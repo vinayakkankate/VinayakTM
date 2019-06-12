@@ -1,0 +1,387 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-calendar"></i>
+            <h2 class="entry-title">My Requests</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section id="content">
+    <div class="container-fluid marginTop20">
+        
+        <!-- <div class="col-md-3 tmfilter">
+            <h4 class="search-results-title">Request Type<span class="glyphicon glyphicon-filter tmglf pull-right"></span></h4>
+            <div class="toggle-container filters-container">
+                <div class="panel style1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-responsive  img-filter-icon-custom" src="/assets/images/flight.png" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="filter-text-custom">
+                                <a href="#employee-filter">Flight</a>
+                            </h4>
+                        </div>
+                    </div>                            
+                </div>
+                <div class="panel style1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-responsive img-filter-icon-custom" src="/assets/images/hotel.png" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="filter-text-custom">
+                                <a href="#employee-filter">Hotel</a>
+                            </h4>
+                        </div>
+                    </div>                            
+                </div>
+                <div class="panel style1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-responsive img-filter-icon-custom" src="/assets/images/car.png" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="filter-text-custom">
+                                <a href="#employee-filter">Car Hire</a>
+                            </h4>
+                        </div>
+                    </div>                            
+                </div>
+                <div class="panel style1">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img-responsive img-filter-icon-custom" src="/assets/images/transfer.png" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="filter-text-custom">
+                                <a href="#employee-filter">Transfer</a>
+                            </h4>
+                        </div>
+                    </div>                            
+                </div>                                                
+                <div>
+                    <h4 class="clear-button">
+                        <a href="#admin-filter" class="lkcolor"><u>Clear</u></a>
+                    </h4>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-md-12 nopadding">
+            <!-- <div class="request-filter-wrapper">
+                <div class="request-filter">
+                    <ul class="nav nav-pills">
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text active">
+                                <span class="badge" *ngIf="statusFlag==null && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#all" (click)="sortRequestStatusWise(null)">All</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text ">
+                                <span class="badge" *ngIf="statusFlag==1 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#pending" (click)="sortRequestStatusWise(1)">Pending</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text ">
+                                <span class="badge" *ngIf="statusFlag==2 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#in-progress" (click)="sortRequestStatusWise(2)">In-Progress</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text ">
+                                <span class="badge" *ngIf="statusFlag==3 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#confirmed" (click)="sortRequestStatusWise(3)">Confirmed</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text ">
+                                <span class="badge" *ngIf="statusFlag==4 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#processed" (click)="sortRequestStatusWise(4)">Processed</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2" style="margin-top: 5px;">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==5 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#history" (click)="sortRequestStatusWise(5)">History</a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div> -->
+
+            <!-- <div class="request-header-wrapper">
+                <div class="request-header">
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-6 header-text  nopadding">Date</div>
+                        <div class="col-md-6 header-text  nopadding">Request ID (C)</div>
+                    </div>
+
+                    <div class="col-md-4 header-text  nopadding">
+                        <div>Request For</div>     
+                    </div>
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 header-text  nopadding">Approver</div>
+                        <div class="col-md-4 header-text nopadding">Status</div>
+                        <div class="col-md-4 header-text nopadding">Rating</div>         
+                    </div>
+                </div>
+            </div> -->
+
+
+            <!-- | paginate: { itemsPerPage: 3, currentPage: p } -->
+
+
+            <!-- <div class="request-box-wrapper" *ngFor="let request of requestList">
+                <div class="request-list">
+                    <div class="row">
+                    <a target="_blank" [routerLink]="['../request-details/',request._id]">
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-6 divider nopadding">
+                            <div class="fullCircle">
+                                {{request.FirstDate | date : 'dd'}}
+                            </div>
+                        </div>
+                        <div class="col-md-6 divider nopadding">
+                            <div class="request-id">{{request.CompanyRequestId}}</div>
+                        </div>
+                       
+                    </div>
+
+                    <div class="col-md-4 divider nopadding image-holder" >
+                        <img *ngIf="request.FlightRequest" class="image-block img-responsive" src="/assets/images/flight.png" alt="">
+                        <img *ngIf="request.AccomodationRequest" class="image-block img-responsive" src="/assets/images/hotel.png" alt="">
+                        <img *ngIf="request.CarRequest" class="image-block img-responsive" src="/assets/images/car.png" alt="">
+                        <img *ngIf="request.TransferRequest" class="image-block img-responsive" src="/assets/images/transfer.png" alt="">
+                    </div>
+                    </a>
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 nopadding divider">
+                            <div *ngIf="request.ReportingManagerId; then thenBlockRMPhoto else elseBlockRMPhoto">
+                            </div>
+                            <ng-template #thenBlockRMPhoto><img class="img-responsive img-circle img-approver-custom" [src]="request.ReportingManagerId.ProfilePhotoPath || DefaultPhotoPath" alt=""></ng-template>
+                            <ng-template #elseBlockRMPhoto><img class="img-responsive img-circle img-approver-custom" [src]="DefaultPhotoPath" alt=""></ng-template>
+                        </div>
+                        <div class="col-md-4 nopadding divider">
+                            <div class="request-status">
+                                <span [class]="request.Status | requestStatusIconClass"></span>
+                                <span [class]="request.Status | requestStatusTextClass">{{request.Status | requestStatusText}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 nopadding">
+                            <div class="rate-button-wrapper">
+                                <button id="rate-button" class="btn btn-primary" (click)="rateUs(request._id,request.Status)" data-toggle="modal" data-target="#ratings-modal" data-original-title  [disabled]="request.Status!=4 || request.Ratings">Rate</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 nopadding">
+                            <div class="col-md-4 nopadding date-year">
+                            {{request.FirstDate | date : 'MMM'}} 
+                            {{request.FirstDate | date : 'yyyy'}}
+                            </div>
+                            <div class="col-md-4 nopadding"></div>
+                            <div class="col-md-4 nopadding"></div>
+
+                        </div>
+                        <div class="col-md-4 nopadding"></div>
+                        <div class="col-md-4 nopadding">
+                            <div class="col-md-4 request-approver-text nopadding">
+                                <span *ngIf="request.ReportingManagerId; then thenBlockRMName else elseBlockRMName"> </span>
+                                <ng-template #thenBlockRMName>{{request.ReportingManagerId.FirstName}} {{request.ReportingManagerId.LastName}}</ng-template>
+                                <ng-template #elseBlockRMName>Self</ng-template>
+                            </div>
+                            <div class="col-md-4 nopadding"></div>
+                            <div class="col-md-4 nopadding"></div>
+                        </div>
+                    </div>
+                </div>                
+            </div> -->
+
+
+
+            <!-- <div id="next-button-wrapper" *ngIf="requestList">
+                <button *ngIf="requestList.length<count" (click)="nextRecords()" class="btn add-button">Next</button>    
+            </div> -->
+
+
+            <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+
+
+            <!-- devextreme grid -->
+            <dx-data-grid id="gridContainer" [dataSource]="requestList" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+                [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true">
+                <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+
+                <!-- Date -->
+                <dxi-column alignment="center" dataType="date" caption="Date" dataField="FirstDate" [allowFiltering]="true" [allowSorting]="false" cellTemplate="DateTemplate"></dxi-column>
+                <div *dxTemplate="let date of 'DateTemplate'">
+                    <div class="fullCircle">
+                        {{date.value | date : 'dd'}}
+                    </div>
+                    <div class="nopadding date-year">
+                        {{date.value | date : 'MMM'}} {{date.value | date : 'yyyy'}}
+                    </div>
+                </div>
+
+                <!-- Request Id -->
+                <dxi-column alignment="center" caption="Request ID" dataField="CompanyRequestId" [allowFiltering]="true" [allowSorting]="true" cellTemplate="RequestIDTemplate" sortOrder="desc"></dxi-column>
+                <div *dxTemplate="let Id of 'RequestIDTemplate'">
+                    <a style="color:blue;" [routerLink]="['../request-details/',Id.data._id]">
+                        {{Id.value}}
+                    </a>
+                </div>
+
+
+                  <!--company name -->
+                  <dxi-column alignment="center" caption="Travel Agent" dataField="AgencyId.CompanyName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="CompanyNameTemplate"></dxi-column>
+                  <div class="company-name" *dxTemplate="let CompanyName of 'CompanyNameTemplate'">
+                          {{CompanyName.value}}
+                  </div>
+
+                <!-- Request For -->
+                <!-- <dxi-column alignment="center" caption="Request For" dataField="_id" [width]="320" [allowFiltering]="true" [allowSorting]="false" cellTemplate="RequestForTemplate"> -->
+                <dxi-column alignment="center" caption="Request For" dataField="Requests" [width]="320" [allowFiltering]="true" [allowSorting]="false" cellTemplate="RequestForTemplate">
+                        <dxo-header-filter [dataSource]="reasonforHeaderFilter"></dxo-header-filter>
+                </dxi-column>
+                <div *dxTemplate="let request of 'RequestForTemplate'">
+                    <div class="nopadding image-holder">
+                        <div *ngFor="let data of request.data.Requests">
+                            <img *ngIf="data.FlightRequest" class="image-block img-responsive" src="assets/images/flight.png" alt="">
+                            <img *ngIf="data.AccomodationRequest" class="image-block img-responsive" src="assets/images/hotel.png" alt="">
+                            <img *ngIf="data.CarRequest" class="image-block img-responsive" src="assets/images/car.png" alt="">
+                            <img *ngIf="data.TransferRequest" class="image-block img-responsive" src="assets/images/transfer.png" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approver -->
+                <dxi-column alignment="center" caption="Approver" dataField="ReportingManagerId[0].FirstName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="ApproverTemplate"></dxi-column>
+                <div *dxTemplate="let approver of 'ApproverTemplate'" class="approver-name">                    
+                    <div *ngIf="!approver.data.ReportingManagerId">
+                        <div>
+                            <img class="img-responsive img-circle img-approver-custom" [src]="DefaultPhotoPath" alt="">
+                        </div>
+                        Self
+                        <!-- <div class="request-approver-text nopadding">Self</div> -->
+                    </div>
+                    <div *ngIf="approver.data.ReportingManagerId" ><br>
+                        <!-- <div > -->
+                            <!-- <img class="img-responsive img-circle img-approver-custom" [src]="getProfilePhoto(approver.data.ReportingManagerId.ProfilePhotoPath)"
+                                alt=""> -->
+                            {{approver.data.ReportingManagerId[0].FirstName}} {{approver.data.ReportingManagerId[0].LastName}}<br>
+                            {{approver.data.ReportingManagerId[0].Email}}<br>{{approver.data.ReportingManagerId[0].MContactNumber}}
+                            <!-- <span class="request-approver-text nopadding">{{approver.data.ReportingManagerId.FirstName}} {{approver.data.ReportingManagerId.LastName}}</span> -->
+                        <!-- </div>  -->
+                    </div>
+                                        
+                </div>
+
+
+                <!-- status -->
+                <dxi-column alignment="center" caption="Status"  dataField="statusName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="StatusTemplate"></dxi-column>
+                <div *dxTemplate="let status of 'StatusTemplate'">
+                
+                    <div class="request-status">
+                        <span [class]="status.data.Status | requestStatusIconClass"></span>
+                        <!-- <span [class]="status.data.Status | requestStatusIconClass" *ngIf="loggedInUserData.Role ==2 && status.data.Status > 3"></span>
+                        <span [class]="'1' | requestStatusIconClass" *ngIf="loggedInUserData.Role ==2 && status.data.Status == 3" ></span> -->
+                    </div>
+                    <div>
+                        <span [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span>
+                        <!-- <span [class]="status.data.Status | requestStatusTextClass" *ngIf="loggedInUserData.Role !=2" >{{status.data.Status | requestStatusText}}</span> -->
+                        <!-- <span [class]="'1' | requestStatusTextClass" *ngIf="loggedInUserData.Role ==2 && status.data.Status == 3" >{{'1' | requestStatusText}}</span>
+                        <span [class]="status.data.Status | requestStatusTextClass" *ngIf="loggedInUserData.Role ==2 && status.data.Status > 3" >{{status.data.Status | requestStatusText}}</span> -->
+                    </div>
+                </div>
+
+                <!-- Rate -->
+                <dxi-column alignment="center" caption="Rating" dataField="Status" [allowFiltering]="false" [allowSorting]="false"
+                    cellTemplate="RateTemplate" *ngIf="authServie.getStatusForCC() =='Processed' || authServie.getStatusForCC() =='' ">
+
+                </dxi-column>
+                <div *dxTemplate="let Rate of 'RateTemplate'">
+                    <div class="rate-button-wrapper" *ngIf="!Rate.data.Ratings">
+                        <button id="rate-button" class="btn btn-default" (click)="rateUs(Rate)" data-toggle="modal" data-target="#ratings-modal" data-original-title  [disabled]="Rate.data.Status < 8 || Rate.data.Ratings"><i class="fa fa-star-half-o" aria-hidden="true" style="color:#9a9a9a; font-size:20px;"></i></button>
+                    </div>
+                    <div class="feedback clearfix" *ngIf="Rate.data.Ratings">
+                        <div class="five-stars-container" ><span class="five-stars" [style.width]="(Rate.data.Ratings*20)+'%'"></span></div>                        
+                    </div>
+                </div>
+               
+             
+
+                <dxo-remote-operations [filtering]="true" [sorting]="false" [paging]="true" [grouping]="true">
+                </dxo-remote-operations>
+
+                <dxo-paging [pageSize]="5"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+            </dx-data-grid>
+
+
+
+
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="ratings-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel">
+                    <span class="glyphicon glyphicon-home"></span> Rate Us</h4>
+            </div>
+            <!-- <form #ratingsResponseForm="ngForm"> -->
+            <div class="modal-body" style="padding: 5px;">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4" style="padding-bottom: 10px;padding-top:10px">
+                        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" [titles]="['one','two','three']"></rating>
+
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
+                        <div class="form-group">
+                            <label for="hotel-additional-details">Additional Feedback (Max 250 chars.):</label>
+                            <textarea [(ngModel)]="RatingFeedback" #ratingFeedback="ngModel" maxlength="256" class="form-control" name="rating-feedback"
+                                id="rating-feedback" placeholder="Any Additional Feedback" rows="2" type="text"></textarea>
+                            <span *ngIf="ratingFeedback.errors && (ratingFeedback.dirty || ratingFeedback.touched)" class="error-message">
+                                <span [hidden]="!ratingFeedback.errors.maxlength">
+                                    Additional rating feedback cannot be more than 256 characters long.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="panel-footer" style="margin-bottom:-14px;">
+                <button (click)="sendRatingsResponse()" type="submit" class="btn btn-success" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ok"></span> SUBMIT RESPONSE</button>
+
+                <button type="button" class="btn btn-default" (click)="clear()" [disabled]="isReadonly">
+                    <span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+                <button style="float: right;" type="button" (click)="clear()" class="btn btn-default btn-close" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+            </div>
+            <!-- </form> -->
+            <!-- [disabled]="!carResponseForm.form.valid" -->
+        </div>
+    </div>
+</div>

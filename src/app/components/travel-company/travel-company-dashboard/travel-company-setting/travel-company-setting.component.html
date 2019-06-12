@@ -1,0 +1,89 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-settings"></i>
+            <h2 class="entry-title">Settings</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section >
+    <div class="row">
+        <div class="heading">Change Your Password</div>
+    </div>
+    <form style="padding:5px;margin: 5px"  #changePasswordForm="ngForm">
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="email">Email Id:</label>
+                    <input type="text" name="email" id="email" [value]="userData.Email" class="form-control full-width" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="old-password">Old Password:</label>
+                    <input [(ngModel)]="OldPassword" type="password" maxlength="20" name="old-password" id="old-password" class="form-control full-width" #oldPassword="ngModel" required>
+                    <span class="error-message" *ngIf="oldPassword.errors && (oldPassword.dirty || oldPassword.touched)">
+                        <span [hidden]="!oldPassword.errors.required">
+                            Old password is required
+                        </span>
+                        <span [hidden]="!oldPassword.errors.maxlength">
+                           Old password cannot be more than 20 characters long 
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="new-password">New Password:</label>
+                    <input [(ngModel)]="NewPassword" 
+                    #newPassword=
+                    "ngModel"
+                    type="password" maxlength="20" minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" name="new-password" id="new-password" class="form-control full-width" required>
+                    <span class="error-message" *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
+                        <span [hidden]="!newPassword.errors.required">
+                            New password is required
+                        </span>
+                        <span [hidden]="!newPassword.errors.maxlength">
+                            New password cannot be more than 20 characters long
+                        </span>
+                        <span [hidden]="!newPassword.errors.pattern">                  
+                            New password should contain atleast 1 Number And 1 Special Character & alteast 8 characters long.
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="confirm-new-password">Confirm New Password:</label>
+                    <input [(ngModel)]="ConfirmNewPassword" #confirmNewPassword="ngModel" maxlength="20" minlength="8" type="password" name="confirm-new-password" id="confirm-new-password" class="form-control full-width" required>
+                    <span class="error-message" *ngIf="confirmNewPassword.errors && (confirmNewPassword.dirty || confirmNewPassword.touched)">
+                        <span [hidden]="!confirmNewPassword.errors.required">
+                            Confirm password is required
+                        </span>              
+                    </span>
+                    <span class="error-message" [hidden]="NewPassword==ConfirmNewPassword">
+                            Password mismatch
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="form-group">
+                    <button [disabled]="!changePasswordForm.form.valid || NewPassword!=ConfirmNewPassword" type="submit" class="button btn-medium dark-blue2" (click)="changePassword()">Change Password</button>
+                </div>
+            </div>  
+        </div>           
+    </form>    
+</section>

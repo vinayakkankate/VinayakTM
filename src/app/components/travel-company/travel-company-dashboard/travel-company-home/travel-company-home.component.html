@@ -1,0 +1,718 @@
+<div id="slideshow">
+	<div class="fullwidthbanner-container">
+		<div class="fullwidthbanner-container">
+			<!--<img class="tab-pane fade" id="hotels-tab" src="assets/images/hotel.jpg" alt="" style="width:100%">
+                <img class="tab-pane fade" id="cars-tab" src="assets/images/car.jpg" alt="" style="width:100%">-->
+			<img src="assets/images/header_home.jpg" alt="">
+			<!--<img class="tab-pane fade" id="transfer-tab" src="assets/images/transfer1.jpg" alt="" style="width:100%">-->
+
+		</div>
+	</div>
+</div>
+<div class="container" id="count-container" *ngIf="checkForAdmin()">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="dashboard">
+				<div class="row block">
+
+					<div class="col-sm-6 col-md-3">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact blue">
+								<div class="numbers counters-box">
+									<dl>
+										<dt>{{AllRequestCount}}</dt>
+										<dd>Requests</dd>
+									</dl>
+									<i class="icon soap-icon-hotel"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<a routerLink="/travel-company/dashboard/mapping">
+							<div class="fact yellow">
+								<div class="numbers counters-box">
+									<dl>
+										<dt>{{MappedCompaniesCount}}</dt>
+										<dd>Companies</dd>
+									</dl>
+									<i class="icon soap-icon-plane"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<a routerLink="/travel-company/dashboard/users">
+							<div class="fact red">
+								<div class="numbers counters-box">
+									<dl>
+										<dt>{{AgencyTLCount}}</dt>
+										<dd>Team Leaders</dd>
+									</dl>
+									<i class="icon soap-icon-car"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-3">
+						<a routerLink="/travel-company/dashboard/users">
+							<div class="fact green">
+								<div class="numbers counters-box">
+									<dl>
+										<dt>{{AgencyUserCount}}</dt>
+										<dd>Users</dd>
+									</dl>
+									<i class="icon soap-icon-cruise flip-effect"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" id="count-container" *ngIf="checkForMyRequestCount()">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="dashboard">
+				<div class="tile-container row block">
+
+					<div class="tile ">
+						<a routerLink="/travel-company/dashboard/my-requests" (click)="onclick('Pending')">
+							<div class="fact pending-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{MyPendingRequestCount}}</dt>
+										<dd class="request-head">Pending Requests</dd>
+									</dl>
+									<i class="fa fa-clock-o icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="tile ">
+						<a routerLink="/travel-company/dashboard/my-requests" (click)="onclick('Rejected')">
+							<div class="fact inprogress-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{MyInProgressRequestCount}}</dt>
+										<dd class="request-head">Rejected Requests</dd>
+									</dl>
+									<i class="fa fa-refresh icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- <div class="row block">  -->
+					<div class="tile ">
+						<a routerLink="/travel-company/dashboard/my-requests" (click)="onclick('Confirmed')">
+							<div class="fact confirmed-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{MyConfirmRequestCount}}</dt>
+										<dd class="request-head">Confirmed Requests</dd>
+									</dl>
+									<i class="fa fa-check-circle icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="tile">
+						<a routerLink="/travel-company/dashboard/my-requests" (click)="onclick('Processed')">
+							<div class="fact processed-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{MyProcessedRequestCount}}</dt>
+										<dd class="request-head">Processed Requests</dd>
+									</dl>
+									<i class="fa fa-thumbs-up icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<div class="tile">
+						<a routerLink="/travel-company/dashboard/my-requests" (click)="onclick('')">
+							<div class="fact all-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{MyRequestCount}}</dt>
+										<dd class="request-head">All Requests</dd>
+									</dl>
+									<i class="fa fa-book icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<!-- <div class="col-sm-6 col-md-4">
+			            <a routerLink="/travel-company/dashboard/my-requests">
+			                <div class="fact history-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyHistoryRequestCount}}</dt>
+			                            <dd class="request-head">History Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-archive icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" id="count-container" *ngIf="checkForDelegationAuthority()">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="dashboard">
+				<div class="row block">
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact all-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllRequestCount}}</dt>
+										<dd class="request-head">Requests</dd>
+									</dl>
+									<i class="fa fa-book icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact pending-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllPendingRequestCount}}</dt>
+										<dd class="request-head">Pending Requests</dd>
+									</dl>
+									<i class="fa fa-clock-o icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact inprogress-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllInProgressRequestCount}}</dt>
+										<dd class="request-head">In Progress Requests</dd>
+									</dl>
+									<i class="fa fa-refresh icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="row block">
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact confirmed-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllConfirmRequestCount}}</dt>
+										<dd class="request-head">Confirmed Requests</dd>
+									</dl>
+									<i class="fa fa-check-circle icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact processed-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllProcessedRequestCount}}</dt>
+										<dd class="request-head">Processed Requests</dd>
+									</dl>
+									<i class="fa fa-thumbs-up icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-sm-6 col-md-4">
+						<a routerLink="/travel-company/dashboard/all-requests">
+							<div class="fact history-counter">
+								<div class="numbers counters-box">
+									<dl>
+										<dt class="request-count">{{AllHistoryRequestCount}}</dt>
+										<dd class="request-head">History Requests</dd>
+									</dl>
+									<i class="fa fa-archive icon"></i>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row" *ngIf="UserData.Role != 2"> <!-- for agent and admin -->
+	<div class="col-md-6 nopadding" >
+		<div class="borderStyle">Todays Service ({{currentDate[2]}}-{{currentDate[1]}}-{{currentDate[3]}})</div>
+		<br>
+		<!-- Todays Service -->
+		<dx-data-grid id="gridContainer" [dataSource]="daytransaction_Arr" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+		 [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" [wordWrapEnabled]="true">
+			<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+			<dxo-load-panel [enabled]="true"></dxo-load-panel>
+			<dxo-filter-row [visible]="false"></dxo-filter-row>
+			<dxi-column *ngIf="UserData.Role!=1" caption="Transactions" dataField="agentTransaction_Count" alignment="center" ></dxi-column>
+			
+			<dxi-column *ngIf="UserData.Role!=1" caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+			<div *dxTemplate="let request of 'RatingForTemplate'">
+				<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+			</div>
+
+			<dxi-column *ngIf="UserData.Role!=1" caption="" dataField="" alignment="center"></dxi-column>
+
+			<dxi-column  caption="Total Travel Agency Transactions" dataField="totaltravelAgencyTransaction"
+			 alignment="center"></dxi-column>
+
+			<dxi-column  caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating"
+			 alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+			 <div *dxTemplate="let request of 'RatingForTemplate'">
+				<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+			</div>
+
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+			</dxo-remote-operations>
+			<dxo-paging [pageSize]="5"></dxo-paging>
+			<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+
+		</dx-data-grid>
+		<br>
+		<br>
+	</div>
+
+
+	<!-- <div [ngClass]="UserData.Role == 1 ? 'col-sm-offset-4' : 'col-sm-offset-2'"></div> -->
+	<div class="col-md-6 nopadding">
+
+		<div class="borderStyle">Monthly Service ({{currentDate[1]}}-{{currentDate[3]}})</div>
+		<br>
+		<dx-data-grid id="gridContainer" [dataSource]="monthtransaction_Arr" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+		 [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" [wordWrapEnabled]="true">
+			<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+			<dxo-load-panel [enabled]="true"></dxo-load-panel>
+			<dxo-filter-row [visible]="false"></dxo-filter-row>
+
+			<!-- Todays Service -->
+			<div>
+				<dxi-column *ngIf="UserData.Role!=1" caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+
+				<dxi-column *ngIf="UserData.Role!=1" caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+				</div>
+
+				<dxi-column *ngIf="UserData.Role!=1" caption="" dataField="" alignment="center"></dxi-column>
+
+				<dxi-column  caption="Total Travel Agency Transactions" dataField="totaltravelAgencyTransaction"
+				 alignment="center"></dxi-column>
+
+				<dxi-column  caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating"
+				 alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				 <div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+				</div>
+
+			</div>
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+			</dxo-remote-operations>
+			<dxo-paging [pageSize]="5"></dxo-paging>
+			<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+
+		</dx-data-grid>
+		<br>
+		<br>
+	</div>
+	</div>
+	<div class="row" *ngIf="UserData.Role == 2"> <!-- for supervisor  -->
+		<div class="col-md-6 nopadding" >
+			<div class="borderStyle">Todays Service ({{currentDate[2]}}-{{currentDate[1]}}-{{currentDate[3]}})</div>
+			<br>
+			<!-- Todays Service -->
+			<dx-data-grid id="gridContainer" [dataSource]="supervisorDaytransaction_Arr" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+			 [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" [wordWrapEnabled]="true">
+				<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+				<dxo-load-panel [enabled]="true"></dxo-load-panel>
+				<dxo-filter-row [visible]="false"></dxo-filter-row>
+				<dxi-column *ngIf="UserData.Role!=1" caption="Transactions" dataField="agentTransaction_Count" alignment="center" ></dxi-column>
+				
+				<dxi-column *ngIf="UserData.Role!=1" caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+				</div>
+	
+				<dxi-column *ngIf="UserData.Role!=1" caption="" dataField="" alignment="center"></dxi-column>
+	
+				<dxi-column  caption="Total Travel Agency Transactions" dataField="totaltravelAgencyTransaction"
+				 alignment="center"></dxi-column>
+	
+				<dxi-column  caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating"
+				 alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				 <div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+				</div>
+	
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+				</dxo-remote-operations>
+				<dxo-paging [pageSize]="5"></dxo-paging>
+				<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+	
+			</dx-data-grid>
+			<br>
+			<br>
+		</div>
+	
+	
+		<!-- <div [ngClass]="UserData.Role == 1 ? 'col-sm-offset-4' : 'col-sm-offset-2'"></div> -->
+		<div  class="col-md-6 nopadding">
+	
+			<div class="borderStyle">Monthly Service ({{currentDate[1]}}-{{currentDate[3]}})</div>
+			<br>
+			<dx-data-grid id="gridContainer" [dataSource]="supervisorMonthtransaction_Arr" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+			 [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" [wordWrapEnabled]="true" (onCellClick)="gotoReportsPage($event)">
+				<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+				<dxo-load-panel [enabled]="true"></dxo-load-panel>
+				<dxo-filter-row [visible]="false"></dxo-filter-row>
+	
+				<!-- Todays Service -->
+				<div>
+					<dxi-column *ngIf="UserData.Role!=1" caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+	
+					<dxi-column *ngIf="UserData.Role!=1" caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate" ></dxi-column>
+					<div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+					</div>
+	
+					<dxi-column *ngIf="UserData.Role!=1" caption="" dataField="" alignment="center"></dxi-column>
+	
+					<dxi-column  caption="Total Travel Agency Transactions" dataField="totaltravelAgencyTransaction"
+					 alignment="center"></dxi-column>
+	
+					<dxi-column  caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating"
+					 alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+					 <div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+					</div>
+	
+				</div>
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+				</dxo-remote-operations>
+				<dxo-paging [pageSize]="5"></dxo-paging>
+				<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+	
+			</dx-data-grid>
+			<br>
+			<br>
+		</div>
+		</div>
+
+	<div *ngIf="UserData.Role == 1">
+
+			<div class="borderStyle">Todays Service ({{currentDate[2]}}-{{currentDate[1]}}-{{currentDate[3]}})</div>
+			<br>
+			<div class="row" >
+				<div class="col-md-4 nopadding">
+				<dx-data-grid id="supervisorPicgrid" [dataSource]="SupervisorprofilepathArr" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+				[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" [wordWrapEnabled]="true">
+					<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+					<dxo-load-panel [enabled]="true"></dxo-load-panel>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+						<dxi-column caption="Supervisor" dataField="" alignment="center">
+							<dxi-column caption="Profile Pic" dataField="ProfilePhotoPath" alignment="center" cellTemplate="profileTemplate"></dxi-column>
+							<div *dxTemplate="let request of 'profileTemplate'">
+								<img alt="" class="image-block img img-responsive img-thumbnail imgwidth" [src]="getProfilePhoto(request.value)">
+							</div>
+							
+							<dxi-column caption="Name" dataField="FirstName" alignment="center" cellTemplate="nameTemplate"></dxi-column>
+							<div *dxTemplate="let request of 'nameTemplate'">
+								{{request.data.FirstName}}
+								{{request.data.LastName}}
+							</div>
+						</dxi-column>
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+					</dxo-remote-operations>
+					<dxo-paging [pageSize]="5"></dxo-paging>
+					<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+				</dx-data-grid>
+				</div>
+				<div class="col-md-4 nopadding">
+					<dx-data-grid id="supervisortransgrid" class="margin" [dataSource]="supervisorDaytransaction_Arr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+					[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+						<dxo-column-fixing [enabled]="true"></dxo-column-fixing> 
+						<dxo-load-panel [enabled]="true"></dxo-load-panel>
+						<dxo-filter-row [visible]="false"></dxo-filter-row>
+						<div>
+							<dxi-column caption="Supervisor" dataField="" alignment="center">
+								<dxi-column caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+			
+								<dxi-column caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+								<div *dxTemplate="let request of 'RatingForTemplate'">
+									<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+								</div>
+							</dxi-column>
+						</div>
+					<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+						</dxo-remote-operations>
+						<dxo-paging [pageSize]="5"></dxo-paging>
+						<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+					</dx-data-grid>
+				</div>	
+			
+				<div class="col-md-4 nopadding">	
+			<dx-data-grid id="supervisoragencygrid" [dataSource]="supervisorDaytransaction_Arr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+			 [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+				<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+				<dxo-load-panel [enabled]="true"></dxo-load-panel>
+				<dxo-filter-row [visible]="false"></dxo-filter-row>
+				<dxi-column caption="Total" dataField="" alignment="center">
+					<dxi-column caption="Travel Agency Transactions" dataField="totaltravelAgencyTransaction" alignment="center"></dxi-column>
+	
+					<dxi-column caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+					<div *dxTemplate="let request of 'RatingForTemplate'">
+							<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+						</div>
+				</dxi-column>	
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+				</dxo-remote-operations>
+				<dxo-paging [pageSize]="5"></dxo-paging>
+				<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+			</dx-data-grid>
+			</div>
+		</div><br><br><br>
+	</div>
+
+	<div *ngIf="UserData.Role == 1">
+
+		<div class="borderStyle">Monthly Service ({{currentDate[1]}}-{{currentDate[3]}})</div>
+		<br>
+		<div class="row">
+			<div class="col-md-4 nopadding">
+				<dx-data-grid id="supervisorPicgrid" [dataSource]="SupervisorprofilepathArr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+				[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+					<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+					<dxo-load-panel [enabled]="true"></dxo-load-panel>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+						<dxi-column caption="Supervisor" dataField="" alignment="center">
+							<dxi-column caption="Profile Pic" dataField="ProfilePhotoPath" alignment="center" cellTemplate="profileTemplate"></dxi-column>
+							<div *dxTemplate="let request of 'profileTemplate'">
+								<img alt="" class="image-block img img-responsive img-thumbnail imgwidth" [src]="getProfilePhoto(request.value)">
+							</div>
+							
+							<dxi-column caption="Name" dataField="FirstName" alignment="center" cellTemplate="nameTemplate"></dxi-column>
+							<div *dxTemplate="let request of 'nameTemplate'">
+								{{request.data.FirstName}}
+								{{request.data.LastName}}
+							</div>
+						</dxi-column>
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+					</dxo-remote-operations>
+					<dxo-paging [pageSize]="5"></dxo-paging>
+					<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+				</dx-data-grid>	
+			</div>
+			<div class="col-md-4 nopadding">
+				<dx-data-grid id="supervisortransgrid" class="margin" [dataSource]="supervisorMonthtransaction_Arr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+				[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+					<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+					<dxo-load-panel [enabled]="true"></dxo-load-panel>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxi-column caption="Supervisor" dataField="" alignment="center">
+						<dxi-column caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+
+						<dxi-column caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+						<div *dxTemplate="let request of 'RatingForTemplate'">
+							<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+						</div>
+					</dxi-column>
+				<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+					</dxo-remote-operations>
+					<dxo-paging [pageSize]="5"></dxo-paging>
+					<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+				</dx-data-grid>
+			</div>
+		
+			<div class="col-md-4 nopadding">
+				<dx-data-grid id="supervisoragencygrid" [dataSource]="supervisorMonthtransaction_Arr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+				[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+					<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+					<dxo-load-panel [enabled]="true"></dxo-load-panel>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxi-column caption="Total" dataField="" alignment="center">
+						<dxi-column caption="Travel Agency Transactions" dataField="totaltravelAgencyTransaction" alignment="center"></dxi-column>
+
+						<dxi-column caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+						<div *dxTemplate="let request of 'RatingForTemplate'">
+								<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+							</div>
+					</dxi-column>	
+					<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+					</dxo-remote-operations>
+					<dxo-paging [pageSize]="5"></dxo-paging>
+					<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+
+				</dx-data-grid>
+				</div>
+		
+	</div><br><br><br>
+</div>
+
+
+<div *ngIf="UserData.Role == 1 || UserData.Role == 2">
+
+		<div class="borderStyle">Team Performance</div>
+		<br>
+		<div class="row">
+		<div class="col-md-4 nopadding">
+			<dx-data-grid id="supervisorPicgrid" [dataSource]="AgentprofilepathArr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+			[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+				<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+				<dxo-load-panel [enabled]="true"></dxo-load-panel>
+				<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxi-column caption="Team Member" dataField="" alignment="center">
+						<dxi-column caption="Profile Pic" dataField="ProfilePhotoPath" alignment="center" cellTemplate="profileTemplate"></dxi-column>
+						<div *dxTemplate="let request of 'profileTemplate'">
+							<img alt="" class="image-block img img-responsive img-thumbnail imgwidth" [src]="getProfilePhoto(request.value)">
+						</div>
+
+						<dxi-column caption="Name" dataField="FirstName" alignment="center" cellTemplate="nameTemplate"></dxi-column>
+						<div *dxTemplate="let request of 'nameTemplate'">
+							{{request.data.FirstName}}
+							{{request.data.LastName}}
+						</div>
+					</dxi-column>
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+				</dxo-remote-operations>
+				<dxo-paging [pageSize]="5"></dxo-paging>
+				<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+			</dx-data-grid>
+		</div>
+		<div class="col-md-4 nopadding">
+			<dx-data-grid id="supervisortransgrid" class="margin" [dataSource]="daytransaction_Arr" [rowAlternationEnabled]="false" [showColumnLines]="true" [showRowLines]="true"
+			[showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="false" [wordWrapEnabled]="true">
+				<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+				<dxo-load-panel [enabled]="true"></dxo-load-panel>
+				<dxo-filter-row [visible]="false"></dxo-filter-row>
+				<dxi-column caption="TODAY" dataField="" alignment="center">
+					<dxi-column caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+					<dxi-column caption="Travel Agency Transactions" dataField="totaltravelAgencyTransaction" alignment="center"></dxi-column>
+					<dxi-column caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+					<div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+					</div>
+					
+
+					<dxi-column caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+					<div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+					</div>
+				</dxi-column>
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+				</dxo-remote-operations>
+				<dxo-paging [pageSize]="5"></dxo-paging>
+				<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+			</dx-data-grid>
+		</div>	
+		
+		<div class="col-md-4 nopadding">
+		<dx-data-grid id="supervisoragencygrid" [dataSource]="monthtransaction_Arr"  [columnAutoWidth]="false" [showBorders]="true" [wordWrapEnabled]="true">
+			<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+			<dxo-load-panel [enabled]="true"></dxo-load-panel>
+			<dxo-filter-row [visible]="false"></dxo-filter-row>
+			<dxi-column caption="MONTHLY" dataField="" alignment="center">
+				<dxi-column caption="Transactions" dataField="agentTransaction_Count" alignment="center"></dxi-column>
+				<dxi-column caption="Travel Agency Transactions" dataField="totaltravelAgencyTransaction" alignment="center"></dxi-column>
+
+				<dxi-column caption="Average Rating" dataField="rating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.rating)">*</span>
+					</div>
+				
+
+				<dxi-column caption="Travel Agency Average Rating" dataField="totaltravelAgencyRating" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+						<span *ngFor="let item of [].constructor(request.data.totaltravelAgencyRating)">*</span>
+					</div>
+			</dxi-column>	
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+			</dxo-remote-operations>
+			<dxo-paging [pageSize]="5"></dxo-paging>
+			<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+
+		</dx-data-grid>
+		</div>
+	</div><br><br><br>
+</div>
+	<!-- <div class="data-wrap3" *ngIf="UserData.Role == 1 || UserData.Role == 2">
+
+		<div class="borderStyle">Teams Performance</div>
+		<br>
+		<dx-data-grid id="gridContainer" [dataSource]="transactionData" [showBorders]="true" [columnAutoWidth]="true">
+			<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+			<dxo-load-panel [enabled]="true"></dxo-load-panel>
+			<dxo-filter-row [visible]="true"></dxo-filter-row>
+
+			Todays Service 
+
+			<dxi-column caption="Supervisor" dataField="" alignment="center">
+
+				<dxi-column caption="Profile Pic" dataField="Agency_MonthTransactionss" alignment="center"></dxi-column>
+
+				<dxi-column caption="Name" dataField="Agency_MonthTransactions" alignment="center"></dxi-column>
+			</dxi-column>
+
+			<dxi-column caption="" dataField="" alignment="center"></dxi-column>
+			<dxi-column caption="Today" dataField="" alignment="center">
+				<dxi-column caption="Todays Transactions" dataField="Agency_MonthTransactions" alignment="center"></dxi-column>
+
+				<dxi-column caption="Transactions" dataField="Agency_MonthTransactions" alignment="center"></dxi-column>
+				<dxi-column caption="Todays Avg Rating" dataField="Agency_MonthTransactions" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+				</div>
+
+				<dxi-column caption="Avg Rating" dataField="Agency_MonthTransactions" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+				</div>
+			</dxi-column>
+			<dxi-column caption="" dataField="" alignment="center"></dxi-column>
+			<dxi-column caption="Monthly" dataField="" alignment="center">
+				<dxi-column caption="Transactions" dataField="Agency_MonthTransactions" alignment="center"></dxi-column>
+
+				<dxi-column caption="Travel Agency Transactions" dataField="Agency_MonthTransactions" alignment="center"></dxi-column>
+
+				<dxi-column caption="Avg Rating" dataField="Agency_MonthTransactions" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+				</div>
+
+				<dxi-column caption="Travel Agency Avg Rating" dataField="Agency_MonthTransactions" alignment="center" cellTemplate="RatingForTemplate"></dxi-column>
+				<div *dxTemplate="let request of 'RatingForTemplate'">
+					<span *ngFor="let item of [].constructor(request.data.Agent_DayRating)">*</span>
+				</div>
+			</dxi-column>
+
+			<dxo-remote-operations [filtering]="false" [sorting]="false" [paging]="true" [grouping]="true">
+			</dxo-remote-operations>
+
+		</dx-data-grid>
+		<br>
+		<br>
+	</div> -->
+
+</div>

@@ -1,0 +1,52 @@
+<div class="soap-login-page style1 body-blank">
+    <div id="page-wrapper" class="wrapper-blank">
+        <section id="content">
+            <div class="container">
+                <div id="main">
+                    <h1 class="logo block">
+                        <a href="#"  title="Travel Mediary - home">
+                            <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                        </a>
+                    </h1>
+                    <div class="text-center yellow-color box" style="font-size: 4em; font-weight: 300; line-height: 1em;">Corporate Login</div>
+                        <p class="light-blue-color block" style="font-size: 1.3333em;">Please login to your account.</p>
+                        <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block form-group">
+                            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
+                                    <div class="form-group">
+                                        <input type="email" class="input-text input-large full-width" placeholder="Enter your email address" required id="loginid" type="text" pattern="[a-z0-9.A-Z_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [formControl]="loginForm.controls['email']" autocomplete="off">
+                                        <div id="alt" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched" class="help-block">Email is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
+                                    <div class="form-group">
+                                        <input type="password" class="input-text input-large full-width" placeholder="Enter your password" required id="loginpsw" type="password" [formControl]="loginForm.controls['password']" autocomplete="off">
+                                        <span id="alt" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched" class="help-block">Password is required.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox">
+                                        <input type="checkbox" value="">Remember my details
+                                    </label>
+                                </div>
+                                    <button type="submit" class="btn-large full-width sky-blue1" [disabled]="!loginForm.valid">LOGIN</button>
+                            </form>
+                        </div>
+                            <a [routerLink]="['/corporate-company/registration']">Create New Corporate Account</a>
+                        <br>
+                            <a [routerLink]="['/corporate-company/forgot-password']">Forgot Password?</a><br>
+                            <a [routerLink]="['/corporate-company/update-user']">Update User?</a>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            <div class="footer-wrapper">
+                <div class="container">
+                    <div class="copyright">
+                        <p>2018 Travel Mediary</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

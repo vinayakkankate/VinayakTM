@@ -1,0 +1,41 @@
+#content{
+    background-color: #fff;
+}
+
+.tab-pane{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.form-actions {
+    margin-bottom: 25px;
+    background-color: transparent;
+    text-align: center;
+}
+
+.error-message{
+    color: #ff0000;
+}
+.search-box{
+    margin-top: -45px;
+}
+ul.search-tabs li a {
+    width: fit-content ! important;
+}
+
+
+table,th,td,th {
+    text-align: center;
+}
+
+.w20{
+    width:20px;
+}
+
+.confirmed{
+    color: #00cc00;
+}
+
+.pending{
+    color: #ffcc00;
+}

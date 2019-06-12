@@ -1,0 +1,16 @@
+.upload-button{
+    background-color: #fdb714; /* Green */
+    border: none;
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.modal-body{
+	text-align: center;
+}

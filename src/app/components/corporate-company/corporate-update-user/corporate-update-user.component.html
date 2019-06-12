@@ -1,0 +1,55 @@
+<div class="soap-login-page style1 body-blank">
+    <div id="page-wrapper" class="wrapper-blank">
+        <section id="content">
+            <div class="container">
+                <div id="main">
+                    <h1 class="logo block">
+                        <a href="#" title="Travel Mediary - home">
+                            <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                        </a>
+                    </h1>
+                    <div class="text-center yellow-color box" style="font-size: 4em; font-weight: 300; line-height: 1em;">Corporate Update User</div>
+                        <!-- <p class="light-blue-color block" style="font-size: 1.3333em;">Please login to your account.</p> -->
+                        <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block form-group">
+                            <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['FirstName'].valid && loginForm.controls['FirstName'].touched}">
+                                    <div class="form-group">
+                                        <input type="text" class="input-text input-large form full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" placeholder="Enter Your First Name" [formControl]="loginForm.controls['FirstName']" autocomplete="off"/>
+                                        <div id="alt" *ngIf="loginForm.controls['FirstName'].hasError('required') && loginForm.controls['FirstName'].touched" class="help-block">FirstName is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['LastName'].valid && loginForm.controls['LastName'].touched}">
+                                    <div class="form-group">
+                                        <input type="text" class="input-text input-large form full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" placeholder="Enter Your Last Name" [formControl]="loginForm.controls['LastName']" autocomplete="off"/>
+                                        <div id="alt" *ngIf="loginForm.controls['LastName'].hasError('required') && loginForm.controls['LastName'].touched" class="help-block">LastName is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['oldEmail'].valid && loginForm.controls['oldEmail'].touched}">
+                                    <div class="form-group">
+                                        <input type="email" class="input-text input-large full-width" placeholder="Enter old user email address" required id="oldloginid" type="text" pattern="[a-z0-9.A-Z_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [formControl]="loginForm.controls['oldEmail']" autocomplete="off">
+                                        <div id="alt" *ngIf="loginForm.controls['oldEmail'].hasError('required') && loginForm.controls['oldEmail'].touched" class="help-block">Email is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback" [ngClass]="{'has-error':!loginForm.controls['newEmail'].valid && loginForm.controls['newEmail'].touched}">
+                                    <div class="form-group">
+                                        <input type="email" class="input-text input-large full-width" placeholder="Enter new user email address" required id="newloginid" type="text" pattern="[a-z0-9.A-Z_%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" [formControl]="loginForm.controls['newEmail']" autocomplete="off">
+                                        <div id="alt" *ngIf="loginForm.controls['newEmail'].hasError('required') && loginForm.controls['newEmail'].touched" class="help-block">Email is required.</div>
+                                    </div>
+                                </div>
+                                    <button type="submit" class="btn-large full-width sky-blue1" [disabled]="!loginForm.valid">Update</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            <div class="footer-wrapper">
+                <div class="container">
+                    <div class="copyright">
+                        <p>2018 Travel Mediary</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

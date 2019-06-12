@@ -1,0 +1,197 @@
+<section id="content">
+    <div id="popup">
+    <dx-popup
+        class="popup"
+        width="auto"
+        height="auto"
+        [showTitle]="true"
+        [(title)]="title"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        [(visible)]="popupVisible">
+        <form [formGroup]="messageForm" novalidate (ngSubmit)="SaveCompany()">
+            <div *dxTemplate="let data of 'content'">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="CompanyType">Company Type:</label>
+                        </div>
+                         <div class="col-md-8">
+                            <select class="form-control" formControlName="CompanyType" required autofocus>
+                                <option value="1">Corporate Company</option>
+                                <option value="2">Travel Company</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label" for="CompanyName"> Company Name:</label>
+    </div>
+    <div class="col-md-8">
+      <input type="text" class="form-control" formControlName="CompanyName" title="Company Name must contain 1 to 50 characters only!" id="CompanyName" placeholder="Enter Company Name" pattern="([A-zÀ-ž0-9\s\.\_\+\-]){1,50}" required autofocus>
+       <input type="text" class="form-control" formControlName="CompanyTmId" *ngIf="edited" >
+       </div>
+  </div> 
+</div>
+<div class="form-group">
+<div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="CompanyAddress">Company Address:</label>
+</div>
+ <div class="col-md-8">
+                        <input type="text" class="form-control" formControlName="Address1" id="Address1" placeholder="Address1" maxlength="100" autocomplete="off" required autofocus>
+                        <input type="text" class="form-control" formControlName="Address2" id="Address2" placeholder="Address2" maxlength="100" autocomplete="off" required autofocus>
+                        <input type="text" class="form-control" formControlName="City" id="City" placeholder="City" maxlength="40" autocomplete="off" required autofocus>
+                        <!-- <textarea class="form-control" rows="2" id="CompanyAddress" #p placeholder="Address of Company:(100 characters only)" maxlength="100" autocomplete="off" formControlName="Address" required autofocus></textarea> -->
+                        <!--<textarea class="form-control" rows="4" id="comment" #p (change)="getComment(p.value)" placeholder="Comment:(250 characters only)" maxlength="250"></textarea>-->
+</div>
+</div>
+                    </div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label" for="Country">Country</label>
+        </div>
+        <div class="col-md-8">
+           <ng2-completer class="form-control cc" formControlName="Country" (selected)="onSelectCountry($event)" [datasource]="dataService" [minSearchLength]="0" name="country" inputClass="full-width" placeholder="Country" required autofocus></ng2-completer> 
+        </div>
+    </div>
+</div>
+
+                    <div class="form-group">
+<div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="Website">Website:</label>
+                        </div>
+                         <div class="col-md-8">
+                        <input type="url" pattern="(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-zA-Z]{3}.?([a-zA-Z]+)?" class="form-control" id="Website" placeholder="Enter Company Website" autocomplete="off" formControlName="Website" required autofocus>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="FirstName">First Name:</label>
+                        </div>
+                        <div class="col-md-8">
+                        <input type="text" class="form-control" id="FirstName" pattern="[A-Za-z]{1,20}" placeholder="Enter First Name" autocomplete="off" formControlName="FirstName" required autofocus>
+                        
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="LastName">Last Name:</label>
+                        </div>
+                        <div class="col-md-8">
+                        <input type="text" class="form-control" id="LastName" pattern="[A-Za-z]{1,20}" placeholder="Enter Last Name" autocomplete="off" formControlName="LastName" required autofocus>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="Email">Email:</label>
+                        </div>
+<div class="col-md-8">
+                        <input type="text" class="form-control" placeholder="Enter Email Address" name="email_field" id="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" formControlName="Email" autocomplete="off" required autofocus>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                     <div class="row">
+        <div class="col-md-4">
+                        <label class="control-label" for="CompanyContact">Contact Number:</label>
+                        </div>
+                        <div class="col-md-8">
+                        <input class="form-control " type="phone" id="CompanyContact" pattern="^[0-9]\d{6,15}$" placeholder="Enter Contact Number" maxlength="15" minlength="6" formControlName="CompanyContact" required autofocus>
+                        </div>
+                        </div>
+                    </div>
+      <div class="form-group"> 
+    <div class="col-md-offset-4 col-md-12" style="padding-top: 10px">
+      <button class="btn btn-success" [disabled]="!messageForm.valid" (click)="SaveCompany()" >Submit</button>
+        <button type="Cancel" class="btn btn-danger" (click)="Close()">Cancel</button>
+    </div>
+  </div>      
+        </div>
+         </form>                            
+    </dx-popup>
+</div>
+
+<div class="row">
+        <div class="col-md-offset-1 col-md-10">
+        <div style="width:auto">
+                <button type="submit" class="btn btn-primary" (click)="OpenPopupForSave()">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Add New
+                </button>
+        </div>
+        <div style="clear:both;">
+<dx-data-grid 
+    id="gridCategory"
+    [dataSource]="companylist"
+    (onContentReady)="onContentReady($event)"
+        (onCellPrepared)="onCellPrepared($event)"
+     [showColumnLines]="true"
+        [showRowLines]="true"
+        [showBorders]="true"
+        [rowAlternationEnabled]="true"
+    [allowColumnReordering]="true"
+    (onRowInserting)="logEventInserting($event)"
+    (onEditingStart)="EditingStart($event)"
+    (onRowRemoving)="RowRemoving($event)"
+(onRowUpdated)="RowUpdated($event)">
+
+<dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="false">
+     <dxo-popup
+                title="Add Company"
+                [showTitle]="true"
+                width="auto"
+                height="auto" 
+                [position]="{ my: 'top', at: 'top' }">
+            </dxo-popup>
+</dxo-editing>
+       <dxo-filter-row 
+        [visible]="showFilterRow" 
+        ></dxo-filter-row>
+          <dxo-header-filter 
+        [visible]="showHeaderFilter"></dxo-header-filter>
+    <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager 
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[5, 10, 20]"
+        [showInfo]="true">
+    </dxo-pager>
+<dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+    <dxi-column dataField="TMID" caption="TM-Id" id="TMID" width="auto" [allowEditing]="false" ></dxi-column>
+    <dxi-column dataField="CompanyName" title="Company Name must contain 1 to 50 alphabets only!" caption="Company Name" width="auto" id="CompanyName" >
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule 
+            type="pattern"
+            pattern="([A-zÀ-ž0-9\s]){1,50}"
+            ></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="CompanyType" caption="Companies/Agencies Type" width="auto" [calculateCellValue]="calculateCellValue" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="Website" caption="Website" width="auto" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="ContactNumber" caption="Contact No." width="auto">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule 
+            type="pattern"
+            pattern="^[0-9]\d{6,15}$" maxlength="15" minlength="6" message="Contact No. must contain 6 to 15 digit only!"
+            ></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="Address" width="auto" caption="Company Address" [calculateCellValue]="calculateCellValue1" [allowEditing]="false">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-validation-rule 
+            type="pattern"
+            pattern="[a-zA-Z][a-zA-Z0-9\s]*" width="auto" maxlength="100" minlength="4" message="Address field can have 100 characters!"
+            ></dxi-validation-rule>
+    </dxi-column>
+</dx-data-grid>
+</div>
+    </div>
+</div>
+</section>

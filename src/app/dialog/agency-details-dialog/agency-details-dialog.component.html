@@ -1,0 +1,35 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">×</button>
+            <h4 class="modal-title" ><span class="glyphicon glyphicon-home"></span> Agency Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+            	<div class="col-md-6 field divider">
+					<div class="field-key">TMID</div>
+					<div class="field-value">{{AgencyTMID}}</div>
+				</div>
+				<div class="col-md-6 ">
+					<div class="field-key">Name</div>
+					<div class="field-value">{{AgencyName}}</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 field divider">
+					<div class="field-key">Website</div>
+					<div class="field-value ">{{AgencyWebsite}}</div>
+				</div>
+				<div class="col-md-6 ">
+					<div class="field-key">Address</div>
+					<div class="field-value">{{AgencyAddress ? (AgencyAddress | addressSplit) : AgencyAddress}}</div>
+				</div>			
+			</div> 
+            <div class="modal-footer" *ngIf="flag=='show'">
+                <button (click)="confirm()" type="button" class="btn btn-primary">Submit</button>
+                
+                <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
+            </div>
+    	</div>
+	</div>
+</div>

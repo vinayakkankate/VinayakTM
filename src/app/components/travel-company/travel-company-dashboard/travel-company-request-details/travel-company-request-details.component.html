@@ -1,0 +1,1906 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-doc-minus"></i>
+            <h2 class="entry-title">Request Details</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<div class="details-wrapper" *ngIf="requestData">
+
+	<div class="details-head-row">
+		<div class="request-status">
+			<!-- <span [class]="requestData.Status | requestStatusIconClass"></span> -->
+			<span *ngIf="requestData.Status ==5" [class]="'1' | requestStatusIconClass"></span>
+			<span *ngIf="requestData.Status !=5" [class]="requestData.Status | requestStatusIconClass"></span>
+			<!-- <span [class]="requestData.Status | requestStatusTextClass">{{requestData.Status | requestStatusText}}</span> -->
+			<span *ngIf="requestData.Status ==5" [class]=" '1' | requestStatusTextClass">{{ '1' | requestStatusText}}</span>
+            <!-- <span *ngIf="requestData.Status ==5 && loggedInUser.Role !=1" [class]="requestData.Status | requestStatusTextClass">{{requestData.Status | requestStatusText}}</span> -->
+            <span *ngIf="requestData.Status !=5" [class]="requestData.Status | requestStatusTextClass">{{requestData.Status | requestStatusText}}</span>
+		</div>
+		<div class="details">
+			<div class="row">
+				<div class="col-md-3 field divider">
+					<div class="field-key">Company Request Id</div>
+					<div class="field-value">{{requestData.CompanyRequestId}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<div class="field-key">Agency Request Id</div>
+					<div class="field-value">{{requestData.AgencyRequestId}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<div class="field-key">Total Cost</div>
+					<div class="field-value">$ {{requestData.TotalCost | number: '.2'}}</div>
+				</div>
+				<div class="col-md-3 field">
+					<div class="field-key">Service Fees</div>
+					<div class="field-value">$ {{requestData.ServiceFees}}</div>
+				</div>
+			</div>
+			<hr>
+
+			<div class="row">
+				<div class="col-md-3 field divider">
+					<div class="field-key">Quoted By</div>
+					<div class="field-value" *ngIf="requestData.QuotedBy">{{requestData.QuotedBy.FirstName}} {{requestData.QuotedBy.LastName}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<div class="field-key">Booked By</div>
+					<div class="field-value" *ngIf="requestData.BookedBy">{{requestData.BookedBy.FirstName}} {{requestData.BookedBy.LastName}}</div>
+				</div>
+				<!-- <div class="col-md-4 field">
+				<div class="field-key">Approved By</div>
+				<div class="field-value" *ngIf="requestData.ApprovedBy">{{requestData.ApprovedBy.FirstName}} {{requestData.ApprovedBy.LastName}}</div>
+			</div> -->
+			</div>
+			<hr *ngIf="requestData.Ratings">
+			<div *ngIf="requestData.Ratings" class="row">
+				<div class="col-md-4 field divider">
+					<div class="field-key">Ratings</div>
+					<div *ngIf="requestData.Ratings" style="padding-bottom: 10px;">
+						<span *ngFor="let i of Arr(num)" class="glyphicon glyphicon-star"></span>
+					</div>
+
+					<!-- <div class="field-value" *ngIf="requestData.QuotedBy">{{requestData.QuotedBy.FirstName}} {{requestData.QuotedBy.LastName}}</div> -->
+				</div>
+				<div class="col-md-8 field divider">
+					<div class="field-key">Feedback</div>
+					<div class="response-field-value" *ngIf="requestData.Feedback">{{requestData.Feedback}}</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row" *ngIf="requestData.PurchaseOrderPath.length>0">
+				<div class="col-md-12">
+					<div class="field-key">File(s)</div>
+					<div class="response-field-value">
+						<span *ngFor="let filePath of requestData.PurchaseOrderPath">
+							<a target="_blank" href={{filePath}}>
+								<img src="assets/images/view-pdf.png" class="view-purchase-order-file">
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- User Details -->
+	<div class="details">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-user.png" alt="">
+				<span class="details-heading">User Details</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Requester</div>
+				<div class="field-value">{{requestData.CompanyUserId.FirstName}} {{requestData.CompanyUserId.LastName}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Email-Id</div>
+				<div class="field-value">{{requestData.CompanyUserId.Email}}</div>
+			</div>
+			<div class="col-md-3 field ">
+				<div class="field-key">Company Name</div>
+				<div class="field-value">{{requestData.CompanyId.CompanyName}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<!-- <div class="field-key">Approver</div>
+				<div class="field-value" >
+					<span *ngIf="requestData.ReportingManagerId; then thenBlockRMName else elseBlockRMName"></span>
+					<ng-template #thenBlockRMName>{{requestData.ReportingManagerId.FirstName}} {{requestData.ReportingManagerId.LastName}}</ng-template>
+            		<ng-template #elseBlockRMName>Self</ng-template>
+           		</div>                 -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<!-- <a [href]="fileUrl" download="file.txt">DownloadFile</a> -->
+				 <div *ngIf="fileUrl">
+					<!-- <iframe src="{{this.fileUrl}}"></iframe> -->
+					<!-- <embed src="{{fileUrl}}" frameborder="0" width="100%" height="400px"> -->
+					
+				</div>
+				<!-- Button trigger modal -->
+				<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#viewdocx">
+					Launch demo modal
+				</button> -->
+				
+				<div class="field-key">Travel Requester’s Passport </div>
+				<div class="field-value">
+					<!-- <a (click)="viewDocument(requestData.CompanyUserId.ForeignPassportPath)">
+						{{requestData.CompanyUserId.FirstName}} {{requestData.CompanyUserId.LastName}}
+					</a> -->
+					<a (click)="viewDocument(requestData.CompanyUserId.ForeignPassportPath)" class="cursor-pointer">
+						<img src="assets/images/view-pdf.png" class="view-purchase-order-file" title="{{requestData.CompanyUserId.FirstName}} {{requestData.CompanyUserId.LastName}}">
+					</a>
+				</div>
+			</div>
+			<div class="col-md-3 field">
+				<div class="field-key">National Identification Document</div>
+				<div class="field-value">
+					<!-- <a (click)="viewDocument(requestData.CompanyUserId.NationalIdPath)" >
+						{{requestData.CompanyUserId.FirstName}} {{requestData.CompanyUserId.LastName}}
+					</a> -->
+					<a (click)="viewDocument(requestData.CompanyUserId.NationalIdPath)" class="cursor-pointer">
+						<img src="assets/images/view-pdf.png" class="view-purchase-order-file" title="{{requestData.CompanyUserId.FirstName}} {{requestData.CompanyUserId.LastName}}">
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- Flight Request Details -->
+	<div class="details" *ngIf="requestData.FlightRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-flight.png" alt="">
+				<span class="details-heading">Flight</span>
+			</div>
+			<div class="col-md-2 col-md-offset-7">
+				<button *ngIf="requestData.Status < 7  && loggedInUser.Role !=1" class="btn add-button" data-toggle="modal" data-target="#flight-modal" data-original-title>Add Quote
+					<span class="fa fa-plus"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Departure</div>
+				<div class="field-value">
+					{{requestData.FlightRequest.DepartureAirport}}, {{requestData.FlightRequest.DepartureCountryName}},
+					{{requestData.FlightRequest.DepartureCode}}
+				</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Arrival</div>
+				<div class="field-value">
+					{{requestData.FlightRequest.ArrivalAirport}},
+					{{requestData.FlightRequest.ArrivalCountryName}},
+					{{requestData.FlightRequest.ArrivalCode}}
+				</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Departing On</div>
+				<div class="field-value">{{requestData.FlightRequest.DepartureDate | date : 'dd MMM yyyy'}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Return Date</div>
+				<div class="field-value">{{requestData.FlightRequest.ReturnDate | date : 'dd MMM yyyy'}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Trip Type</div>
+				<div class="field-value">
+					{{requestData.FlightRequest.TripType | tripType}}
+				</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Flight Class</div>
+				<div class="field-value">{{requestData.FlightRequest.Class | flightClass}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Flight Type</div>
+				<div class="field-value">{{requestData.FlightRequest.FlightType | flightType}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Preferred Airline</div>
+				<div class="field-value">{{requestData.FlightRequest.PreferredAirlines}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<!-- <div class="col-md-3 field divider">
+				<div class="field-key">Membership No.</div>
+				<div class="field-value">{{requestData.FlightRequest.MembershipNo}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Rewards Claim</div>
+				<div class="field-value">{{requestData.FlightRequest.RewardsClaim}}</div>
+			</div> -->
+			<!-- <div class="col-md-3 field divider">
+				<div class="field-key">Reason For Travel</div>
+				<div class="field-value">{{requestData.FlightRequest.ReasonForTravel}}</div>
+			</div> -->
+			<div class="col-md-3 field divider">
+				<div class="field-key">Flight Requests Comments</div>
+				<div class="field-value">{{requestData.FlightRequest.FlightRequestComment}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.FlightResponse">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#flight-response-collapse" data-original-title>View Quote
+				<span *ngIf="requestData.FlightResponse.Response.length!=0" class="badge count-badge">{{requestData.FlightResponse.Response.length}}</span>
+				<span class="fa fa-expand" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="response-wrapper collapse" id="flight-response-collapse" *ngIf="requestData.FlightResponse">
+			<div class="panel-group" *ngFor="let response of requestData.FlightResponse.Response; let i = index" id="accordion-{{i}}">
+				<div class="panel panel-default">
+					<div class="panel-heading quote-list">
+						<h4 class="panel-title">
+							<a class="quote-head" data-toggle="collapse" href="#flight-collapse-{{i}}">
+								<span class="glyphicon glyphicon-triangle-bottom"></span>
+								<span class="tab-spacing">
+									{{response.DepartureDateAndTime | date:'dd MMM yyyy HH:mm'}}
+								</span>
+								<span class="tab-spacing">
+									{{response.EstimatedTime | minutesRound }}
+								</span>
+								<span class="tab-spacing">
+									{{response.Class}}
+								</span>
+								<span *ngIf="response.ReturnDepartureDateAndTime"> |
+									<span class="tab-spacing">
+										{{response.ReturnDepartureDateAndTime | date:'dd MMM yyyy HH:mm'}}
+									</span>
+									<span class="tab-spacing">
+										{{response.ReturnEstimatedTime | minutesRound }}
+									</span>
+									<span class="tab-spacing">
+										{{response.ReturnClass}}
+									</span>
+								</span>
+								<span class="tab-spacing">${{response.Cost | number: '.2'}}
+								</span>
+
+							</a>&nbsp;
+							<span *ngIf="requestData.FlightResponse.Selected==response._id" class="badge badge-selected">Selected</span>
+							<button type="button" class="close" *ngIf="requestData.Status==1" (click)="DeleteFlightQuote(response._id)">&times;</button>
+						</h4>
+					</div>
+					<div id="flight-collapse-{{i}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Departure Date & Time</div>
+									<div class="response-field-value">
+										{{response.DepartureDateAndTime | date:'dd MMM yyyy HH:mm'}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Departure Airport</div>
+									<div class="response-field-value">
+										{{response.DepartureAirport}},
+										{{response.DepartureCountryName}},
+										{{response.DepartureCode}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Arrival Airport</div>
+									<div class="response-field-value">
+										{{response.ArrivalAirport}},
+										{{response.ArrivalCountryName}},
+										{{response.ArrivalCode}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Airlines</div>
+									<div class="response-field-value">{{response.Airlines}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Arrival Date & Time</div>
+									<div class="response-field-value">{{response.ArrivalDateAndTime | date:'dd MMM yyyy HH:mm'}}</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Duration (Approx.)</div>
+									<div class="response-field-value">{{response.EstimatedTime | minutesRound }}</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Class</div>
+									<div class="response-field-value">{{response.Class}}</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Trip Type</div>
+									<div class="response-field-value">{{ArrivalCountryName==DepartureCountryName?'Domestic':'International'}}</div>
+								</div>
+							</div>
+							<hr *ngIf="response.ReturnDepartureDateAndTime">
+							<div class="row" *ngIf="response.ReturnDepartureDateAndTime">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Return Departure Date & Time</div>
+									<div class="response-field-value">
+										{{response.ReturnDepartureDateAndTime | date:'dd MMM yyyy HH:mm'}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Return Departure Airport</div>
+									<div class="response-field-value">
+										{{response.ReturnDepartureAirport}},
+										{{response.ReturnDepartureCountryName}},
+										{{response.ReturnDepartureCode}}</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Return Arrival Airport</div>
+									<div class="response-field-value">
+										{{response.ReturnArrivalAirport}},
+										{{response.ReturnArrivalCountryName}},
+										{{response.ReturnArrivalCode}}</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Airlines</div>
+									<div class="response-field-value">
+										{{response.ReturnAirlines}}</div>
+								</div>
+							</div>
+							<div class="row" *ngIf="response.ReturnDepartureDateAndTime">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Return Arrival Date & times</div>
+									<div class="response-field-value">{{response.ReturnArrivalDateAndTime | date:'dd MMM yyyy HH:mm'}}</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Duration (Approx.)</div>
+									<div class="response-field-value">{{response.ReturnEstimatedTime | minutesRound }}</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Class</div>
+									<div class="response-field-value">{{response.ReturnClass}}</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Trip Type</div>
+									<div class="response-field-value">
+										{{ReturnArrivalCountryName==ReturnDepartureCountryName?'Domestic':'International'}}
+								</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Cost</div>
+									<div class="response-field-value">
+										{{response.Cost | number: '.2'}}
+									</div>
+								</div>
+								<div class="col-md-9 response-field">
+									<div class="response-field-key">Additional Details</div>
+									<div class="response-field-value">{{response.AdditionalDetails}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row" *ngIf="requestData.FlightResponse.Selected==response._id && requestData.FlightResponse.CommentsByTL">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Team Leader comments after quote selection</div>
+									<div class="response-field-value">{{requestData.FlightResponse.CommentsByTL}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Hotel Request Details -->
+	<div class="details" *ngIf="requestData.AccomodationRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-hotel.png" alt="">
+				<span class="details-heading">Hotel</span>
+			</div>
+			<div class="col-md-2 col-md-offset-7">
+				<button *ngIf="requestData.Status < 7 && loggedInUser.Role !=1" class="btn add-button" data-toggle="modal" data-target="#hotel-modal" data-original-title>Add Quote
+					<span class="fa fa-plus"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">City</div>
+				<div class="field-value">{{requestData.AccomodationRequest.City}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Preferred Place</div>
+				<div class="field-value">{{requestData.AccomodationRequest.PreferredPlace}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Check-In</div>
+				<div class="field-value">{{requestData.AccomodationRequest.CheckIn | date : 'dd MMM yyyy'}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Check-Out</div>
+				<div class="field-value">{{requestData.AccomodationRequest.CheckOut | date : 'dd MMM yyyy'}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12 field ">
+				<div class="field-key">Hotel Request Comment </div>
+				<div class="field-value">{{requestData.AccomodationRequest.HotelRequestComment}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.AccomodationResponse">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#hotel-response-collapse" data-original-title>View Quote
+				<span *ngIf="requestData.AccomodationResponse.Response.length!=0" class="badge count-badge">{{requestData.AccomodationResponse.Response.length}}</span>
+				<span class="fa fa-expand" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="response-wrapper collapse" id="hotel-response-collapse" *ngIf="requestData.AccomodationResponse">
+			<div class="panel-group" *ngFor="let response of requestData.AccomodationResponse.Response; let j = index" id="accordion-{{j}}">
+				<div class="panel panel-default">
+					<div class="panel-heading quote-list">
+						<h4 class="panel-title">
+							<a class="quote-head" data-toggle="collapse" href="#hotel-collapse-{{j}}">
+								<span class="glyphicon glyphicon-triangle-bottom"></span>
+								<span class="tab-spacing">{{response.HotelCity}}</span>
+								<span class="tab-spacing">{{response.CheckInDateAndTime | date:'dd MMM yyyy HH:mm'}}</span>
+								<span class="tab-spacing">{{response.Duration}} Day(s)</span>
+								<span class="tab-spacing">{{response.HotelName}}</span>
+								<span class="tab-spacing">${{response.Cost | number: '.2'}}</span>
+							</a>
+							&nbsp;
+							<span *ngIf="requestData.AccomodationResponse.Selected==response._id" class="badge badge-selected">Selected</span>
+							<button type="button" class="close" *ngIf="requestData.Status==1" (click)="DeleteHotelQuote(response._id)">&times;</button>
+						</h4>
+					</div>
+					<div id="hotel-collapse-{{j}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Check-In Date & Time</div>
+									<div class="response-field-value">
+										{{response.CheckInDateAndTime | date:'dd MMM yyyy HH:mm'}}
+									</div>
+								</div>
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Check-Out Date & Time</div>
+									<div class="response-field-value">{{response.CheckOutDateAndTime | date:'dd MMM yyyy HH:mm'}}</div>
+								</div>
+								<div class="col-md-4 response-field">
+									<div class="response-field-key">No. of Day(s) </div>
+									<div class="response-field-value">{{response.Duration}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Hotel</div>
+									<div class="response-field-value">{{response.HotelName}}</div>
+								</div>
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Address</div>
+									<div class="response-field-value">
+										{{response.HotelAddress}}
+									</div>
+								</div>
+								<div class="col-md-4 response-field">
+									<div class="response-field-key">Map Link</div>
+									<div class="response-field-value">
+										<a target="_blank" href="{{response.HotelMapUrl}}">{{response.HotelMapUrl}}</a>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Ratings</div>
+									<div class="response-field-value">{{response.HotelRating}}
+										<span *ngIf="response.HotelRating">Star</span>
+									</div>
+								</div>
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Coordinates</div>
+									<div class="response-field-value">{{response.HotelLatLng}}</div>
+								</div>
+								<div class="col-md-4 response-field">
+									<div class="response-field-key">Website</div>
+									<div class="response-field-value">
+										<a target="_blank" href="{{response.HotelWebsite}}">{{response.HotelWebsite}}</a>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-4 response-field divider">
+									<div class="response-field-key">Cost</div>
+									<div class="response-field-value">${{response.Cost | number: '.2'}}</div>
+								</div>
+								<div class="col-md-8 response-field">
+									<div class="response-field-key">Additional Details</div>
+									<div class="response-field-value">{{response.AdditionalDetails}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row" *ngIf="requestData.AccomodationResponse.Selected==response._id && requestData.AccomodationResponse.CommentsByTL">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Team Leader comments after quote selection</div>
+									<div class="response-field-value">{{requestData.AccomodationResponse.CommentsByTL}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Car Hire Details -->
+	<div class="details" *ngIf="requestData.CarRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-car.png" alt="">
+				<span class="details-heading">Car Hire</span>
+			</div>
+			<div class="col-md-2 col-md-offset-7">
+				<button *ngIf="requestData.Status < 7 && loggedInUser.Role !=1" class="btn add-button" data-toggle="modal" data-target="#car-hire-modal" data-original-title>Add Quote
+					<span class="fa fa-plus"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Pick Up From</div>
+				<div class="field-value">{{requestData.CarRequest.PickupFromLocation}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Pick Up Date And Time</div>
+				<div class="field-value">{{requestData.CarRequest.PickupDate | date : 'dd MMM yyyy HH:mm'}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Drop Off To</div>
+				<div class="field-value">{{requestData.CarRequest.DropoffTo}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Drop Off Date And Time</div>
+				<div class="field-value">{{requestData.CarRequest.DropoffDate | date : 'dd MMM yyyy HH:mm'}}</div>
+			</div>
+
+		</div>
+		<hr>
+		<div class="row">
+			<!-- <div class="col-md-3 field divider">
+				<div class="field-key">Car Type</div>
+				<div class="field-value">{{requestData.CarRequest.CarType | cars}}</div>
+			</div> -->
+			<div class="col-md-3 field divider">
+				<div class="field-key">No of People</div>
+				<div class="field-value">{{requestData.CarRequest.NumberOfPeople}}</div>
+			</div>
+			<div class="col-md-9 field divider">
+				<div class="field-key">Car Request Comment</div>
+				<div class="field-value">{{requestData.CarRequest.CarRequestComment}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.CarResponse">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#car-response-collapse" data-original-title>View Quote
+				<span *ngIf="requestData.CarResponse.Response.length!=0" class="badge count-badge">{{requestData.CarResponse.Response.length}}</span>
+				<span class="fa fa-expand" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="response-wrapper collapse" id="car-response-collapse" *ngIf="requestData.CarResponse">
+			<div class="panel-group" *ngFor="let response of requestData.CarResponse.Response; let k=index" id="accordion-{{k}}">
+				<div class="panel panel-default">
+					<div class="panel-heading quote-list">
+						<h4 class="panel-title">
+							<a class="quote-head" data-toggle="collapse" href="#car-collapse-{{k}}">
+								<span class="glyphicon glyphicon-triangle-bottom"></span>
+								<span class="tab-spacing">
+									{{response.ServiceProvider}}
+								</span>
+								<span class="tab-spacing">
+									{{response.TransportationType}}
+								</span>
+								<span class="tab-spacing">
+									${{response.Cost | number: '.2'}}
+								</span>
+							</a>&nbsp;
+							<span *ngIf="requestData.CarResponse.Selected==response._id" class="badge badge-selected">Selected</span>
+							<button type="button" class="close" *ngIf="requestData.Status==1" (click)="DeleteCarHireQuote(response._id)">&times;</button>
+						</h4>
+					</div>
+					<div id="car-collapse-{{k}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Service Provider</div>
+									<div class="response-field-value">
+										{{response.ServiceProvider}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Vehicle Type</div>
+									<div class="response-field-value">{{response.TransportationType}}</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Distance </div>
+									<div class="response-field-value">{{response.Distance}}
+										<span *ngIf="response.Distance">KM</span>
+									</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Cost</div>
+									<div class="response-field-value">${{response.Cost | number: '.2'}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Additional Details</div>
+									<div class="response-field-value">{{response.AdditionalDetails}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row" *ngIf="requestData.CarResponse.Selected==response._id && requestData.CarResponse.CommentsByTL">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Team Leader comments after quote selection</div>
+									<div class="response-field-value">{{requestData.CarResponse.CommentsByTL}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+
+	<!-- Transfer Details -->
+	<div class="details" *ngIf="requestData.TransferRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-transfer.png" alt="">
+				<span class="details-heading">Transfer</span>
+			</div>
+			<div class="col-md-2 col-md-offset-7">
+				<button *ngIf="requestData.Status < 7 && loggedInUser.Role !=1" class="btn add-button" data-toggle="modal" data-target="#transfer-modal" data-original-title >Add Quote
+					<span class="fa fa-plus"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Pick Up From</div>
+				<div class="field-value">{{requestData.TransferRequest.PickupFromLocation}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Pick Up Date And Time</div>
+				<div class="field-value">{{requestData.TransferRequest.PickupDate | date : 'dd MMM yyyy HH:mm'}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Drop Off To</div>
+				<div class="field-value">{{requestData.TransferRequest.DropoffTo}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Drop Off Date And Time</div>
+				<div class="field-value">{{requestData.TransferRequest.DropoffDate | date : 'dd MMM yyyy HH:mm'}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Transportation Type</div>
+				<div class="field-value">{{requestData.TransferRequest.TransportationType | transportations}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Transfer Request Comment</div>
+				<div class="field-value">{{requestData.TransferRequest.TransferRequestComment}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">No. of People</div>
+				<div class="field-value">{{requestData.TransferRequest.NumberOfPeople}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.TransferResponse">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#transfer-response-collapse" data-original-title>View Quote
+				<span *ngIf="requestData.TransferResponse.Response.length!=0" class="badge count-badge">{{requestData.TransferResponse.Response.length}}</span>
+				<span class="fa fa-expand" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="response-wrapper collapse" id="transfer-response-collapse" *ngIf="requestData.TransferResponse">
+			<div class="panel-group" *ngFor="let response of requestData.TransferResponse.Response; let l=index" id="accordion-{{l}}">
+				<div class="panel panel-default">
+					<div class="panel-heading quote-list">
+						<h4 class="panel-title">
+							<a class="quote-head" data-toggle="collapse" href="#transfer-collapse-{{l}}">
+								<span class="glyphicon glyphicon-triangle-bottom"></span>
+								<span class="tab-spacing">
+									{{response.ServiceProvider}}
+								</span>
+								<span class="tab-spacing">
+									{{response.TransportationType}}
+								</span>
+								<span class="tab-spacing">
+									${{response.Cost | number: '.2'}}
+								</span>
+							</a>&nbsp;
+							<span *ngIf="requestData.TransferResponse.Selected==response._id" class="badge badge-selected">Selected</span>
+							<button type="button" class="close" *ngIf="requestData.Status==1" (click)="DeleteTransferQuote(response._id)">&times;</button>
+						</h4>
+					</div>
+					<div id="transfer-collapse-{{l}}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Service Provider</div>
+									<div class="response-field-value">
+										{{response.ServiceProvider}}
+									</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Vehicle Type</div>
+									<div class="response-field-value">{{response.TransportationType}}</div>
+								</div>
+								<div class="col-md-3 response-field divider">
+									<div class="response-field-key">Distance </div>
+									<div class="response-field-value">{{response.Distance}}
+										<span *ngIf="response.Distance">KM</span>
+									</div>
+								</div>
+								<div class="col-md-3 response-field">
+									<div class="response-field-key">Cost</div>
+									<div class="response-field-value">${{response.Cost | number: '.2'}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Additional Details</div>
+									<div class="response-field-value">{{response.AdditionalDetails}}</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row" *ngIf="requestData.TransferResponse.Selected==response._id && requestData.TransferResponse.CommentsByTL">
+								<div class="col-md-12 response-field">
+									<div class="response-field-key">Team Leader comments after quote selection</div>
+									<div class="response-field-value">{{requestData.TransferResponse.CommentsByTL}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Service Fee -->
+	<div class="details" *ngIf="requestData.Status < 7 && loggedInUser.Role !=1">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-user.png" alt="">
+				<span class="details-heading">Service Fee</span>
+			</div>
+
+			<div class="col-md-3 col-md-offset-6">
+				<div class="col-md-12">
+					<input #servicefee="ngModel" [(ngModel)]="ServiceFees" name="Servicefee" id="servicefeetext" type="number" class="form-control service-fee-text full-width" placeholder="Enter Service Fee" pattern="[0-9]+(\\.[0-9][0-9]?)?" required />
+
+					<span class="error-message" *ngIf="servicefee.errors && (servicefee.dirty || servicefee.touched)">
+						<span [hidden]="!servicefee.errors.required">Service fee is required</span>
+						<span [hidden]="!servicefee.errors.pattern">Invalid Input</span>
+					</span>
+				</div>
+				<!-- <div class="col-md-3">
+					<button class="btn add-button">Add Fee
+						<span class="fa fa-plus"></span>
+					</button>
+				</div> -->
+			</div>
+		</div>
+	</div>
+
+	<div class="details" *ngIf="loggedInUser.Role !=1">
+		<div class="row details-head-row">
+			<div class="col-md-12" style="text-align:center">
+				<a *ngIf="requestData.Status == 5" (click)="RejectQuotes()" class="button btn-large dark-blue2">Reject</a>
+				<a *ngIf="requestData.Status == 5" (click)="SubmitQuotes()" class="button btn-large dark-blue2">Submit All Quotes</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- Flight Details Modal -->
+<div class="modal fade" id="flight-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<!-- <h4 class="panel-title" id="contactLabel">
+					<span class="glyphicon glyphicon-plane"></span> Flight Details</h4> -->
+				<div class="panel-title" id="contactLabel">
+						<h4 class="panel-title" id="contactLabel">
+								<span class="glyphicon glyphicon-plane"></span> Flight Details
+						<span class="col-md-2 fright vertical-divider" *ngIf="requestData">{{requestData.CompanyRequestId}}</span>
+						<span class="col-md-3 fright txt-right" *ngIf="requestData">{{requestData.CompanyId.CompanyName }}</span>
+						</h4> 
+				</div>
+					
+			</div>
+			<form #flightResponseForm="ngForm">
+				<div class="modal-body" style="padding: 5px;">
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="departure-date-time">Departure Date:</label>
+								<input placeholder="Select Date & Time" name="departure-date-time" id="departure-date-time" class="form-control picker-input"
+								 #flightDepartureDate="ngModel" [mode]="'dropdown'" dateTimePicker [minMoment]="currentDateTime" [autoClose]="true" [(ngModel)]="DepartureDateAndTime"
+								 [value]="DepartureDateAndTime | date:'dd MMM yyyy HH:mm'" required autofocus readonly (ngModelChange)="ondepartureDateChange()">
+
+								<span *ngIf="flightDepartureDate.errors && (flightDepartureDate.dirty || flightDepartureDate.touched)" class="error-message">
+									<span [hidden]="!flightDepartureDate.errors.required">
+										Deprture date is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="departure-airport">Departure Airport :</label>
+								<ng2-completer
+                                    #departure="ngModel"
+                                    [(ngModel)]="DepartureFrom"
+                                    class="form-control cc"
+                                    (selected)="onSelectDepartureFrom($event)"
+                                    [datasource]="dataServiceIataList"
+                                    [minSearchLength]="3"
+                                    name="iataList"
+                                    id="iataList"
+                                    inputClass="full-width form-control"
+                                    placeholder="Search Airport">
+                                </ng2-completer>
+                                <span class="error-message"
+                                    *ngIf="departure.errors && (departure.dirty || departure.touched)">
+                                    Invalid Selection of Departure Airport
+                                </span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="arrival-airport">Arrival Airport :</label>
+								<ng2-completer
+                                    #arrivalTo="ngModel"
+                                    [(ngModel)]="ArrivalTo"
+                                    class="form-control cc"
+                                    (selected)="onSelectArrivalTo($event)"
+                                    [datasource]="dataServiceIataList"
+                                    [minSearchLength]="3"
+                                    name="iataList2"
+                                    id="iataList2"
+                                    inputClass="full-width form-control"
+                                    placeholder="Search Airport">
+                                </ng2-completer>
+                                <span class="error-message"
+                                    *ngIf="arrivalTo.errors && (arrivalTo.dirty || arrivalTo.touched)">
+                                    Invalid Selection of Arrival Airport
+                                </span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="departure-airport">Departure Airport :</label>
+								<input type="text" [(ngModel)]="DepartureAirport" maxlength="30" #departureAirport="ngModel" class="form-control" name="departure-airport"
+								 id="departure-airport" placeholder="Enter Airport Name" required />
+								<span *ngIf="departureAirport.errors && (departureAirport.dirty || departureAirport.touched)" class="error-message">
+									<span [hidden]="!departureAirport.errors.required">
+										Departure airport is required!
+									</span>
+									<span [hidden]="!departureAirport.errors.maxlength">
+										Departure airport cannot be more than 30 characters long.
+									</span>
+								</span>
+							</div>
+						</div> -->
+						<!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="departure-city">Departure City :</label>
+								<input type="text" [(ngModel)]="DepartureCity" maxlength="30" #departureCity="ngModel" class="form-control" name="departure-city"
+								 id="departure-city" placeholder="Enter City" required />
+								<span *ngIf="departureCity.errors && (departureCity.dirty || departureCity.touched)" class="error-message">
+									<span [hidden]="!departureCity.errors.required">
+										Departure city is required!
+									</span>
+									<span [hidden]="!departureCity.errors.maxlength">
+										Departure city cannot be more than 30 characters long.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="arraival-date-time">Arrival Date:</label>
+								<input [disabled]="!DepartureDateAndTime" placeholder="Select Arriaval Date & Time" name="arraival-date-time" id="arraival-date-time"
+								 class="form-control picker-input" [mode]="'dropdown'" dateTimePicker  [autoClose]="true" [value]="ArrivalDateAndTime | date:'dd MMM yyyy HH:mm'"
+								 [minMoment]="DepartureDateAndTime" [(ngModel)]="ArrivalDateAndTime" #flightArrivalDate="ngModel" required autofocus
+								 readonly (ngModelChange)="checkSameDate()">
+								<span *ngIf="flightArrivalDate.errors && (flightArrivalDate.dirty || flightArrivalDate.touched)" class="error-message">
+									<span [hidden]="!flightArrivalDate.errors.required">
+										Arrival date is required!
+									</span>
+								</span>
+								<span [hidden]="!isSameTimeandDate" class="error-message">
+									DepartureDateAndTime & ArrivalDateAndTime is should not be same!
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="airlines">Flight Airlines:</label>
+								<input type="text" [(ngModel)]="Airlines" maxlength="30" #flightAirlines="ngModel" class="form-control" name="airlines" id="airlines"
+								 placeholder="Enter Airlines" required />
+								<span *ngIf="flightAirlines.errors && (flightAirlines.dirty || flightAirlines.touched)" class="error-message">
+									<span [hidden]="!flightAirlines.errors.required">
+										Airlines is required!
+									</span>
+									<span [hidden]="!flightAirlines.errors.maxlength">
+										Airlines cannot be more than 30 characters long.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="class">Flight Class:</label>
+								<select id="class" name="class" class="form-control" [(ngModel)]="Class" #flightClass="ngModel" required>
+									<option disabled selected> Select Class
+									</option>
+									<option *ngFor="let class of listedClasses" [value]="class.name">{{class.name}}</option>
+									<!-- <option *ngFor="let class of listedClasses" [value]="class">{{class}}</option> -->
+								</select>
+								<span *ngIf="flightClass.errors && (flightClass.dirty || flightClass.touched)" class="error-message">
+									<span [hidden]="!flightClass.errors.required">
+										Class is required!
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-departure-date-time">Return Departure Date:</label>
+								<input [disabled]="!ArrivalDateAndTime || requestData.FlightRequest.TripType == 1" placeholder="Select Date & Time" name="return-departure-date-time" id="return-departure-date-time"
+								 class="form-control picker-input" [mode]="'dropdown'" dateTimePicker  [autoClose]="true" [value]="ReturnDepartureDateAndTime | date:'dd MMM yyyy HH:mm'"
+								 [minMoment]="ArrivalDateAndTime" [(ngModel)]="ReturnDepartureDateAndTime" #flightReturnDepartureDate="ngModel" autofocus
+								 readonly >
+								<span *ngIf="flightReturnDepartureDate.errors && (flightReturnDepartureDate.dirty || flightReturnDepartureDate.touched)"
+								 class="error-message">
+									<span [hidden]="!flightReturnDepartureDate.errors.required">
+										Return deprture date is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-departure-airport">Return Departure Airport :</label>
+								<input [disabled]="!ReturnDepartureDateAndTime" type="text" [(ngModel)]="ReturnDepartureAirport" maxlength="30" #returnDepartureAirport="ngModel"
+								 class="form-control" name="return-departure-airport" id="return-departure-airport" placeholder="Enter Airport Name"
+								 required />
+								<span *ngIf="returnDepartureAirport.errors && (returnDepartureAirport.dirty || returnDepartureAirport.touched)" class="error-message">
+									<span [hidden]="!returnDepartureAirport.errors.required">
+										Return Departure airport is required!
+									</span>
+									<span [hidden]="!returnDepartureAirport.errors.maxlength">
+										Return Departure airport cannot be more than 30 characters long.
+									</span>
+								</span>
+							</div>
+						</div> -->
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-departure-airport">Return Departure Airport :</label>
+								<ng2-completer
+									[disabled]="!ReturnDepartureDateAndTime || requestData.FlightRequest.TripType ==1"
+                                    #departure="ngModel"
+                                    [(ngModel)]="ReturnDepartureFrom"
+                                    class="form-control cc"
+                                    (selected)="onSelectReturnDepartureFrom($event)"
+                                    [datasource]="dataServiceIataList"
+                                    [minSearchLength]="3"
+                                    name="iataList3"
+                                    id="iataList3"
+                                    inputClass="full-width form-control"
+                                    placeholder="Search Airport">
+                                </ng2-completer>
+                                <span class="error-message"
+                                    *ngIf="departure.errors && (departure.dirty || departure.touched)">
+                                    Invalid Selection Airport
+                                </span>
+							</div>
+						</div>
+
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-arrival-airport">Return Arrival Airport :</label>
+								<ng2-completer
+									[disabled]="!ReturnDepartureDateAndTime || requestData.FlightRequest.TripType ==1"
+                                    #arrivalTo="ngModel"
+                                    [(ngModel)]="ReturnArrivalTo"
+                                    class="form-control cc"
+                                    (selected)="onSelectReturnArrivalTo($event)"
+                                    [datasource]="dataServiceIataList"
+                                    [minSearchLength]="3"
+                                    name="iataList4"
+                                    id="iataList4"
+                                    inputClass="full-width form-control"
+                                    placeholder="Search Airport">
+                                </ng2-completer>
+                                <span class="error-message"
+                                    *ngIf="arrivalTo.errors && (arrivalTo.dirty || arrivalTo.touched)">
+                                    Invalid Selection of Arrival Airport
+                                </span>
+							</div>
+						</div>
+
+
+						<!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="departure-city">Return Departure City :</label>
+								<input [disabled]="!ReturnDepartureDateAndTime" type="text" [(ngModel)]="ReturnDepartureCity" maxlength="30" #returnDepartureCity="ngModel"
+								 class="form-control" name="return-departure-city" id="return-departure-city" placeholder="Enter City" required />
+								<span *ngIf="returnDepartureCity.errors && (returnDepartureCity.dirty || returnDepartureCity.touched)" class="error-message">
+									<span [hidden]="!returnDepartureCity.errors.required">
+										Return Departure city is required!
+									</span>
+									<span [hidden]="!returnDepartureCity.errors.maxlength">
+										Return Departure city cannot be more than 30 characters long.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-arrival-date-time">Return Arrival Date:</label>
+								<input [disabled]="!ReturnDepartureDateAndTime || requestData.FlightRequest.TripType ==1" placeholder="Select Date & Time" name="return-arrival-date-time" id="return-arrival-date-time"
+								 class="form-control picker-input" [mode]="'dropdown'" dateTimePicker  [autoClose]="true" [value]="ReturnArrivalDateAndTime | date:'dd MMM yyyy HH:mm'"
+								 [minMoment]="ReturnDepartureDateAndTime" [(ngModel)]="ReturnArrivalDateAndTime" #flightReturnArrivalDate="ngModel"
+								 required autofocus readonly (ngModelChange)="checkReturnSameDate()">
+								<span *ngIf="flightReturnArrivalDate.errors && (flightReturnArrivalDate.dirty || flightReturnArrivalDate.touched)" class="error-message">
+									<span [hidden]="!flightReturnArrivalDate.errors.required">
+										Return arrival date is required!
+									</span>
+								</span>
+								<span [hidden]="!isReturnSameTimeandDate" class="error-message">
+									DepartureDateAndTime & ArrivalDateAndTime is should not be same!
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="airlines">Return Flight Airlines:</label>
+								<input [disabled]="!ReturnDepartureDateAndTime || requestData.FlightRequest.TripType ==1" [(ngModel)]="ReturnAirlines" class="form-control" maxlength="30" #flightReturnAirlines="ngModel"
+								 name="return-airlines" id="return-airlines" placeholder="Enter Return Airlines" type="text" required/>
+								<span *ngIf="flightReturnAirlines.errors && (flightReturnAirlines.dirty || flightReturnAirlines.touched)" class="error-message">
+									<span [hidden]="!flightReturnAirlines.errors.required">
+										Return Airlines is required!
+									</span>
+									<span [hidden]="!flightReturnAirlines.errors.maxlength">
+										Return Airlines cannot be more than 30 characters long.
+									</span>
+									<!-- <span [hidden]="!flightAirlines.errors.pattern">
+                            			Airlines can only be alphabets.
+                            		</span> -->
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="return-class">Return Flight Class:</label>
+								<select [disabled]="!ReturnDepartureDateAndTime || requestData.FlightRequest.TripType ==1" #flightReturnClass="ngModel" name="return-class" id="return-class" class="form-control"
+								 [(ngModel)]="ReturnClass" required>
+									<option disabled selected> Select Class
+									</option>
+									<option *ngFor="let class of listedClasses" [value]="class.name">{{class.name}}</option>
+								</select>
+								<span *ngIf="flightReturnClass.errors && (flightReturnClass.dirty || flightReturnClass.touched)" class="error-message">
+									<span [hidden]="!flightReturnClass.errors.required">
+										Return Class is required!
+									</span>
+									<!-- <span [hidden]="!flightAirlines.errors.pattern">
+                            			Airlines can only be alphabets.
+                            		</span> -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="class">Currency:</label>
+								<select id="class" name="class" class="form-control" [(ngModel)]="Currency" #currency="ngModel" required>
+									<option disabled selected> Select Currency
+									</option>
+									<option *ngFor="let currency of listedCurrency" [value]="currency.symbol">{{currency.symbol}}</option>
+									<!-- <option *ngFor="let class of listedClasses" [value]="class">{{class}}</option> -->
+								</select>
+								<span *ngIf="currency.errors && (currency.dirty || currency.touched)" class="error-message">
+									<span [hidden]="!currency.errors.required">
+										currency is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="flight-Cost">Cost (e.g. 220):</label>
+								<input [(ngModel)]="FlightCost" class="form-control" pattern="^[1-9]\d*$" maxlength="5" #flightCost="ngModel" name="flight-Cost"
+								 id="flight-Cost" placeholder="Enter Cost" type="text" required  [disabled]="Currency == undefined || Currency ==''"/>
+								<span *ngIf="flightCost.errors && (flightCost.dirty || flightCost.touched)" class="error-message">
+									<span [hidden]="!flightCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!flightCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!flightCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="flight-additional-details">Additional Details (Max 250 chars.):</label>
+								<textarea [(ngModel)]="FlightAdditionalDetails" #flightAdditionalDetails="ngModel" maxlength="250" class="form-control" name="flight-additional-details"
+								 id="flight-additional-details" placeholder="Any Additional Details" rows="2" type="text"></textarea>
+								<span *ngIf="flightAdditionalDetails.errors && (flightAdditionalDetails.dirty || flightAdditionalDetails.touched)" class="error-message">
+									<span [hidden]="!flightAdditionalDetails.errors.maxlength">
+										Flight additional details cannot be more than 250 characters long.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<dx-data-grid id="gridContainerloyal"
+					[dataSource]="orders"
+					[allowColumnResizing]="false"
+					[allowColumnReordering]="false"
+					[showBorders]="true"
+					>
+
+					<dxo-selection mode="single"></dxo-selection>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxo-group-panel [visible]="false"></dxo-group-panel>
+					<dxo-state-storing [enabled]="false" type="localStorage" storageKey="storage"></dxo-state-storing>
+					<!-- <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager> -->
+
+					<dxi-column dataField="Airline" caption="Airline"></dxi-column>
+					<dxi-column dataField="LoyaltyProgram" caption="Loyalty Program"></dxi-column>
+					<dxi-column dataField="AccounmtMemnum" caption="Account/Membership number"></dxi-column>
+					<dxi-column dataField="loyaltytype" caption="loyalty program" [groupIndex]="0"></dxi-column>
+			    </dx-data-grid>
+				<div class="panel-footer" style="margin-bottom:-14px;">
+					<button [disabled]="!flightResponseForm.form.valid || isSameTimeandDate || isReturnSameTimeandDate" (click)="sendFlightResponse(flightResponseForm)" type="submit" class="btn btn-success">
+						<span class="glyphicon glyphicon-ok"></span> SUBMIT & ADD NEW</button>
+
+					<button type="reset" class="btn btn-default">
+						<span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+					<button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Hotel Details Modal -->
+<div class="modal fade" id="hotel-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<!-- <h4 class="panel-title" id="contactLabel">
+					<span class="glyphicon glyphicon-home"></span> Hotel Details</h4> -->
+				<div class="panel-title" id="contactLabel">
+					<h4 class="panel-title" id="contactLabel">
+							<span class="glyphicon glyphicon-home"></span> Hotel Details
+					<span class="col-md-3 fright vertical-divider" *ngIf="requestData">{{requestData.CompanyRequestId}}</span>
+					<span class="col-md-4 fright txt-right" *ngIf="requestData">{{requestData.CompanyId.CompanyName }}</span>
+					</h4> 
+				</div>
+			</div>
+			<form #hotelResponseForm="ngForm">
+				<div class="modal-body" style="padding: 5px;">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="chekc-in-date-time">Check-In Date & Time :</label>
+								<input placeholder="Check-In Date & Time" name="check-in-date-time" id="check-in-date-time" class="form-control picker-input"
+								 [mode]="'dropdown'" dateTimePicker [value]="CheckInDateAndTime | date:'dd MMM yyyy HH:mm'" [autoClose]="true" [minMoment]="currentDateTime"
+								 [(ngModel)]="CheckInDateAndTime" #checkInDate="ngModel" required autofocus readonly (ngModelChange)="onCheckInDateChange()">
+								<span *ngIf="checkInDate.errors && (checkInDate.dirty || checkInDate.touched)" class="error-message">
+									<span [hidden]="!checkInDate.errors.required">
+										Check-in date & time is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="chekc-out-date-time">Check-Out Date & Time :</label>
+								<input [disabled]="!CheckInDateAndTime" placeholder="Check-Out Date & Time" name="chekc-out-date-time" id="chekc-out-date-time"
+								 class="form-control picker-input" [mode]="'dropdown'" dateTimePicker  [autoClose]="true" [value]="CheckOutDateAndTime | date:'dd MMM yyyy HH:mm'"
+								 [minMoment]="CheckInDateAndTime" [(ngModel)]="CheckOutDateAndTime" #checkOutDate="ngModel" (ngModelChange)="onCheckOutDateChange()" required autofocus readonly>
+								<span *ngIf="checkOutDate.errors && (checkOutDate.dirty || checkOutDate.touched)" class="error-message">
+									<span [hidden]="!checkOutDate.errors.required">
+										Check-out date & time is required!
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="Duration">Total Duration (e.g. 3):</label>
+								<input [(ngModel)]="Duration" class="form-control" maxlength="3" pattern="^[1-9]\d*$" #duration="ngModel" name="Duration"
+								 id="Duration" placeholder="Duration in Day(s)" type="text" required="" [disabled]="true" />
+								<span *ngIf="duration.errors && (duration.dirty || duration.touched)" class="error-message">
+									<span [hidden]="!duration.errors.required">
+										Duration is required!
+									</span>
+									<span [hidden]="!duration.errors.maxlength">
+										Duration cannot be more than 3 digit long.
+									</span>
+									<span [hidden]="!duration.errors.pattern">
+										Invalid Duration.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="class">Currency:</label>
+								<select id="class" name="class" class="form-control" [(ngModel)]="hotelCurrency" #currency="ngModel" required>
+									<option disabled selected> Select Currency
+									</option>
+									<option *ngFor="let currency of listedCurrency" [value]="currency.symbol">{{currency.symbol}}</option>
+									<!-- <option *ngFor="let class of listedClasses" [value]="class">{{class}}</option> -->
+								</select>
+								<span *ngIf="currency.errors && (currency.dirty || currency.touched)" class="error-message">
+									<span [hidden]="!currency.errors.required">
+										currency is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-Cost">Hotel Cost (e.g. 220):</label>
+								<input [(ngModel)]="HotelCost" pattern="^[1-9]\d*$" maxlength="5" #hotelCost="ngModel" class="form-control" name="hotel-Cost"
+								 id="hotel-Cost" placeholder="Enter Cost in USD ($)" type="text" required />
+								<span *ngIf="hotelCost.errors && (hotelCost.dirty || hotelCost.touched)" class="error-message">
+									<span [hidden]="!hotelCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!hotelCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!hotelCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-Cost">Hotel Cost (e.g. 220):</label>
+								<input [(ngModel)]="HotelCost" pattern="^[1-9]\d*$" maxlength="5" #hotelCost="ngModel" class="form-control" name="hotel-Cost"
+									id="hotel-Cost" placeholder="Enter Cost" type="text" required [disabled]="hotelCurrency == undefined || hotelCurrency ==''" />
+								<span *ngIf="hotelCost.errors && (hotelCost.dirty || hotelCost.touched)" class="error-message">
+									<span [hidden]="!hotelCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!hotelCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!hotelCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div> 
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-details">Search Hotel</label>
+								<input [(ngModel)]="HotelSearch" #hotelSearch="ngModel" id="autocomplete" class="form-control" name="hotel-details" id="hotel-details"
+								 placeholder="Search Hotel" type="text" (city)="HotelCity=$event" (setAddress)="getHotelAddress($event)" ng2-google-place-autocomplete
+								 required/>
+								<span *ngIf="hotelSearch.errors && (hotelSearch.dirty || hotelSearch.touched)" class="error-message">
+									<span [hidden]="!hotelSearch.errors.required">
+										Please Search Hotels
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-name">Hotel Name :</label>
+								<input [(ngModel)]="HotelName" class="form-control" name="hotel-name" id="hotel-name" placeholder="Hotel Name" type="text"
+								 readonly />
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-name">Hotel Name :</label>
+								<input [(ngModel)]="HotelName" class="form-control" name="hotel-name" id="hotel-name" placeholder="Hotel Name" type="text"
+									readonly />
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-address">Hotel Address :</label>
+								<input [(ngModel)]="HotelAddress" class="form-control" name="hotel-address" id="hotel-address" placeholder="Hotel Address"
+								 type="text" readonly />
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-website">Hotel Website :</label>
+								<input [(ngModel)]="HotelWebsite" class="form-control" name="hotel-website" id="hotel-website" placeholder="Hotel Website"
+								 type="text" readonly />
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-website">Hotel Website :</label>
+								<input [(ngModel)]="HotelWebsite" class="form-control" name="hotel-website" id="hotel-website" placeholder="Hotel Website"
+									type="text" readonly />
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-map-url">Hotel GMap URL :</label>
+								<input [(ngModel)]="HotelMapUrl" class="form-control" name="hotel-map-url" id="hotel-map-url" placeholder="Hotel Google Map URL"
+								 type="text" readonly />
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-rating">Hotel Ratings :</label>
+								<input [(ngModel)]="HotelRating" class="form-control" name="hotel-rating" id="hotel-rating" placeholder="Hotel Rating" type="text"
+								 readonly />
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-rating">Hotel Ratings :</label>
+								<input [(ngModel)]="HotelRating" class="form-control" name="hotel-rating" id="hotel-rating" placeholder="Hotel Rating" type="text"
+									readonly />
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-additional-details">Additional Details (Max 250 chars.):</label>
+								<textarea [(ngModel)]="HotelAdditionalDetails" #hotelAdditionalDetails="ngModel" maxlength="250" class="form-control" name="hotel-additional-details"
+								 id="hotel-additional-details" placeholder="Any Additional Details" rows="2" type="text"></textarea>
+								<span *ngIf="hotelAdditionalDetails.errors && (hotelAdditionalDetails.dirty || hotelAdditionalDetails.touched)" class="error-message">
+									<span [hidden]="!hotelAdditionalDetails.errors.maxlength">
+										Hotel additional details cannot be more than 250 characters long.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<dx-data-grid id="gridContainerloyal"
+					[dataSource]="orders"
+					[allowColumnResizing]="false"
+					[allowColumnReordering]="false"
+					[showBorders]="true"
+					>
+
+					<dxo-selection mode="single"></dxo-selection>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxo-group-panel [visible]="false"></dxo-group-panel>
+					<dxo-state-storing [enabled]="false" type="localStorage" storageKey="storage"></dxo-state-storing>
+					<!-- <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager> -->
+
+					<dxi-column dataField="Airline" caption="Hotel Group"></dxi-column>
+					<dxi-column dataField="LoyaltyProgram" caption="Loyalty Program"></dxi-column>
+					<dxi-column dataField="AccounmtMemnum" caption="Account/Membership number"></dxi-column>
+					<dxi-column dataField="loyaltytype" caption="loyalty program" [groupIndex]="0"></dxi-column>
+				</dx-data-grid>
+				
+				<div class="panel-footer" style="margin-bottom:-14px;">
+					<button [disabled]="!hotelResponseForm.form.valid" (click)="sendHotelResponse(hotelResponseForm)" type="submit" class="btn btn-success"
+					 data-dismiss="modal">
+						<span class="glyphicon glyphicon-ok"></span> SUBMIT & ADD NEW</button>
+
+					<button type="reset" class="btn btn-default">
+						<span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+					<button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Car Hire Details Modal -->
+<div class="modal fade" id="car-hire-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<!-- <h4 class="panel-title" id="contactLabel">
+					<span class="glyphicon glyphicon-home"></span> Car Hire Details</h4> -->
+				<div class="panel-title" id="contactLabel">
+					<h4 class="panel-title" id="contactLabel">
+							<span class="glyphicon glyphicon-car"></span>Car Hire Details
+					<span class="col-md-3 fright vertical-divider" *ngIf="requestData">{{requestData.CompanyRequestId}}</span>
+					<span class="col-md-4 fright txt-right" *ngIf="requestData">{{requestData.CompanyId.CompanyName }}</span>
+					</h4> 
+				</div>
+			</div>
+			<form #carResponseForm="ngForm">
+				<div class="modal-body" style="padding: 5px;">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-hire-service-provider">Service Provider (e.g. Uber)</label>
+								<input [(ngModel)]="CarHireServiceProvider" #carServiceProvider="ngModel" maxlength="30" class="form-control" id="car-hire-service-provider"
+								 name="car-hire-service-provider" placeholder="Service Provider" type="text" required />
+								<span *ngIf="carServiceProvider.errors && (carServiceProvider.dirty || carServiceProvider.touched)" class="error-message">
+									<span [hidden]="!carServiceProvider.errors.required">
+										Service provider is required!
+									</span>
+									<span [hidden]="!carServiceProvider.errors.maxlength">
+										Service provider cannot be more than 30 digit long.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-hire-transportation-type">Vehicle Type (e.g. Auto,Bus):</label>
+
+								<input [(ngModel)]="CarHireTransportationType" #carTransportationType="ngModel" class="form-control" name="car-hire-transportation-type"
+								 maxlength="30" id="car-hire-transportation-type" placeholder="Vehicle Type" type="text" required />
+								<span *ngIf="carTransportationType.errors && (carTransportationType.dirty || carTransportationType.touched)" class="error-message">
+									<span [hidden]="!carTransportationType.errors.required">
+										Transportation Type is required!
+									</span>
+									<span [hidden]="!carTransportationType.errors.maxlength">
+										Transportation Type cannot be more than 30 digit long.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-days">Number of Days</label>
+								<input [(ngModel)]="CarHireDays" type="number" #carDays="ngModel" class="form-control" name="car-days"
+								 id="car-days" placeholder="Enter Number of days" type="text" required  (ngModelChange)="calculateCarHireCost()"/>
+								<span *ngIf="carDays.errors && (carDays.dirty || carDays.touched)" class="error-message">
+									<span [hidden]="!carDays.errors.required">
+										Number of Days is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-rate">Daily Rate</label>
+								<input [(ngModel)]="CarHireRate" type="number"  #carRate="ngModel" class="form-control" name="car-rate"
+								 id="car-rate" placeholder="Enter Daily rate" type="text" required  (ngModelChange)="calculateCarHireCost()"/>
+								<span *ngIf="carRate.errors && (carRate.dirty || carRate.touched)" class="error-message">
+									<span [hidden]="!carRate.errors.required">
+										Daily Rate is required!
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-distance">Distance (e.g. 115):</label>
+								<input [(ngModel)]="CarHireDistance" pattern="^[1-9]\d*$" maxlength="4" #carDistance="ngModel" class="form-control" name="car-distance"
+								 id="car-distance" placeholder="Enter Distance in KM" type="text" required />
+								<span *ngIf="carDistance.errors && (carDistance.dirty || carDistance.touched)" class="error-message">
+									<span [hidden]="!carDistance.errors.required">
+										Distnce is required!
+									</span>
+									<span [hidden]="!carDistance.errors.maxlength">
+										Distance cannot be more than 4 digit long.
+									</span>
+									<span [hidden]="!carDistance.errors.pattern">
+										Invalid Distance.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="class">Currency:</label>
+								<select id="class" name="class" class="form-control" [(ngModel)]="carCurrency" #currency="ngModel"  required>
+									<option disabled selected> Select Currency
+									</option>
+									<option *ngFor="let currency of listedCurrency" [value]="currency.symbol">{{currency.symbol}}</option>
+									<!-- <option *ngFor="let class of listedClasses" [value]="class">{{class}}</option> -->
+								</select>
+								<span *ngIf="currency.errors && (currency.dirty || currency.touched)" class="error-message">
+									<span [hidden]="!currency.errors.required">
+										currency is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-Cost">Car Hire Cost (e.g. 220):</label>
+								<input [(ngModel)]="CarHireCost" pattern="^[1-9]\d*$" maxlength="5" #carCost="ngModel" class="form-control" name="car-Cost"
+								 id="car-Cost" placeholder="Enter Cost in USD ($)" type="text" required />
+								<span *ngIf="carCost.errors && (carCost.dirty || carCost.touched)" class="error-message">
+									<span [hidden]="!carCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!carCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!carCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="car-Cost">Car Hire Cost (e.g. 220):</label>
+								<input [(ngModel)]="CarHireCost" pattern="^[1-9]\d*$" maxlength="5" #carCost="ngModel" class="form-control" name="car-Cost"
+									id="car-Cost" placeholder="Enter Cost " type="text" required [disabled]="carCurrency == undefined || carCurrency ==''" />
+								<span *ngIf="carCost.errors && (carCost.dirty || carCost.touched)" class="error-message">
+									<span [hidden]="!carCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!carCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!carCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="hotel-additional-details">Additional Details (Max 250 chars.):</label>
+								<textarea [(ngModel)]="CarHireAdditionalDetails" #carAdditionalDetails="ngModel" maxlength="250" class="form-control" name="car-additional-details"
+								 id="car-additional-details" placeholder="Any Additional Details" rows="2" type="text"></textarea>
+								<span *ngIf="carAdditionalDetails.errors && (carAdditionalDetails.dirty || carAdditionalDetails.touched)" class="error-message">
+									<span [hidden]="!carAdditionalDetails.errors.maxlength">
+										Additional details cannot be more than 250 characters long.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<dx-data-grid id="gridContainerloyal"
+					[dataSource]="orders"
+					[allowColumnResizing]="false"
+					[allowColumnReordering]="false"
+					[showBorders]="true"
+					>
+
+					<dxo-selection mode="single"></dxo-selection>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxo-group-panel [visible]="false"></dxo-group-panel>
+					<dxo-state-storing [enabled]="false" type="localStorage" storageKey="storage"></dxo-state-storing>
+					<!-- <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager> -->
+
+					<dxi-column dataField="Airline" caption="Car Rental Group"></dxi-column>
+					<dxi-column dataField="LoyaltyProgram" caption="Loyalty Program"></dxi-column>
+					<dxi-column dataField="AccounmtMemnum" caption="Account/Membership number"></dxi-column>
+					<dxi-column dataField="loyaltytype" caption="loyalty program" [groupIndex]="0"></dxi-column>
+				</dx-data-grid>
+
+				<div class="panel-footer" style="margin-bottom:-14px;">
+					<button [disabled]="!carResponseForm.form.valid" (click)="sendCarHireResponse(carResponseForm)" type="submit" class="btn btn-success"
+					 data-dismiss="modal">
+						<span class="glyphicon glyphicon-ok"></span> SUBMIT & ADD NEW</button>
+
+					<button type="reset" class="btn btn-default">
+						<span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+					<button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Transfer Details Modal -->
+<div class="modal fade" id="transfer-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<!-- <h4 class="panel-title" id="contactLabel">
+					<span class="glyphicon glyphicon-home"></span> Transfer Details</h4> -->
+				<div class="panel-title" id="contactLabel">
+					<h4 class="panel-title" id="contactLabel">
+							<span class="glyphicon glyphicon-car"></span> Transfer Details
+					<span class="col-md-3 fright vertical-divider" *ngIf="requestData">{{requestData.CompanyRequestId}}</span>
+					<span class="col-md-4 fright txt-right" *ngIf="requestData">{{requestData.CompanyId.CompanyName }}</span>
+					</h4> 
+				</div>
+			</div>
+			<form #transferResponseForm="ngForm">
+				<div class="modal-body" style="padding: 5px;">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-service-provider">Service Provider (e.g. Uber)</label>
+								<input [(ngModel)]="TransferServiceProvider" #transferServiceProvider="ngModel" maxlength="30" class="form-control" id="transfer-service-provider"
+								 name="transfer-service-provider" placeholder="Service Provider" type="text" required />
+								<span *ngIf="transferServiceProvider.errors && (transferServiceProvider.dirty || transferServiceProvider.touched)" class="error-message">
+									<span [hidden]="!transferServiceProvider.errors.required">
+										Service provider is required!
+									</span>
+									<span [hidden]="!transferServiceProvider.errors.maxlength">
+										Service provider cannot be more than 30 digit long.
+									</span>
+									<span [hidden]="!transferServiceProvider.errors.pattern">
+										Invalid Service Provider.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-transportation-type">Vehicle Type (e.g. Auto,Bus):</label>
+
+								<input [(ngModel)]="TransferTransportationType" #transferTransportationType="ngModel" class="form-control" maxlength="30"
+								 name="transfer-transportation-type" id="transfer-transportation-type" placeholder="Vehicle Type" type="text" required
+								/>
+								<span *ngIf="transferTransportationType.errors && (transferTransportationType.dirty || transferTransportationType.touched)"
+								 class="error-message">
+									<span [hidden]="!transferTransportationType.errors.required">
+										Transportation Type is required!
+									</span>
+									<span [hidden]="!transferTransportationType.errors.maxlength">
+										Transportation Type cannot be more than 30 digit long.
+									</span>
+									<span [hidden]="!transferTransportationType.errors.pattern">
+										Invalid Transportation Type.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-distance">Estimated Distance (e.g. 115):</label>
+								<input [(ngModel)]="TransferDistance" pattern="^[1-9]\d*$" maxlength="4" #transferDistance="ngModel" class="form-control"
+								 name="transfer-distance" id="transfer-distance" placeholder="Enter Distance in KM" type="text" required  />
+								<span *ngIf="transferDistance.errors && (transferDistance.dirty || transferDistance.touched)" class="error-message">
+									<span [hidden]="!transferDistance.errors.required">
+										Distance is required!
+									</span>
+									<span [hidden]="!transferDistance.errors.maxlength">
+										Distance cannot be more than 4 digit long.
+									</span>
+									<span [hidden]="!transferDistance.errors.pattern">
+										Invalid Distance.
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-people">Number of People</label>
+								<input [(ngModel)]="TransferPeople"  #transferPeople="ngModel" type="number" class="form-control" name="transfer-people"
+								 id="transfer-people" placeholder="Enter No. of People" type="text" required />
+								<span *ngIf="transferPeople.errors && (transferPeople.dirty || transferPeople.touched)" class="error-message">
+									<span [hidden]="!transferPeople.errors.required">
+										Number of People is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-Cost">Transfer Cost (e.g. 220):</label>
+								<input [(ngModel)]="TransferCost" pattern="^[1-9]\d*$" maxlength="5" #transferCost="ngModel" class="form-control" name="transfer-Cost"
+								 id="transfer-Cost" placeholder="Enter Cost in USD ($)" type="text" required />
+								<span *ngIf="transferCost.errors && (transferCost.dirty || transferCost.touched)" class="error-message">
+									<span [hidden]="!transferCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!transferCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!transferCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="class">Currency:</label>
+								<select id="class" name="class" class="form-control" [(ngModel)]="transferCurrency" #currency="ngModel" required>
+									<option disabled selected> Select Currency
+									</option>
+									<option *ngFor="let currency of listedCurrency" [value]="currency.symbol">{{currency.symbol}}</option>
+									<!-- <option *ngFor="let class of listedClasses" [value]="class">{{class}}</option> -->
+								</select>
+								<span *ngIf="currency.errors && (currency.dirty || currency.touched)" class="error-message">
+									<span [hidden]="!currency.errors.required">
+										currency is required!
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-Cost">Transfer Cost (e.g. 220):</label>
+								<input [(ngModel)]="TransferCost" pattern="^[1-9]\d*$" maxlength="5" #transferCost="ngModel" class="form-control" name="transfer-Cost"
+									id="transfer-Cost" placeholder="Enter Cost " type="text" required [disabled]="transferCurrency == undefined || transferCurrency ==''" />
+								<span *ngIf="transferCost.errors && (transferCost.dirty || transferCost.touched)" class="error-message">
+									<span [hidden]="!transferCost.errors.required">
+										Cost is required!
+									</span>
+									<span [hidden]="!transferCost.errors.maxlength">
+										Cost cannot be more than 5 digit long.
+									</span>
+									<span [hidden]="!transferCost.errors.pattern">
+										Invalid Cost.
+									</span>
+								</span>
+							</div>
+						</div>
+						<!-- <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-additional-details">Additional Details (Max 250 chars.):</label>
+								<textarea [(ngModel)]="TransferAdditionalDetails" #transferAdditionalDetails="ngModel" maxlength="250" class="form-control"
+								 name="transfer-additional-details" id="transfer-additional-details" placeholder="Any Additional Details" rows="2"
+								 type="text"></textarea>
+								<span *ngIf="transferAdditionalDetails.errors && (transferAdditionalDetails.dirty || transferAdditionalDetails.touched)"
+								 class="error-message">
+									<span [hidden]="!transferAdditionalDetails.errors.maxlength">
+										Additional details cannot be more than 250 characters long.
+									</span>
+								</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+							<div class="form-group">
+								<label for="transfer-additional-details">Additional Details (Max 250 chars.):</label>
+								<textarea [(ngModel)]="TransferAdditionalDetails" #transferAdditionalDetails="ngModel" maxlength="250" class="form-control"
+									name="transfer-additional-details" id="transfer-additional-details" placeholder="Any Additional Details" rows="2"
+									type="text"></textarea>
+								<span *ngIf="transferAdditionalDetails.errors && (transferAdditionalDetails.dirty || transferAdditionalDetails.touched)"
+									class="error-message">
+									<span [hidden]="!transferAdditionalDetails.errors.maxlength">
+										Additional details cannot be more than 250 characters long.
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+				<dx-data-grid id="gridContainerloyal"
+					[dataSource]="orders"
+					[allowColumnResizing]="false"
+					[allowColumnReordering]="false"
+					[showBorders]="true"
+					>
+
+					<dxo-selection mode="single"></dxo-selection>
+					<dxo-filter-row [visible]="false"></dxo-filter-row>
+					<dxo-group-panel [visible]="false"></dxo-group-panel>
+					<dxo-state-storing [enabled]="false" type="localStorage" storageKey="storage"></dxo-state-storing>
+					<!-- <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager> -->
+
+					<dxi-column dataField="Airline" caption="Airline"></dxi-column>
+					<dxi-column dataField="LoyaltyProgram" caption="Loyalty Program"></dxi-column>
+					<dxi-column dataField="AccounmtMemnum" caption="Account/Membership number"></dxi-column>
+					<dxi-column dataField="loyaltytype" caption="loyalty program" [groupIndex]="0"></dxi-column>
+				</dx-data-grid>
+
+				<div class="panel-footer" style="margin-bottom:-14px;">
+					<button [disabled]="!transferResponseForm.form.valid" (click)="sendTransferResponse(transferResponseForm)" type="submit"
+					 class="btn btn-success" data-dismiss="modal">
+						<span class="glyphicon glyphicon-ok"></span> SUBMIT & ADD NEW</button>
+
+					<button type="reset" class="btn btn-default">
+						<span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+					<button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Passport and National ID view Modal -->
+<div class="modal fade" id="viewdocx" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"   >
+	<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id="myModalLabel">{{fileName}}</h4> 
+		</div>
+		<div class="modal-body">
+		<div style="text-align: center;">
+<!-- <iframe src="http://docs.google.com/gview?url=http://www.pdf995.com/samples/pdf.pdf&embedded=true" 
+style="width:500px; height:500px;" frameborder="0"></iframe> -->
+<iframe  *ngIf="fileUrl" [src]="fileUrl | viewfile"  style="width:500px; height:500px;background:transparent;" allowtransparency="true" frameborder="0" ></iframe>
+<!-- <iframe  *ngIf="fileUrl" [src]="ViewURL()"  style="width:500px; height:500px;" frameborder="0" ></iframe> -->
+<!-- <iframe  *ngIf="fileUrl" [src]="ViewURL()"  style="width:500px; height:500px;" frameborder="0" ></iframe>  -->
+<!-- <img  *ngIf="fileUrl" [src]="ViewURL()"  style="width:500px; height:500px;" frameborder="0" > -->
+<!-- <embed src="this.sanitizer.bypassSecurityTrustResourceUrl(fileUrl)" width="500" height="375" type="application/pdf"> -->
+	<!-- <object width="400" height="500" type="application/pdf" data="{{ViewURL()}}">
+		<p>Insert your error message here, if the PDF cannot be displayed.</p>
+	</object> -->
+
+</div>
+		</div>
+		<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+		</div>
+	</div>
+	</div>
+</div>

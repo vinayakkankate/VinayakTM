@@ -1,0 +1,29 @@
+ /* .txtbtn{
+    padding-bottom: 1em!important;
+}  */
+.form-horizontal .control-label{
+    text-align: left;
+    padding-top: 5px;
+}
+
+.form-group{
+	margin-bottom: 10px;
+}
+
+.heading{
+	text-align: center;
+	vertical-align: middle;
+	color: #194eb0;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	font-size: 20px;
+}
+
+button{
+	margin-top: 10px;
+	font-size: 16px;
+}
+
+.error-message{
+    color: #ff0000;
+}

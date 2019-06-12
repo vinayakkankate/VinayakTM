@@ -1,0 +1,174 @@
+<div id="page-wrapper">
+    <header id="header" class="navbar-static-top">
+        <!-- <div class="topnav hidden-xs">
+            <div class="container">
+                <h4 class="pull-left whtext">{{userData.AgencyId.CompanyName}}</h4>
+                <h4 *ngIf="userData" class="pull-right whtext">Welcome, {{userData.FirstName}} {{userData.LastName}}</h4>
+            </div>
+        </div> -->
+
+        <div class="topnav hidden-xs">
+            <div class="container">
+                <label class="pull-left whtext">{{userData.AgencyId.CompanyName}}</label>
+                <h4 *ngIf="userData" class="pull-right whtext">Welcome, {{userData.FirstName}} {{userData.LastName}}</h4>
+            </div>
+        </div>
+
+        <div class="main-header">
+
+            <a href="#mobile-menu-01" data-toggle="collapse" class="mobile-menu-toggle">
+                Mobile Menu Toggle
+            </a>
+
+            <div class="container-fluid" id="nav-container">
+                <h1 class="logo navbar-brand cursor-pointer">
+                    <a (click)="ontravelDashboardHome('goToTCHome')" title="Travel Mediary - home">
+                        <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                    </a>
+                </h1>
+                <div class="col-md-1 col-lg-1"></div>
+                <nav id="main-menu" role="navigation">
+                    <ul class="menu floatLeftManagementConsoleMenu">
+                        <li class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/home" routerLinkActive="active">Home</a>
+                        </li>
+                        <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/users" routerLinkActive="active">Users</a>
+                        </li>
+                        <!-- <li *ngIf="userData.Role==4 || userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/all-requests" routerLinkActive="active">All Requests</a>
+                        </li> -->
+                        <li class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/all-requests" routerLinkActive="active">All Requests</a>
+                        </li>
+                        <li *ngIf="userData.Role==3 || userData.Role==2 " class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/my-requests" routerLinkActive="active">My Requests</a>
+                        </li>
+
+
+                        <li *ngIf="userData.Role==2" class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/team-members" routerLinkActive="active">Team Members</a>
+                        </li>
+                        <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/agency-profile" routerLinkActive="active">Agency Profile</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/user-profile" routerLinkActive="active">User Profile</a>
+                        </li>
+                        <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/mapping" routerLinkActive="active">Mapping</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/settings" routerLinkActive="active">Settings</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a routerLink="/travel-company/dashboard/reports" routerLinkActive="active">Reports</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a href="#" (click)="onLogoutClick()">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <nav id="mobile-menu-01" class="mobile-menu collapse">
+                <ul id="mobile-primary-menu " class="menu">
+                    <li class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/home" routerLinkActive="active">Home</a>
+                    </li>
+                    <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/users" routerLinkActive="active">Users</a>
+                    </li>
+
+                    <li *ngIf="userData.Role==3" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/my-requests" routerLinkActive="active">My Requests</a>
+                    </li>
+                    <li *ngIf="userData.Role==4" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/all-requests" routerLinkActive="active">Requests</a>
+                    </li>
+
+                    <li *ngIf="userData.Role==2" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/team-members" routerLinkActive="active">Team Members</a>
+                    </li>
+                    <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/agency-profile" routerLinkActive="active">Agency Profile</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/user-profile" routerLinkActive="active">User Profile</a>
+                    </li>
+                    <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/mapping" routerLinkActive="active">Mapping</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a routerLink="/travel-company/dashboard/settings" routerLinkActive="active">Settings</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="#" (click)="onLogoutClick()">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+
+
+    <router-outlet></router-outlet>
+
+
+
+
+
+
+    <footer id="footer">
+
+
+
+        <div class="bottom gray-area">
+
+            <div class="container">
+                <div class="row">
+
+
+
+                    <div class="col-md-12 txt">
+                        <h2>About Travel Mediary</h2>
+                        <p>currently in beta phase, please email "support" for assistance</p>
+                        <br />
+                        <address class="contact-details">
+                            <!-- <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span> -->
+                            For support please contact
+                            <br />
+                            <a href="#" class="contact-email">suppport@travelmediary.com</a>
+                        </address>
+                        <!-- <ul class="social-icons clearfix ss">
+                            <li class="twitter"><a title="twitter" href="#" data-toggle="tooltip"><i class="soap-icon-twitter"></i></a></li>
+                            <li class="googleplus"><a title="googleplus" href="#" data-toggle="tooltip"><i class="soap-icon-googleplus"></i></a></li>
+                            <li class="facebook"><a title="facebook" href="#" data-toggle="tooltip"><i class="soap-icon-facebook"></i></a></li>
+                            <li class="linkedin"><a title="linkedin" href="#" data-toggle="tooltip"><i class="soap-icon-linkedin"></i></a></li>
+                            <li class="vimeo"><a title="vimeo" href="#" data-toggle="tooltip"><i class="soap-icon-vimeo"></i></a></li>
+                            <li class="dribble"><a title="dribble" href="#" data-toggle="tooltip"><i class="soap-icon-dribble"></i></a></li>
+                            <li class="flickr"><a title="flickr" href="#" data-toggle="tooltip"><i class="soap-icon-flickr"></i></a></li>
+                        </ul> -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="logo pull-left">
+                        <a href="#" title="Travel Mediary - home">
+                            <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <a id="back-to-top" href="#" class="animated" data-animation-type="bounce">
+                            <i class="soap-icon-longarrow-up circle"></i>
+                        </a>
+                    </div>
+                    <div class="copyright pull-right ">
+                        <p>2018 Travel Mediary</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

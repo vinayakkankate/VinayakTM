@@ -1,0 +1,194 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-user"></i>
+            <h2 class="entry-title">Travel Agency Profile</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section style="padding: 20px" id="content">
+    <article *ngIf="!edit" class="box innerstyle personal-details row">
+
+        <figure class="col-md-4">
+            <img
+                style="display: block; margin-left: auto; margin-right: auto;" 
+                alt="Company Logo"
+                class="img-responsive"
+                [src]="getPhoto(companyData.CompanyLogo)">
+        </figure>
+        <div style="margin-top: 10px" class="details col-md-8">
+            <button
+                type="submit"
+                class="button btn-medium blue pull-right"
+                (click)="editProfile()">
+                <span class="glyphicon glyphicon-plus-edit">
+                </span> Edit Profile
+            </button>
+            <h2 class="box-title fullname">{{companyData.CompanyName}}</h2>
+            <dl class="term-description" style="margin-top: 20px">
+                <dt>TMID:</dt>
+                <dd>{{companyData.TMID}}</dd>
+                <dt>Company Name:</dt>
+                 <dd>{{companyData.CompanyName}}</dd> 
+                <dt>Website:</dt>
+                 <dd>{{companyData.Website}}</dd> 
+                <dt>Sales Tax Number:</dt>
+                 <dd>{{companyData.SalesTaxNumber || 'Not Available'}}</dd>
+                 <dt>Registration Number:</dt>
+                 <dd>{{companyData.RegistrationNumber || 'Not Available'}}</dd>
+                  <dt>VAT Number:</dt>
+                 <dd>{{companyData.VATNumber || 'Not Available'}}</dd> 
+                  <!-- <dt>Contact Person:</dt>
+                <dd>{{userData.FirstName}} {{userData.LastName}}</dd>   -->
+                <dt>Contact Number:</dt>
+                <dd>{{companyData.ContactNumber}}</dd>
+                 <dt>Email Id:</dt>
+                <dd>{{userData.Email}}</dd>
+
+                 <!-- <dt>Contact Person:</dt>
+                <dd>{{userData.FirstName}} {{userData.LastName}}</dd>  -->
+                <dt>Contact Number:</dt>
+                <dd>{{companyData.ContactNumber}}</dd>
+                <dt>Address :</dt>
+                <dd *ngIf="addressParts!=null">{{addressParts[0] || 'Not Available'}}</dd>
+                <dt *ngIf="addressParts!=null"></dt>
+                <dd *ngIf="addressParts!=null">{{addressParts[1] || 'Not Available'}}</dd>
+                <dt *ngIf="addressParts!=null"></dt>
+                <dd *ngIf="addressParts!=null">{{addressParts[2] || 'Not Available'}}</dd>
+                <dd *ngIf="addressParts==null">Not Available</dd>
+                <dt>Country:</dt>
+                <dd >{{companyData.Country || 'Not Available'}}</dd> 
+            </dl>
+        </div>      
+    </article>
+    <article *ngIf="edit" class="box innerstyle personal-details row">
+
+        <figure class="col-md-4">
+            <img
+                style="display: block; margin-left: auto; margin-right: auto;" 
+                class="img-responsive"
+                alt=""
+                [src]="getPhoto(companyData.CompanyLogo)">
+                
+            <br>
+                 <!-- <i style="paddiing-top:5px" data-tooltip="Please only upload files that end in types 'jpg', 'png', 'jpeg' only" class="{{!updateCompanyProfileForm.controls['photo'].valid && updateCompanyProfileForm.controls['photo'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i>  -->
+                 <div class="text-center">( .png,.jpeg )</div>
+            <div class="text-center">
+                <label class="btn upload-button">
+                    Browse
+                    <input
+                    #uploadCompanyLogo
+                    type="file"
+                    name="upload-company-logo"
+                    id="upload-company-logo"
+                    accept="image/*"
+                    (change)="saveFile($event)"
+                    hidden>
+                </label>
+            </div>
+            <!-- <input id="photo" #c type="file" ng2FileSelect [uploader]="uploader" accept=".png,.jpg,.jpeg" (change)="TestFileType(c.value,['jpg', 'png', 'jpeg'],'photo')" [formControl]="updateCompanyProfileForm.controls['photo']"  class="form-control full-width"/> -->
+        </figure>
+        
+        <div class="details col-md-8" style="margin-top: 10px;">
+            
+             <form [formGroup]="updateCompanyProfileForm">
+            <h2 class="box-title fullname">{{companyData.CompanyName}}</h2>
+                    <dl class="term-description">
+                        <dt>TMID:</dt>
+                        <dd><input type="text " class="form-control full-width" [value]="companyData.TMID" readonly="readonly" /></dd>
+               <dt>Company Name:</dt>
+                 <dd class="search">
+                             <i data-tooltip="Company Name can contain 1 to 50 characters including digits and special characters (space, dash, underscore, plus) only!" class="{{!updateCompanyProfileForm.controls['CompanyName'].valid && updateCompanyProfileForm.controls['CompanyName'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                     <input type="text" class="form-control full-width" pattern="([A-zÀ-ž0-9\s\.\_\+\-]){1,50}" maxlength="50" [value]="companyData.CompanyName" [formControl]="updateCompanyProfileForm.controls['CompanyName']" autofocus/></dd> 
+                        <dt>Company Website:</dt>
+                 <dd> <input type="text " class="form-control full-width" [value]="companyData.Website" readonly="readonly" /></dd> 
+               
+                  <dt>Sales (VAT) Number:</dt>
+                  <dd class="search">
+                             <i data-tooltip="Sales Tax Number can contain 1 to 14 digits only!" class="{{!updateCompanyProfileForm.controls['SalesTaxNumber'].valid && updateCompanyProfileForm.controls['SalesTaxNumber'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                   <input *ngIf="companyData.SalesTaxNumber!=undefined || null" type="text " class="form-control full-width" [value]="companyData.SalesTaxNumber" readonly="readonly" /> 
+                   <input *ngIf="companyData.SalesTaxNumber==undefined || null" type="text " class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['SalesTaxNumber']" pattern="^[0-9]\d{14}$" placeholder="Enter Sales Tax Number" maxlength="15" required autofocus/>   
+                 </dd>
+
+                 <dt>Registration Number:</dt>
+                  <dd class="search">
+                             <i data-tooltip="Registration Number can contain 1 to 14 digits only!" class="{{!updateCompanyProfileForm.controls['RegistrationNumber'].valid && updateCompanyProfileForm.controls['RegistrationNumber'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                   <input *ngIf="companyData.RegistrationNumber!=undefined || null" type="text " class="form-control full-width" [value]="companyData.RegistrationNumber" readonly="readonly" /> 
+                   <input *ngIf="companyData.RegistrationNumber==undefined || null" type="text " class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['RegistrationNumber']" pattern="^[0-9]\d{14}$" placeholder="Enter Registration Number" maxlength="15" required autofocus/>   
+                 </dd>
+
+                  <!-- <dt>VAT Number:</dt>
+                 <dd class="search">
+                             <i data-tooltip="VAT Number example IN32456789654V!" class="{{!updateCompanyProfileForm.controls['VATNumber'].valid && updateCompanyProfileForm.controls['VATNumber'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i>
+                    <input *ngIf="companyData.VATNumber!=undefined || null" type="text " class="form-control full-width" [value]="companyData.VATNumber" readonly="readonly" /> 
+                   <input *ngIf="companyData.VATNumber==undefined || null" type="text " class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['VATNumber']" pattern="^(ATU[0-9]{8}|BE0[0-9]{9}|BG[0-9]{9,10}|CY[0-9]{8}L|CZ[0-9]{8,10}|DE[0-9]{9}|DK[0-9]{8}|EE[0-9]{9}|(EL|GR)[0-9]{9}|ES[0-9A-Z][0-9]{7}[0-9A-Z]|FI[0-9]{8}|FR[0-9A-Z]{2}[0-9]{9}|GB([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|HU[0-9]{8}|IE[0-9]S[0-9]{5}L|IT[0-9]{11}|IN[0-9]{11}V|LT([0-9]{9}|[0-9]{12})|LU[0-9]{8}|LV[0-9]{11}|MT[0-9]{8}|NL[0-9]{9}B[0-9]{2}|PL[0-9]{10}|PT[0-9]{9}|RO[0-9]{2,10}|SE[0-9]{12}|SI[0-9]{8}|SK[0-9]{10})$" placeholder="Enter VAT Number" required autofocus/>   
+                </dd>  -->
+                 
+                <!-- <dt>Contact Person</dt>
+                 <dd><input type="text " class="form-control full-width" [value]="userData.FirstName+' '+userData.LastName" readonly="readonly" /></dd> -->
+                  <dt>Contact Number:</dt>
+                <dd class="search">
+                             <i data-tooltip="Contact Number can contain 7 to 15 digits only!" class="{{!updateCompanyProfileForm.controls['ContactNumber'].valid && updateCompanyProfileForm.controls['ContactNumber'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                <input *ngIf="companyData.ContactNumber!=undefined || null"  class="form-control full-width" autocomplete="off" type="phone" pattern="^[0-9]\d{6,15}$" [value]="companyData.ContactNumber" [formControl]="updateCompanyProfileForm.controls['ContactNumber']" maxlength="15" minlength="6">
+                            <input *ngIf="companyData.ContactNumber==undefined || null"  class="form-control full-width" type="phone" pattern="^[0-9]\d{6,15}$" placeholder="Enter Cell Number" [formControl]="updateCompanyProfileForm.controls['ContactNumber']" maxlength="15" minlength="6" required>
+                        </dd> 
+                <dt>Email Id:</dt>
+                 <dd><input type="text " class="form-control full-width" [value]="userData.Email" readonly="readonly" /></dd>
+                <dt>Address1:</dt>
+                <dd class="search">
+                             <i data-tooltip="Plot No./Street/Locality" class="{{!updateCompanyProfileForm.controls['Address1'].valid && updateCompanyProfileForm.controls['Address1'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                    <!-- <input *ngIf="companyData.Address!=undefined || null" id="autocomplete" type="text" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address']" [value]="companyData.Address" (setAddress)="getAddressOfCompany($event)" ng2-google-place-autocomplete required autofocus/>
+                    <input *ngIf="companyData.Address==undefined || null" id="autocomplete" type="text" placeholder="Enter Your Address" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address']" (setAddress)="getAddressOfCompany($event)" ng2-google-place-autocomplete required autofocus/> -->
+                     <input *ngIf="addressParts!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[0]" [formControl]="updateCompanyProfileForm.controls['Address1']" required autofocus/>
+                    <input *ngIf="addressParts==undefined || null" type="text" placeholder="Plot No./Street/Locality" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address1']" required autofocus/> 
+                </dd>
+                <dt>Address2:</dt>
+                <dd class="search">
+                             <i data-tooltip="Landmark" class="{{!updateCompanyProfileForm.controls['Address2'].valid && updateCompanyProfileForm.controls['Address2'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                     <input *ngIf="addressParts!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[1]" [formControl]="updateCompanyProfileForm.controls['Address2']"  required autofocus/>
+                    <input *ngIf="addressParts==undefined || null" type="text" placeholder="Landmark" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address2']" required autofocus/> 
+                </dd>
+                <dt>City:</dt>
+                <dd class="search">
+                             <i data-tooltip="City" class="{{!updateCompanyProfileForm.controls['City'].valid && updateCompanyProfileForm.controls['City'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                     <input *ngIf="addressParts!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[2]" [formControl]="updateCompanyProfileForm.controls['City']"  required autofocus/>
+                    <input *ngIf="addressParts==undefined || null" type="text" placeholder="City" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['City']" required autofocus/> 
+                </dd>
+                <dt>Country:</dt>
+                <dd class="search">
+                             <i data-tooltip="Enter Country Name" class="{{!updateCompanyProfileForm.controls['Country'].valid && updateCompanyProfileForm.controls['Country'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                    <!-- <ng2-completer *ngIf="companyData.Country!=undefined || null" class="form-control" [formControl]="flightRequestForm.controls['Country']" (selected)="onSelectCountry($event)" [datasource]="countryList" [minSearchLength]="0" name="country" inputClass="full-width" placeholder="Country" required autofocus></ng2-completer> -->
+                    <ng2-completer *ngIf="companyData.Country!=undefined || null" class="form-control cc" [formControl]="updateCompanyProfileForm.controls['Country']" (selected)="onSelectCountry($event)" [datasource]="dataService" [minSearchLength]="1" name="country" inputClass="full-width" placeholder="{{companyData.Country}}" required autofocus></ng2-completer>
+                    <ng2-completer *ngIf="companyData.Country==undefined || null" class="form-control cc" [formControl]="updateCompanyProfileForm.controls['Country']" (selected)="onSelectCountry($event)" [datasource]="dataService" [minSearchLength]="1" name="country" inputClass="full-width" placeholder="Country" required autofocus></ng2-completer>
+                </dd>  
+                        
+                <!-- <dt>Address:</dt>
+                <dd >
+                    <input *ngIf="companyData.Address!=undefined || null" id="autocomplete" type="text" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address']" [value]="companyData.Address" (setAddress)="getAddressOfCompany($event)" ng2-google-place-autocomplete required autofocus/>
+                    <input *ngIf="companyData.Address==undefined || null" id="autocomplete" type="text" placeholder="Enter Your Address" class="form-control full-width" [formControl]="updateCompanyProfileForm.controls['Address']" (setAddress)="getAddressOfCompany($event)" ng2-google-place-autocomplete required autofocus/>
+                </dd> -->
+            <dt class="text-center">
+                <button
+                    type="button"
+                    class="button btn-medium blue"
+                    (click)="goBack()">Back
+                </button>
+            </dt>
+            <dd class="text-center">
+                <button
+                    type="button"
+                    class="button btn-medium green"
+                    (click)="updateCompanyProfile(updateCompanyProfileForm.value)">Save Profile
+                </button>
+            </dd>
+            </dl>
+             
+             </form>
+        </div>  
+    </article>
+</section>

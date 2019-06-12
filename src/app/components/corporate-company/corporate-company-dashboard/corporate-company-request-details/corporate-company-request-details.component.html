@@ -1,0 +1,844 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-doc-minus"></i>
+            <h2 class="entry-title">Request Details</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<div class="details-wrapper" *ngIf="requestData">
+	<div class="details-head-row">
+		<div class="request-status">
+			{{requestData.Status}}
+			<!-- <span [class]="requestData.Status | requestStatusIconClass"></span> -->
+			<span *ngIf="requestData.Status ==3 && loggedInUserData.Role ==1" [class]=" '1' | requestStatusIconClass"></span>
+			<span *ngIf="requestData.Status ==3 && loggedInUserData.Role !=1"  [class]="requestData.Status | requestStatusIconClass"></span>
+			<span *ngIf="requestData.Status !=3" [class]="requestData.Status | requestStatusIconClass"></span>
+            <span *ngIf="requestData.Status ==3 && loggedInUser.Role ==1" [class]=" '1' | requestStatusTextClass">{{ '1' | requestStatusText}}</span>
+            <span *ngIf="requestData.Status ==3 && loggedInUser.Role !=1" [class]="requestData.Status | requestStatusTextClass">{{requestData.Status | requestStatusText}}</span>
+            <span *ngIf="requestData.Status !=3" [class]="requestData.Status | requestStatusTextClass">{{requestData.Status | requestStatusText}}</span>
+        </div>
+        <div class="details">
+        	<div class="row">
+				<div class="col-md-3 field divider">
+					<div class="field-key">Company Request Id</div>
+					<div class="field-value" >{{requestData.CompanyRequestId}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<!-- <div class="field-key" *ngIf="!isReportingManager">Agency Request Id</div> -->
+					<div class="field-key" >Travel Requester</div>
+					<!-- <div class="field-value" *ngIf="!isReportingManager" >{{requestData.AgencyRequestId}}</div> -->
+					<div class="field-value" >{{requestData.CompanyUserId.FirstName }} {{requestData.CompanyUserId.LastName }}</div>
+				</div>
+				<div class="col-md-3 field" >
+					<div class="field-key">Department</div>
+					<div class="field-value" >{{requestData.CompanyUserId.Department}}</div>
+				</div>						
+				<div class="col-md-3 field divider">
+					<div class="field-key">Total Cost</div>
+					<div class="field-value" >$ {{requestData.TotalCost | number: '.2'}}</div>
+				</div>
+				<!-- <div class="col-md-3 field" *ngIf="!isReportingManager">
+					<div class="field-key">Service Fees</div>
+					<div class="field-value" >$ {{requestData.ServiceFees}}</div>
+				</div> -->
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-3 field divider">
+					<div class="field-key">Approved By</div>
+					<div class="field-value" *ngIf="requestData.ApprovedBy">{{requestData.ApprovedBy.FirstName}} {{requestData.ApprovedBy.LastName}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<div class="field-key">Quoted By</div>
+					<div class="field-value" *ngIf="requestData.QuotedBy">{{requestData.QuotedBy.FirstName}} {{requestData.QuotedBy.LastName}}</div>
+				</div>
+				<div class="col-md-3 field divider">
+					<div class="field-key">Booked By</div>
+					<div class="field-value" *ngIf="requestData.BookedBy" >{{requestData.BookedBy.FirstName}} {{requestData.BookedBy.LastName}}</div>
+				</div>	
+				<div class="col-md-3 field">
+					<div class="field-key">Ratings</div>
+						<div
+							*ngIf="requestData.Ratings"
+							style="padding-bottom: 10px;">
+							<span *ngFor="let i of Arr(num)" class="glyphicon glyphicon-star"></span>
+                        </div>					
+                    
+					<!-- <div class="field-value" *ngIf="requestData.QuotedBy">{{requestData.QuotedBy.FirstName}} {{requestData.QuotedBy.LastName}}</div> -->
+				</div>
+			</div>
+			<hr >		
+			<div  class="row">
+				<div class="col-md-6 field divider">
+					<!-- <div class="field-key" *ngIf="!isReportingManager">Feedback</div> -->
+					<div class="field-key" >Motivation</div>
+					<!-- <div class="response-field-value" *ngIf="requestData.Feedback" >{{requestData.Feedback}}</div> -->
+					<div class="response-field-value" *ngIf="requestData.ReasonForTravel" >{{requestData.ReasonForTravel}}</div>
+				</div>
+				<div
+					class="col-md-6"
+					*ngIf="requestData.PurchaseOrderPath.length>0">
+					<div class="field-key">File(s)</div>
+					<div class="response-field-value">
+						<span *ngFor="let filePath of requestData.PurchaseOrderPath">
+							<a target="_blank" href={{filePath}}><img src="assets/images/view-pdf.png" class="view-purchase-order-file"></a>
+						</span>
+                    </div>					
+				</div>			
+			</div>	
+			<hr >	
+			<!-- <div class="row" *ngIf="requestData.PurchaseOrderPath.length>0">
+				<div class="col-md-12">
+					<div class="field-key">File(s)</div>
+					<div class="response-field-value">
+						<span *ngFor="let filePath of requestData.PurchaseOrderPath">
+							<a target="_blank" href={{filePath}}><img src="/assets/images/view-pdf.png" class="view-purchase-order-file"></a>
+						</span>
+                    </div>					
+				</div>			
+			</div> -->						
+		</div>
+	</div>
+	<!-- User Details -->
+	<div class="details">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-user.png"  alt="">
+				<!-- <span class="details-heading" *ngIf="!isReportingManager">User Details</span> -->
+				<span class="details-heading" >Travel Requester Details</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">First Name</div>
+				<div class="field-value" >{{requestData.CompanyUserId.FirstName}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Last Name</div>
+				<div class="field-value" >{{requestData.CompanyUserId.LastName}}</div>
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Email-Id</div>
+				<div class="field-value" >{{requestData.CompanyUserId.Email}}</div>
+			</div>				
+			<div class="col-md-3 field ">
+				<div class="field-key">Company Name</div>
+				<div class="field-value" >{{requestData.CompanyId.CompanyName}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3 field divider">
+				<div class="field-key">Mobile Number</div>
+				<div class="field-value" >
+					{{requestData.CompanyUserId.MContactNumber}}
+	            </div>                
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Department</div>
+				<div class="field-value" >
+					{{requestData.CompanyUserId.Department}}
+	            </div>                
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Designation</div>
+				<div class="field-value" >
+					{{requestData.CompanyUserId.Designation}}
+	            </div>                
+			</div>
+			<div class="col-md-3 field divider">
+				<div class="field-key">Approver</div>
+				<div class="field-value" >
+				<span *ngIf="requestData.ReportingManagerId; then thenBlockRMName else elseBlockRMName"></span>
+				<ng-template #thenBlockRMName>{{requestData.ReportingManagerId.FirstName}} {{requestData.ReportingManagerId.LastName}}</ng-template>
+	            <ng-template #elseBlockRMName>Self</ng-template>
+	            </div>                
+			</div>
+		</div>
+		<hr >
+	</div>
+	
+
+	<!-- Flight Request Details -->
+	<div class="details" *ngIf="requestData.FlightRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-flight.png" alt="">
+				<span class="details-heading">Flight</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">Departure</div>
+                <div class="field-value">
+                	{{requestData.FlightRequest.DepartureAirport}},
+                	{{requestData.FlightRequest.DepartureCountryName}},
+                	{{requestData.FlightRequest.DepartureCode}}
+                </div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Arrival</div>
+                <div class="field-value" >
+                	{{requestData.FlightRequest.ArrivalAirport}},
+                	{{requestData.FlightRequest.ArrivalCountryName}},
+                	{{requestData.FlightRequest.ArrivalCode}}
+                </div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Departing On</div>
+                <div class="field-value">{{requestData.FlightRequest.DepartureDate | date : 'dd MMM yyyy'}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Returning On</div>
+                <div class="field-value">{{requestData.FlightRequest.ReturnDate | date : 'dd MMM yyyy'}}</div>
+            </div>                
+        </div>
+		<hr>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">Trip Type</div>
+                <div class="field-value" >
+                    {{requestData.FlightRequest.TripType | tripType}}
+                </div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Flight Class</div>
+                <div class="field-value" >{{requestData.FlightRequest.Class | flightClass}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Flight Type</div>
+                <div class="field-value" >{{requestData.FlightRequest.FlightType | flightType}}</div>
+            </div>
+            <div class="col-md-3 field divider" *ngIf="loggedInUser._id == requestData.CompanyUserId._id">
+                <div class="field-key">Preferred Airline</div>
+                <div class="field-value">{{requestData.FlightRequest.PreferredAirlines}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="row">
+            <!-- <div class="col-md-3 field divider" *ngIf="!isReportingManager && loggedInUser.Type !='TC'">
+                <div class="field-key">Membership No.</div>
+                <div class="field-value">{{requestData.FlightRequest.MembershipNo}}</div>
+            </div>
+            <div class="col-md-3 field divider" *ngIf="!isReportingManager && loggedInUser.Type !='TC'">
+                <div class="field-key">Rewards Claim</div>
+                <div class="field-value">{{requestData.FlightRequest.RewardsClaim}}</div>
+            </div>  -->               
+            <!-- <div class="col-md-3 field divider">
+                <div class="field-key">Reason For Travel</div>
+                <div class="field-value" >{{requestData.FlightRequest.ReasonForTravel}}</div>
+            </div> -->
+            <div class="col-md-3 field divider" >
+                <div class="field-key">Flight Requests Comments</div>
+                <div class="field-value">{{requestData.FlightRequest.FlightRequestComment}}</div>
+			</div>  
+			<!-- <div class="col-md-3 field divider"  *ngIf="isReportingManager">
+				<div class="field-key">Travel Requester comments</div>
+				<div class="field-value"></div>
+			</div>    -->           
+        </div>
+		<hr>
+		
+		<div class="view-quote-wrapper" *ngIf="requestData.FlightResponse && requestData.Status>1">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#flight-response-collapse" data-original-title>View Quote <span class="badge count-badge">{{requestData.FlightResponse.Response.length}}</span> <span class="fa fa-expand" aria-hidden="true"></span></button>
+		</div>	
+		<div class="response-wrapper collapse" id="flight-response-collapse" *ngIf="requestData.FlightResponse">
+			<div class="panel-group" *ngFor="let response of requestData.FlightResponse.Response; let i = index" id="accordion-{{i}}">
+				<div class="panel panel-default">
+				  <div class="panel-heading quote-list">
+				    <h4 class="panel-title">
+				      	<a class="quote-head" data-toggle="collapse" href="#flight-collapse-{{i}}">
+				      		<span class="glyphicon glyphicon-triangle-bottom" ></span>
+				      		<span class="tab-spacing">
+						      	{{response.DepartureDateAndTime | date:'MM-dd-yyyy HH:mm'}}
+							</span>
+							<span class="tab-spacing">
+								{{response.EstimatedTime | minutesRound }}
+							</span>
+							<span class="tab-spacing">
+								{{response.Class}}
+							</span>
+							<span *ngIf="response.ReturnDepartureDateAndTime"> | 
+					      		<span class="tab-spacing">
+					      			{{response.ReturnDepartureDateAndTime | date:'MM-dd-yyyy HH:mm'}}
+						    	</span>
+						    	<span class="tab-spacing">
+						      		{{response.ReturnEstimatedTime | minutesRound }}
+						    	</span>
+						    	<span class="tab-spacing">
+						      		{{response.ReturnClass}}
+						    	</span>
+						    </span>
+						    <span class="tab-spacing">${{response.Cost | number: '.2'}}
+						    </span>
+				      	</a>
+			      		<input *ngIf="!requestData.FlightResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" type="radio" name="select-flight-response" [value]="response" [(ngModel)]="SelectedFlightResponse"> &nbsp;
+						  <span class="badge badge-selected" *ngIf="requestData.FlightResponse.Selected==response._id">Selected</span>
+						  <button class="ApproveEtBtn" *ngIf="!requestData.FlightResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" (click)="SelectedFlightResponse=response"  >Approve Quote</button>
+						  <button class="ApproveEtBtn" *ngIf="loggedInUser.Role ==1 && requestData.FlightResponse.Selected==response._id" (click)="editFlightSelection(response)" >Edit quote </button>
+				    </h4>
+				  </div>
+				  <div id="flight-collapse-{{i}}" class="panel-collapse collapse">
+				    <div class="panel-body">
+				    	<div class="row">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Departure Date & Time</div>
+								<div class="response-field-value">
+									{{response.DepartureDateAndTime | date:'MM-dd-yyyy HH:mm'}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Departure Airport</div>
+								<div class="response-field-value">
+									{{response.DepartureAirport}},
+									{{response.DepartureCountryName}},
+									{{response.DepartureCode}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Arrival Airport</div>
+								<div class="response-field-value">
+									{{response.ArrivalAirport}},
+									{{response.ArrivalCountryName}},
+									{{response.ArrivalCode}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Airlines</div>
+								<div class="response-field-value">{{response.Airlines}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Arrival Date & Time</div>
+								<div class="response-field-value">{{response.ArrivalDateAndTime | date:'MM-dd-yyyy HH:mm'}}</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Duration (Approx.)</div>
+								<div class="response-field-value">{{response.EstimatedTime | minutesRound }}</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Class</div>
+								<div class="response-field-value">{{response.Class}}</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Trip Type</div>
+								<div class="response-field-value">{{ArrivalCountryName==DepartureCountryName?'Domestic':'International'}}</div>
+							</div>
+						</div>
+						<hr *ngIf="response.ReturnDepartureDateAndTime" style="border: 2px solid #fbf8f8;">
+						<div class="row" *ngIf="response.ReturnDepartureDateAndTime">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Return Departure Date & Time</div>
+								<div class="response-field-value">
+									{{response.ReturnDepartureDateAndTime | date:'MM-dd-yyyy HH:mm'}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Return Departure Airport</div>
+								<div class="response-field-value">
+									{{response.ReturnDepartureAirport}},
+									{{response.ReturnDepartureCountryName}},
+									{{response.ReturnDepartureCode}}</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Return Arrival Airport</div>
+								<div class="response-field-value">
+									{{response.ReturnArrivalAirport}},
+									{{response.ReturnArrivalCountryName}},
+									{{response.ReturnArrivalCode}}</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Airlines</div>
+								<div class="response-field-value">
+									{{response.ReturnAirlines}}</div>
+							</div>
+						</div>
+						<div class="row" *ngIf="response.ReturnDepartureDateAndTime">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Return Arrival Date & Time</div>
+								<div class="response-field-value">{{response.ReturnArrivalDateAndTime | date:'MM-dd-yyyy HH:mm'}}</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Duration (Approx.)</div>
+								<div class="response-field-value">{{response.ReturnEstimatedTime | minutesRound }}</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Class</div>
+								<div class="response-field-value">{{response.ReturnClass}}</div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Trip Type</div>
+								<div class="response-field-value">
+									{{ReturnArrivalCountryName==ReturnDepartureCountryName?'Domestic':'International'}}
+							</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Cost</div>
+								<div class="response-field-value">
+									{{response.Cost | number: '.2'}}
+								</div>
+							</div>
+							<div class="col-md-9 response-field">
+								<div class="response-field-key">Additional Details</div>
+								<div class="response-field-value">{{response.AdditionalDetails}}</div>
+							</div>
+						</div>
+						<hr>
+						<!-- <div class="row" *ngIf="requestData.FlightResponse.Selected==response._id && requestData.FlightResponse.CommentsByTL">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Team Leader comments after quote selection</div>
+								<div class="response-field-value" >{{requestData.FlightResponse.CommentsByTL}}</div>
+							</div>
+						</div> -->
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="!requestData.FlightResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)">
+				<label for="flight-comment">Comment:</label>
+				<textarea class="form-control" rows="3" id="flight-comment" maxlength="255" name="flight-comment" [(ngModel)]="FlightResponseCommentsByTL" ></textarea>
+			</div>
+			<div *ngIf="!requestData.FlightResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" class="view-quote-wrapper">
+				<button (click)="updateFlightSelection()" class="btn add-button view-quote">Submit</button>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Hotel Request Details -->
+	<div class="details" *ngIf="requestData.AccomodationRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-hotel.png" alt="">
+				<span class="details-heading">Hotel</span>
+			</div>				
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">City</div>
+                <div class="field-value" >{{requestData.AccomodationRequest.City}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Preferred Place</div>
+                <div class="field-value" >{{requestData.AccomodationRequest.PreferredPlace}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Check-In</div>
+                <div class="field-value" >{{requestData.AccomodationRequest.CheckIn | date : 'dd MMM yyyy'}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Check-Out</div>
+                <div class="field-value" >{{requestData.AccomodationRequest.CheckOut | date : 'dd MMM yyyy'}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="row">
+            <div class="col-md-12 field ">
+                <div class="field-key">Hotel Request Comment </div>
+                <div class="field-value">{{requestData.AccomodationRequest.HotelRequestComment}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.AccomodationResponse && requestData.Status>1">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#hotel-response-collapse" data-original-title>View Quote <span class="badge count-badge">{{requestData.AccomodationResponse.Response.length}}</span> <span class="fa fa-expand" aria-hidden="true"></span></button>
+		</div>
+		<div class="response-wrapper collapse" id="hotel-response-collapse" *ngIf="requestData.AccomodationResponse">
+			<div class="panel-group" *ngFor="let response of requestData.AccomodationResponse.Response; let j = index" id="accordion-{{j}}">
+				<div class="panel panel-default">
+				  <div class="panel-heading quote-list">
+				    <h4 class="panel-title">
+				      <a class="quote-head" data-toggle="collapse" href="#hotel-collapse-{{j}}"><span class="glyphicon glyphicon-triangle-bottom" ></span>
+				      	<span class="tab-spacing">{{response.HotelCity}}</span>
+				      <span class="tab-spacing">{{response.CheckInDateAndTime | date:'MM-dd-yyyy HH:mm'}}</span>
+				      <span class="tab-spacing">{{response.Duration}} Day(s)</span>
+				      <span class="tab-spacing">{{response.HotelName}}</span>
+				      <span class="tab-spacing">${{response.Cost | number: '.2'}}</span>
+
+				      </a>
+				      <input *ngIf="!requestData.AccomodationResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" type="radio" name="select-hotel-response" [value]="response" [(ngModel)]="SelectedHotelResponse" > &nbsp;
+					  <span class="badge badge-selected" *ngIf="requestData.AccomodationResponse.Selected==response._id">Selected</span>
+					  <button class="ApproveEtBtn" *ngIf="!requestData.AccomodationResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" (click)="SelectedHotelResponse=response"  >Approve Quote</button>
+					  <button class="ApproveEtBtn" *ngIf="loggedInUser.Role ==1 && requestData.AccomodationResponse.Selected==response._id" (click)="editHotelSelection(response)" >Edit quote </button>
+				    </h4>
+				  </div>
+				  <div id="hotel-collapse-{{j}}" class="panel-collapse collapse">
+				    <div class="panel-body">
+				    	<div class="row">
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Check-In Date & Time</div>
+								<div class="response-field-value" >
+								{{response.CheckInDateAndTime | date:'MM-dd-yyyy HH:mm'}}
+								</div>
+							</div>
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Check-Out Date & Time</div>
+								<div class="response-field-value" >{{response.CheckOutDateAndTime | date:'MM-dd-yyyy HH:mm'}}</div>
+							</div>
+							<div class="col-md-4 response-field">
+								<div class="response-field-key">No. of Day(s) </div>
+								<div class="response-field-value">{{response.Duration}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Hotel</div>
+								<div class="response-field-value" >{{response.HotelName}}</div>
+							</div>						
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Address</div>
+								<div class="response-field-value" >
+								{{response.HotelAddress}}
+								</div>
+							</div>
+							<div class="col-md-4 response-field">
+								<div class="response-field-key">Map Link</div>
+								<div class="response-field-value" >
+								<a target="_blank" href="{{response.HotelMapUrl}}">{{response.HotelMapUrl}}</a></div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Rating</div>
+								<div class="response-field-value">{{response.HotelRating}} <span *ngIf="response.HotelRating">Star</span></div>
+							</div>								
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Coordinates</div>
+								<div class="response-field-value">{{response.HotelLatLng}}</div>
+							</div>
+							<div class="col-md-4 response-field">
+								<div class="response-field-key">Website</div>
+								<div class="response-field-value" >
+								<a target="_blank" href="{{response.HotelWebsite}}">{{response.HotelWebsite}}</a>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-4 response-field divider">
+								<div class="response-field-key">Cost</div>
+								<div class="response-field-value">$ {{response.Cost | number: '.2'}}</div>
+							</div>
+							<div class="col-md-8 response-field">
+								<div class="response-field-key">Additional Details</div>
+								<div class="response-field-value" >{{response.AdditionalDetails}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row" *ngIf="requestData.AccomodationResponse.Selected==response._id && requestData.AccomodationResponse.CommentsByTL">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Team Leader comments after quote selection</div>
+								<div class="response-field-value" >{{requestData.AccomodationResponse.CommentsByTL}}</div>
+							</div>
+						</div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="!requestData.AccomodationResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)">
+				<label for="hotel-comment">Comment:</label>
+				<textarea class="form-control" maxlength="255" rows="3" id="hotel-comment" name="hotel-comment" [(ngModel)]="HotelResponseCommentsByTL" ></textarea>
+			</div>
+			<div *ngIf="!requestData.AccomodationResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" class="view-quote-wrapper">
+				<button (click)="updateHotelSelection()" class="btn add-button view-quote">Submit</button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Car Hire Details -->
+	<div class="details" *ngIf="requestData.CarRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-car.png" alt="">
+				<span class="details-heading">Car Hire</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">Pick Up From</div>
+                <div class="field-value">{{requestData.CarRequest.PickupFromLocation}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Pick Up Date And Time</div>
+                <div class="field-value" >{{requestData.CarRequest.PickupDate | date : 'dd MMM yyyy HH:mm'}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Drop Off To</div>
+                <div class="field-value" >{{requestData.CarRequest.DropoffTo}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Drop Off Date And Time</div>
+                <div class="field-value" >{{requestData.CarRequest.DropoffDate | date : 'dd MMM yyyy HH:mm'}}</div>
+            </div>
+            
+        </div>
+		<hr>
+		<div class="row">
+            <!-- <div class="col-md-3 field divider">
+                <div class="field-key">Car Type</div>
+                <div class="field-value">{{requestData.CarRequest.CarType | cars}}</div>
+            </div> -->
+            <div class="col-md-9 field divider">
+                <div class="field-key">Car Request Comment</div>
+                <div class="field-value">{{requestData.CarRequest.CarRequestComment}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.CarResponse && requestData.Status>1">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#car-response-collapse" data-original-title>View Quote <span class="badge count-badge">{{requestData.CarResponse.Response.length}}</span> <span class="fa fa-expand" aria-hidden="true"></span></button>
+		</div>
+		<div class="response-wrapper collapse" id="car-response-collapse" *ngIf="requestData.CarResponse">
+			<div class="panel-group" *ngFor="let response of requestData.CarResponse.Response; let k=index" id="accordion-{{k}}">
+				<div class="panel panel-default">
+				  <div class="panel-heading quote-list">
+				    <h4 class="panel-title">
+				      <a class="quote-head" data-toggle="collapse" href="#car-collapse-{{k}}"><span class="glyphicon glyphicon-triangle-bottom" ></span>
+				      	<span class="tab-spacing">
+				      		{{response.ServiceProvider}}
+				      	</span>
+				      	<span class="tab-spacing">
+				      		{{response.TransportationType}}
+				      	</span>
+				      	<span class="tab-spacing">
+				      		${{response.Cost | number: '.2'}}
+				      	</span>
+				       </a>
+				      <input *ngIf="!requestData.CarResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" type="radio" name="select-car-response" [value]="response" [(ngModel)]="SelectedCarHireResponse"> &nbsp;
+					  <span class="badge badge-selected" *ngIf="requestData.CarResponse.Selected==response._id">Selected</span>
+					  <button class="ApproveEtBtn" *ngIf="!requestData.CarResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" (click)="SelectedCarHireResponse=response"  >Approve Quote</button>
+					  <button class="ApproveEtBtn" *ngIf="loggedInUser.Role ==1 && requestData.CarResponse.Selected==response._id" (click)="editCarHireSelection(response)" >Edit quote </button>
+				    </h4>
+				  </div>
+				  <div id="car-collapse-{{k}}" class="panel-collapse collapse">
+				    <div class="panel-body">
+				    	<div class="row">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Service Provider</div>
+								<div class="response-field-value" >
+								{{response.ServiceProvider}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Vehicle Type</div>
+								<div class="response-field-value" >{{response.TransportationType}}</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Free Distance </div>
+								<div class="response-field-value">{{response.Distance}} <span *ngIf="response.Distance">KM</span></div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Cost</div>
+								<div class="response-field-value" >$ {{response.Cost | number: '.2'}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Additional Details</div>
+								<div class="response-field-value" >{{response.AdditionalDetails}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row" *ngIf="requestData.CarResponse.Selected==response._id && requestData.CarResponse.CommentsByTL">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Team Leader comments after quote selection</div>
+								<div class="response-field-value" >{{requestData.CarResponse.CommentsByTL}}</div>
+							</div>
+						</div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="!requestData.CarResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)">
+				<label for="car-comment">Comment:</label>
+				<textarea class="form-control" maxlength="255" rows="3" id="car-comment" name="car-comment" [(ngModel)]="CarHireResponseCommentsByTL" ></textarea>
+			</div>
+			<div *ngIf="!requestData.CarResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" class="view-quote-wrapper">
+				<button (click)="updateCarHireSelection()" class="btn add-button view-quote">Submit</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Transfer Details -->
+	<div class="details" *ngIf="requestData.TransferRequest">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-transfer.png" alt="">
+				<span class="details-heading">Transfer</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">Pick Up From</div>
+                <div class="field-value">{{requestData.TransferRequest.PickupFromLocation}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Pick Up Date And Time</div>
+                <div class="field-value">{{requestData.TransferRequest.PickupDate | date : 'dd MMM yyyy HH:mm'}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Drop Off To</div>
+                <div class="field-value">{{requestData.TransferRequest.DropoffTo}}</div>
+            </div>
+            <div class="col-md-3 field divider">
+                <div class="field-key">Drop Off Date And Time</div>
+                <div class="field-value" >{{requestData.TransferRequest.DropoffDate | date : 'dd MMM yyyy HH:mm'}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="row">
+            <div class="col-md-3 field divider">
+                <div class="field-key">Transportation Type</div>
+                <div class="field-value">{{requestData.TransferRequest.TransportationType | transportations}}</div>
+            </div>
+            <div class="col-md-9 field divider">
+                <div class="field-key">Transfer Request Comment</div>
+                <div class="field-value">{{requestData.TransferRequest.TransferRequestComment}}</div>
+            </div>
+        </div>
+		<hr>
+		<div class="view-quote-wrapper" *ngIf="requestData.TransferResponse && requestData.Status>1">
+			<button class="btn add-button view-quote" data-toggle="collapse" data-target="#transfer-response-collapse" data-original-title>View Quote <span class="badge count-badge">{{requestData.TransferResponse.Response.length}}</span> <span class="fa fa-expand" aria-hidden="true"></span></button>
+		</div>
+		<div class="response-wrapper collapse" id="transfer-response-collapse" *ngIf="requestData.TransferResponse">
+			<div class="panel-group" *ngFor="let response of requestData.TransferResponse.Response; let l=index" id="accordion-{{l}}">
+				<div class="panel panel-default">
+				  <div class="panel-heading quote-list">
+				    <h4 class="panel-title">
+				      <a class="quote-head" data-toggle="collapse" href="#transfer-collapse-{{l}}"><span class="glyphicon glyphicon-triangle-bottom" ></span> 
+				      	<span class="tab-spacing">
+				      		{{response.ServiceProvider}}
+				      	</span>
+				      	<span class="tab-spacing">
+				      		{{response.TransportationType}}
+				      	</span>
+				      	<span class="tab-spacing">
+				      		${{response.Cost | number: '.2'}}
+				      	</span> 
+				      </a>
+				      <input *ngIf="!requestData.TransferResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" type="radio" name="select-transfer-response" [value]="response" [(ngModel)]="SelectedTransferResponse"> &nbsp;
+					  <span class="badge badge-selected" *ngIf="requestData.TransferResponse.Selected==response._id">Selected</span>
+					  <!-- <input  type="radio" name="select-transfer-response" [value]="response" [(ngModel)]="SelectedTransferResponse"> &nbsp;
+					  <span class="badge badge-selected">Selected</span>  -->
+					  <button class="ApproveEtBtn" *ngIf="!requestData.TransferResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" (click)="SelectedTransferResponse=response"  >Approve Quote</button>
+					  <button class="ApproveEtBtn" *ngIf="loggedInUser.Role ==1 && requestData.TransferResponse.Selected==response._id" (click)="editTransferSelection(response)" >Edit quote </button>
+				    </h4>
+				  </div>
+				  <div id="transfer-collapse-{{l}}" class="panel-collapse collapse">
+				    <div class="panel-body">
+				    	<div class="row">
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Service Provider</div>
+								<div class="response-field-value" >
+								{{response.ServiceProvider}}
+								</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Vehicle Type</div>
+								<div class="response-field-value" >{{response.TransportationType}}</div>
+							</div>
+							<div class="col-md-3 response-field divider">
+								<div class="response-field-key">Distance </div>
+								<div class="response-field-value">{{response.Distance}} <span *ngIf="response.Distance">KM</span></div>
+							</div>
+							<div class="col-md-3 response-field">
+								<div class="response-field-key">Cost</div>
+								<div class="response-field-value" >$ {{response.Cost | number: '.2'}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Additional Details</div>
+								<div class="response-field-value" >{{response.AdditionalDetails}}</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row" *ngIf="requestData.TransferResponse.Selected==response._id && requestData.TransferResponse.CommentsByTL">
+							<div class="col-md-12 response-field">
+								<div class="response-field-key">Team Leader comments after quote selection</div>
+								<div class="response-field-value" >{{requestData.TransferResponse.CommentsByTL}}</div>
+							</div>
+						</div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="form-group" *ngIf="!requestData.TransferResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)">
+				<label for="transfer-comment">Comment:</label>
+				<textarea class="form-control" maxlength="255" rows="3" id="transfer-comment" name="transfer-comment" [(ngModel)]="TransferResponseCommentsByTL" ></textarea>
+			</div>
+			<div *ngIf="!requestData.TransferResponse.Selected && (!requestData.ReportingManagerId || isReportingManager || loggedInUser.Role==1)" class="view-quote-wrapper">
+				<button (click)="updateTransferSelection()" class="btn add-button view-quote">Submit</button>
+			</div>
+			<!-- <div class="form-group" >
+				<label for="transfer-comment">Comment:</label>
+				<textarea class="form-control" maxlength="255" rows="3" id="transfer-comment" name="transfer-comment" [(ngModel)]="TransferResponseCommentsByTL" ></textarea>
+			</div>
+			<div  class="view-quote-wrapper">
+				<button (click)="updateTransferSelection()" class="btn add-button view-quote">Submit</button>
+			</div> -->
+		</div>
+	</div>
+
+	<div class="details" *ngIf="isReportingManager">
+		<div class="row details-head-row">
+			<div class="col-md-3 details-head-box">
+				<img class="" src="assets/images/inverse-transfer.png" alt="">
+				<span class="details-heading">Transaction Submission</span>
+			</div>
+			<div class="col-md-9"></div>
+		</div>
+		<div class="row">
+			<div style="margin:10px;">
+				<label for="transfer-comment">Approver Comment:</label>
+				<textarea class="form-control" maxlength="255" rows="3" id="transfer-comment" name="transfer-comment" [(ngModel)]="TransferResponseCommentsByTL" ></textarea>
+			</div>
+			<!-- <div  class="view-quote-wrapper">
+				<button (click)="updateTransferSelection()" class="btn add-button view-quote">Submit</button>
+			</div> -->
+		</div>
+	</div>
+	<!-- <div
+		*ngIf="!requestData.ReportingManagerId || requestData.ReportingManagerId._id ==loggedInUser._id || loggedInUser.Role==1"
+		class="details">
+		<div class="row details-head-row">
+			<div class="col-md-12" style="text-align:center">
+				<a *ngIf="requestData.Status==2 || loggedInUser.Role==1" (click)="SubmitSelections()" class="button btn-large dark-blue2">Submit All Selections</a>	
+			</div>
+		</div>
+	</div> -->
+	<div class="details" *ngIf="requestData.Status !=2 && requestData.Status !=4 && requestData.Status !=6">
+		<div class="row">
+			<div class="col-md-12" style="text-align:center">
+				<a *ngIf="(isReportingManager && requestData.Status ==1) || requestData.Status ==3"  class="button btn-large dark-blue2" (click)="approveRejectRequest('approve')">Approve</a>	
+				<a *ngIf="(isReportingManager && requestData.Status ==1) || requestData.Status ==3" class="button btn-large dark-blue2" (click)="approveRejectRequest('reject')">Reject</a>	
+			</div>
+		</div>
+	</div>
+	<div class="details" *ngIf="loggedInUser.Role ==1">
+		<div class="row details-head-row">
+			<div class="col-md-12" style="text-align:center">
+				<!-- <a *ngIf="requestData.Status == 5" (click)="RejectQuotes()" class="button btn-large dark-blue2">Reject</a> -->
+				<a *ngIf="requestData.Status == 7" (click)="SubmitQuotes()" class="button btn-large dark-blue2">Submit All Quotes</a>
+			</div>
+		</div>
+	</div>
+</div>

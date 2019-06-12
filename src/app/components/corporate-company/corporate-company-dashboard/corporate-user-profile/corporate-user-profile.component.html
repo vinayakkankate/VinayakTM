@@ -1,0 +1,772 @@
+<div class="page-title-container style4 txt-left">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-user"></i>
+            <h2 class="entry-title">User Profile</h2>
+        </div>&nbsp;&nbsp;&nbsp;
+        <button class="personaldt-btn"  (click)="usersection='personal'" [ngClass]="{'usersection-select':usersection=='personal'}">Personal Detail</button>
+        <button class="loyalty-btn" (click)="usersection='loyalty'" [ngClass]="{'usersection-select':usersection=='loyalty'}">Loyalty Programs</button>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul>  -->
+    </div>
+</div>
+<section style="padding: 20px" *ngIf="usersection=='personal'">
+
+    <div class="row display-profile">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <dl class="term-description" style="margin-top: 10px;">
+                <dt>Email-ID:</dt>
+                <dd>{{userData.Email}}</dd>
+                <dt>First Name:</dt>
+                <dd>{{userData.FirstName}}</dd>
+                <dt>Last Name:</dt>
+                <dd>{{userData.LastName}}</dd>
+                <dt>Employee Code:</dt>
+                <dd>{{userData.EmployeeCode || DefaultText}}</dd>
+                <dt>Designation:</dt>
+                <dd>{{userData.Designation || DefaultText}}</dd>
+                <dt>Department:</dt>
+                <dd>{{userData.Department || DefaultText}}</dd>
+                <!-- <dt>Gender:</dt>
+                <dd>{{userData.Gender || DefaultText}}</dd>
+                <dt>Date of Birth:</dt>
+                <dd>
+                    <span *ngIf="userData.DOB">
+                        {{userData.DOB | date : 'yyyy-MM-dd'}}
+                    </span>
+                    <span *ngIf="!userData.DOB">
+                        {{DefaultText}}
+                    </span>
+                </dd> -->
+                <dt>Mobile Number:</dt>
+                <dd>{{userData.MContactNumber || DefaultText}}</dd>
+                <dt>Phone Number:</dt>
+                <dd>{{userData.LContactNumber || DefaultText}}</dd>
+                
+            </dl>
+        </div>
+
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <dl class="term-description">
+                <dt>Department Manager:</dt>
+                <dd>
+                    <span *ngIf="userData.ReportingManagerId">{{userData.ReportingManagerId.FirstName}} {{userData.ReportingManagerId.LastName}}
+                    </span>
+                    <span *ngIf="!userData.ReportingManagerId">{{DefaultText}}
+                    </span>
+                </dd>
+                <dt>Emergency Contact:</dt>
+                <dd>
+                    <span *ngIf="userData.EmergencyContactId">{{userData.EmergencyContactId.FirstName}} {{userData.EmergencyContactId.LastName}}
+                    </span>
+                    <span *ngIf="!userData.EmergencyContactId">{{DefaultText}}
+                    </span>
+                </dd>
+                <!-- <dt>National-ID Number:</dt>
+                <dd>{{userData.NationalIdNumber || DefaultText}}</dd>
+                <dt>Passport Number:</dt>
+                <dd>{{userData.PassportNumber || DefaultText}}</dd>
+                <dt>Passport Expiry Date:</dt>
+                <dd>
+                    <span *ngIf="userData.PassportExpiryDate">
+                        {{userData.PassportExpiryDate | date : 'yyyy-MM-dd'}}
+                    </span>
+                    <span *ngIf="!userData.PassportExpiryDate">
+                        {{DefaultText}}
+                    </span>
+                </dd> -->
+                <dt>Address 1:</dt>
+                <dd>{{userData.AddressOne || DefaultText}}</dd>
+                <dt>Address 2:</dt>
+                <dd>{{userData.AddressTwo || DefaultText}}</dd>
+                <dt>City:</dt>
+                <dd>{{userData.City || DefaultText}}</dd>
+                <dt>Zipcode:</dt>
+                <dd>{{userData.Zipcode || DefaultText}}</dd>
+                <dt>Country:</dt>
+                <dd>{{userData.Country || DefaultText}}</dd>
+                <dt>Referral Code:</dt>
+                <dd style="font-style: bold;color: black">{{userData.CompanyId.referralCode || DefaultText}}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row edit-profile-button-wrapper">
+        <button data-toggle="modal" data-target="#edit-profile-modal" class="edit-user-profile">Edit Profile</button>
+    </div>
+
+
+    <div class="row upload-wrapper">
+        <div class="col-md-4 image-wrapper">
+            <div class="col-md-8 col-md-offset-2">
+                <label class="img-lable">Profile Picture</label>
+                <img
+                    alt="Profile Photo"
+                    class="image-block img img-responsive img-thumbnail"
+                    [src]="getProfilePhoto(userData.ProfilePhotoPath)">
+                <label class="btn upload-button">
+                    Browse
+                    <input
+                        #profilePhoto
+                        type="file"
+                        name="upload-profile-photo"
+                        id="upload-profile-photo"
+                        accept="image/*"
+                        (change)="uploadProfilePhoto($event)" hidden>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 image-wrapper">
+            <div class="col-md-8 col-md-offset-2">
+                <label class="img-lable">National Identification Document</label>
+                <!-- <img alt="File Not Uploded" *ngIf="!userData.NationalIdPath" class="image-block img img-responsive" src="/assets/images/icon/id-card.png"> -->
+                <a
+                    (click)="openFileInOtherTab(userData.NationalIdPath,$event)" style="cursor: pointer;">
+                    <img
+                        alt="Click to View"
+                        class="image-block img img-responsive"
+                        src="assets/images/icon/id-card.png">
+                </a>
+                <label class="btn upload-button">
+                    Browse
+                    <input type="file" (change)="uploadNationalId($event)" hidden>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 image-wrapper">
+            <div class="col-md-8 col-md-offset-2">
+                <label class="img-lable">National Passport</label>
+                <!-- <img
+                    alt="File Not Uploded"
+                    *ngIf="!userData.PassportPath"
+                    class="image-block img img-responsive"
+                    src="/assets/images/icon/passport.png"> -->
+                <a
+                    (click)="openFileInOtherTab(userData.PassportPath,$event)" style="cursor: pointer;">
+                    <img
+                        alt="Click to View"
+                        class="image-block img img-responsive"
+                        src="assets/images/icon/passport.png">
+                </a>
+                <label class="btn upload-button" >
+                    Browse
+                   <!--  Browse
+                    <input type="file" (change)="uploadPassport($event)" hidden> -->
+                    <button hidden data-toggle="modal" data-target="#upload-passport-modal" >Upload Passport</button>
+                </label>
+                <!-- <div class="row edit-profile-button-wrapper">
+                    <button data-toggle="modal" data-target="#upload-passport-modal" >Upload Passport</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel">
+                    <span class="glyphicon glyphicon-plane"></span>Edit Profile</h4>
+            </div>
+            <form #editProfileForm="ngForm">
+                <div class="modal-body" style="padding: 20px;">
+                    <!-- FirstName LastName EmployeeCode -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="first-name">Firstname:</label>
+                                <input placeholder="Enter Firstname" maxlength="20" pattern="[A-Za-z]{1,20}" name="first-name" id="first-name" class="form-control"
+                                    #firstName="ngModel" [(ngModel)]="userData.FirstName" required>
+
+                                <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                    <span [hidden]="!firstName.errors.required">
+                                        Firstname is required!
+                                    </span>
+                                    <span [hidden]="!firstName.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!firstName.errors.pattern">
+                                        Invalid firstname
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="last-name">Lastname:</label>
+                                <input placeholder="Enter Lastname" maxlength="20" pattern="[A-Za-z]{1,20}" name="last-name" id="last-name" class="form-control"
+                                    #lastName="ngModel" [(ngModel)]="userData.LastName" required>
+
+                                <span *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="error-message">
+                                    <span [hidden]="!lastName.errors.required">
+                                        Lastname is required!
+                                    </span>
+                                    <span [hidden]="!lastName.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!lastName.errors.pattern">
+                                        Invalid lastname
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="employee-code">Employee Code:</label>
+                                <input placeholder="Enter Employee Code" maxlength="20" pattern="[A-Za-z0-9]{1,20}" name="employee-code" id="employee-code"
+                                    class="form-control" #employeeCode="ngModel" [(ngModel)]="userData.EmployeeCode">
+
+                                <span *ngIf="employeeCode.errors && (employeeCode.dirty || employeeCode.touched)" class="error-message">
+                                    <span [hidden]="!employeeCode.errors.required">
+                                        Employee code is required!
+                                    </span>
+                                    <span [hidden]="!employeeCode.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!employeeCode.errors.pattern">
+                                        Invalid Employee code
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Designation Department Gender -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="designation">Designation:</label>
+                                <input placeholder="Enter Your Designation" maxlength="20" pattern="[A-Za-z]{1,20}" name="designation" id="designation" class="form-control"
+                                    #designation="ngModel" [(ngModel)]="userData.Designation">
+                                <span *ngIf="designation.errors && (designation.dirty || designation.touched)" class="error-message">
+                                    <span [hidden]="!designation.errors.required">
+                                        Designation is required!
+                                    </span>
+                                    <span [hidden]="!designation.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!designation.errors.pattern">
+                                        Invalid designation
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="department">Department:</label>
+                                <input placeholder="Enter Your Department" maxlength="20" pattern="[A-Za-z]{1,20}" name="department" id="department" class="form-control"
+                                    #department="ngModel" [(ngModel)]="userData.Department">
+
+                                <span *ngIf="department.errors && (department.dirty || department.touched)" class="error-message">
+                                    <span [hidden]="!department.errors.required">
+                                        Department is required!
+                                    </span>
+                                    <span [hidden]="!department.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!department.errors.pattern">
+                                        Invalid department
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" class="form-control" [(ngModel)]="userData.Gender" #gender="ngModel">
+                                    <option *ngFor="let gender of listedGenders" [value]="gender">{{gender}}</option>
+                                </select>
+                                <span *ngIf="gender.errors && (gender.dirty || gender.touched)" class="error-message">
+                                    <span [hidden]="!gender.errors.pattern">
+                                        Gender is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="contact-number">Mobile Number :</label>
+                                <input [(ngModel)]="userData.MContactNumber" #mContactNumber="ngModel" maxlength="15" class="form-control" id="contact-number"
+                                    name="contact-number" placeholder="Enter Mobile Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$"
+                                    type="text" required />
+                                <span *ngIf="mContactNumber.errors && (mContactNumber.dirty || mContactNumber.touched)" class="error-message">
+                                    <span [hidden]="!mContactNumber.errors.required">
+                                        Mobile Number is required!
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.maxlength">
+                                        Mobile Number cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.pattern">
+                                        Invalid Mobile Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DOB Mobile Nubmer Landline Number-->
+                    <div class="row">
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="dob">Date of Birth:</label>
+                                <input placeholder="Date of Birth" name="dob" id="dob" class="form-control picker-input" [mode]="'dropdown'" [value]="userData.DOB | date:'MM/dd/yyyy'"
+                                    dateTimePicker [pickerType]="'date'" [(ngModel)]="userData.DOB" #dob="ngModel" readonly>
+                                <span *ngIf="dob.errors && (dob.dirty || dob.touched)" class="error-message">
+                                    <span [hidden]="!dob.errors.required">
+                                        Date of Birth is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="contact-number">Mobile Number :</label>
+                                <input [(ngModel)]="userData.MContactNumber" #mContactNumber="ngModel" maxlength="15" class="form-control" id="contact-number"
+                                    name="contact-number" placeholder="Enter Mobile Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$"
+                                    type="text" required />
+                                <span *ngIf="mContactNumber.errors && (mContactNumber.dirty || mContactNumber.touched)" class="error-message">
+                                    <span [hidden]="!mContactNumber.errors.required">
+                                        Mobile Number is required!
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.maxlength">
+                                        Mobile Number cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.pattern">
+                                        Invalid Mobile Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="phone-number">Phone Number :</label>
+                                <input [(ngModel)]="userData.LContactNumber" #lContactNumber="ngModel" maxlength="15" class="form-control" id="phone-number"
+                                    name="phone-number" placeholder="Enter Phone Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$"
+                                    type="text" />
+                                <span *ngIf="lContactNumber.errors && (lContactNumber.dirty || lContactNumber.touched)" class="error-message">
+                                    <span [hidden]="!lContactNumber.errors.required">
+                                        Phone Number is required!
+                                    </span>
+                                    <span [hidden]="!lContactNumber.errors.maxlength">
+                                        Mobile Phone cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!lContactNumber.errors.pattern">
+                                        Invalid Phone Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="emergency-contact">Emergency Contact:</label>
+                                <ng2-completer class="form-control cc" #emergencyContact="ngModel" [(ngModel)]="EmergencyContact" (selected)="onSelectEmergencyContact($event)"
+                                    [datasource]="companyUsersService" [minSearchLength]="0" name="emergency-contact" inputClass="full-width"
+                                    required></ng2-completer>
+                                <span *ngIf="emergencyContact.errors && (emergencyContact.dirty || emergencyContact.touched)" class="error-message">
+                                    <span [hidden]="!emergencyContact.errors.pattern">
+                                        Emergency Contact is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="address-one">Address 1:</label>
+                                <input placeholder="Enter Address" maxlength="120" name="address-one" id="address-one" class="form-control" #addressOne="ngModel"
+                                    [(ngModel)]="userData.AddressOne">
+                                <span *ngIf="addressOne.errors && (addressOne.dirty || addressOne.touched)" class="error-message">
+                                    <span [hidden]="!addressOne.errors.required">
+                                        Address 1 is required!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.maxlength">
+                                        Input exceeding max character limit (120)!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.pattern">
+                                        Invalid Address
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EmegencyContact NationalIdNumber PassportNumber-->
+                    <div class="row">
+                       <!--  <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="emergency-contact">Emergency Contact:</label>
+                                <ng2-completer class="form-control cc" #emergencyContact="ngModel" [(ngModel)]="EmergencyContact" (selected)="onSelectEmergencyContact($event)"
+                                    [datasource]="companyUsersService" [minSearchLength]="0" name="emergency-contact" inputClass="full-width"
+                                    required></ng2-completer>
+                                <span *ngIf="emergencyContact.errors && (emergencyContact.dirty || emergencyContact.touched)" class="error-message">
+                                    <span [hidden]="!emergencyContact.errors.pattern">
+                                        Emergency Contact is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="national-id-number">National-ID Number:</label>
+                                <input placeholder="Enter National ID Number" maxlength="20" pattern="[A-Za-z0-9]{1,20}" name="national-id-number" id="national-id-number"
+                                    class="form-control" #nationalIdNumber="ngModel" [(ngModel)]="userData.NationalIdNumber">
+
+                                <span *ngIf="nationalIdNumber.errors && (nationalIdNumber.dirty || nationalIdNumber.touched)" class="error-message">
+                                    <span [hidden]="!nationalIdNumber.errors.required">
+                                        National ID Number is required!
+                                    </span>
+                                    <span [hidden]="!nationalIdNumber.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!nationalIdNumber.errors.pattern">
+                                        Invalid National ID Number
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="passport-number">Passport Number:</label>
+                                <input placeholder="Enter Passport Number" maxlength="20" pattern="[A-Za-z0-9]{1,20}" name="passport-number" id="passport-number"
+                                    class="form-control" #passportNumber="ngModel" [(ngModel)]="userData.PassportNumber">
+
+                                <span *ngIf="passportNumber.errors && (passportNumber.dirty || passportNumber.touched)" class="error-message">
+                                    <span [hidden]="!passportNumber.errors.required">
+                                        Passport Number is required!
+                                    </span>
+                                    <span [hidden]="!passportNumber.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!passportNumber.errors.pattern">
+                                        Invalid Passport Number
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- PassportExpiryDate Address1 Address2-->
+                    <div class="row">
+                       <!--  <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="passport-expiry-date">Passport Expiry Date:</label>
+                                <input placeholder="Passport Expiry Date" name="passport-expiry-date" id="passport-expiry-date" class="form-control picker-input"
+                                    [mode]="'dropdown'" [value]="userData.PassportExpiryDate | date:'MM/dd/yyyy'" dateTimePicker
+                                    [pickerType]="'date'" [minMoment]="minPassportExpiryDate" [(ngModel)]="userData.PassportExpiryDate"
+                                    #passportExpiryDate="ngModel" readonly>
+                                <span *ngIf="passportExpiryDate.errors && (passportExpiryDate.dirty || passportExpiryDate.touched)" class="error-message">
+                                    <span [hidden]="!passportExpiryDate.errors.required">
+                                        Passport Expiry Date is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+
+                       <!--  <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="address-one">Address1:</label>
+                                <input placeholder="Enter Address" maxlength="120" name="address-one" id="address-one" class="form-control" #addressOne="ngModel"
+                                    [(ngModel)]="userData.AddressOne">
+                                <span *ngIf="addressOne.errors && (addressOne.dirty || addressOne.touched)" class="error-message">
+                                    <span [hidden]="!addressOne.errors.required">
+                                        Address1 is required!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.maxlength">
+                                        Input exceeding max character limit (120)!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.pattern">
+                                        Invalid Address
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="address-two">Address 2:</label>
+                                <input placeholder="Enter Address" maxlength="120" name="address-two" id="address-two" class="form-control" #addressTwo="ngModel"
+                                    [(ngModel)]="userData.AddressTwo">
+                                <span *ngIf="addressTwo.errors && (addressTwo.dirty || addressTwo.touched)" class="error-message">
+                                    <span [hidden]="!addressTwo.errors.required">
+                                        Address2 is required!
+                                    </span>
+                                    <span [hidden]="!addressTwo.errors.maxlength">
+                                        Input exceeding max character limit (120)!
+                                    </span>
+                                    <span [hidden]="!addressTwo.errors.pattern">
+                                        Invalid Address
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input [options]="{types:['(cities)']}" placeholder="Search City" name="city" class="form-control" [(ngModel)]="userData.City"
+                                        #city="ngModel" id="autocomplete" (city)='userData.City=$event' (country)='userData.Country=$event'
+                                        required ng2-google-place-autocomplete>
+                                    <span *ngIf="city.errors && (city.dirty || city.touched)" class="error-message">
+                                        <span [hidden]="!city.errors.required">
+                                            City is required!
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label for="country">Country:</label>
+                                    <input name="country" id="country" class="form-control" #country="ngModel" [(ngModel)]="userData.Country" readonly>
+                                    <span *ngIf="country.errors && (country.dirty || country.touched)" class="error-message">
+                                        <span [hidden]="!country.errors.required">
+                                            Country is required!
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- City Country Zipcode -->
+                    <div class="row">
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input [options]="{types:['(cities)']}" placeholder="Search City" name="city" class="form-control" [(ngModel)]="userData.City"
+                                    #city="ngModel" id="autocomplete" (city)='userData.City=$event' (country)='userData.Country=$event'
+                                    required ng2-google-place-autocomplete>
+                                <span *ngIf="city.errors && (city.dirty || city.touched)" class="error-message">
+                                    <span [hidden]="!city.errors.required">
+                                        City is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="country">Country:</label>
+                                <input name="country" id="country" class="form-control" #country="ngModel" [(ngModel)]="userData.Country" readonly>
+                                <span *ngIf="country.errors && (country.dirty || country.touched)" class="error-message">
+                                    <span [hidden]="!country.errors.required">
+                                        Country is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode:</label>
+                                <input name="zipcode" id="zipcode" class="form-control" #zipcode="ngModel" [(ngModel)]="userData.Zipcode" maxlength="6" pattern="[0-9]{6}">
+                                <span *ngIf="zipcode.errors && (zipcode.dirty || zipcode.touched)" class="error-message">
+                                    <span [hidden]="!zipcode.errors.required">
+                                        Zipcode is required!
+                                    </span>
+                                    <span [hidden]="!zipcode.errors.maxlength">
+                                        Input exceeding max limit (6)
+                                    </span>
+                                    <span [hidden]="!zipcode.errors.pattern">
+                                        Invalid Zipcode
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row"> -->     
+                        <h3>Personal Emergency contact deatails:</h3>
+                    <!-- </div> -->
+                    <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label for="Ename">Name:</label>
+                                    <input placeholder="Enter Name" maxlength="20" pattern="[A-Za-z]{1,20}" name="Emergency-name" id="Ename" class="form-control"
+                                        #EName="ngModel" [(ngModel)]="userData.EmergencyName" >
+    
+                                    <!-- <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                        <span [hidden]="!firstName.errors.required">
+                                            Firstname is required!
+                                        </span>
+                                        <span [hidden]="!firstName.errors.maxlength">
+                                            Input exceeding max character limit (20)!
+                                        </span>
+                                        <span [hidden]="!firstName.errors.pattern">
+                                            Invalid firstname
+                                        </span>
+                                    </span> -->
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="Efirst-name">Firstname:</label>
+                                        <input placeholder="Enter Firstname" maxlength="20" pattern="[A-Za-z]{1,20}" name="Efirst-name" id="Efirst-name" class="form-control"
+                                            #EfirstName="ngModel" [(ngModel)]="userData.EmergencyFirstName" >
+        
+                                        <!-- <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                            <span [hidden]="!firstName.errors.required">
+                                                Firstname is required!
+                                            </span>
+                                            <span [hidden]="!firstName.errors.maxlength">
+                                                Input exceeding max character limit (20)!
+                                            </span>
+                                            <span [hidden]="!firstName.errors.pattern">
+                                                Invalid firstname
+                                            </span>
+                                        </span> -->
+                                    </div>
+                                </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label for="Elast-name">Lastname:</label>
+                                    <input placeholder="Enter Lastname" maxlength="20" pattern="[A-Za-z]{1,20}" name="Elast-name" id="Elast-name" class="form-control"
+                                        #ElastName="ngModel" [(ngModel)]="userData.EmergencyLastName" >
+    
+                                    <!-- <span *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="error-message">
+                                        <span [hidden]="!lastName.errors.required">
+                                            Lastname is required!
+                                        </span>
+                                        <span [hidden]="!lastName.errors.maxlength">
+                                            Input exceeding max character limit (20)!
+                                        </span>
+                                        <span [hidden]="!lastName.errors.pattern">
+                                            Invalid lastname
+                                        </span>
+                                    </span> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="Eemail">Email:</label>
+                                        <input placeholder="Enter Email" maxlength="20" pattern="[A-Za-z]{1,20}" name="Eemail" id="Eemail" class="form-control"
+                                            #Eemail="ngModel" [(ngModel)]="userData.EmergencyEmail" >
+        
+                                        <!-- <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                            <span [hidden]="!firstName.errors.required">
+                                                Firstname is required!
+                                            </span>
+                                            <span [hidden]="!firstName.errors.maxlength">
+                                                Input exceeding max character limit (20)!
+                                            </span>
+                                            <span [hidden]="!firstName.errors.pattern">
+                                                Invalid firstname
+                                            </span>
+                                        </span> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label for="Econtact">Contact Number :</label>
+                                            <input placeholder="Enter Contact Number " maxlength="20" pattern="[A-Za-z]{1,20}" name="Econtact" id="Econtact" class="form-control"
+                                                #Econtctno="ngModel" [(ngModel)]="userData.EmeregencyContact" >
+            
+                                           <!--  <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                                <span [hidden]="!firstName.errors.required">
+                                                    Firstname is required!
+                                                </span>
+                                                <span [hidden]="!firstName.errors.maxlength">
+                                                    Input exceeding max character limit (20)!
+                                                </span>
+                                                <span [hidden]="!firstName.errors.pattern">
+                                                    Invalid firstname
+                                                </span>
+                                            </span> -->
+                                        </div>
+                                    </div>
+                            </div>
+
+                </div>
+                <div class="panel-footer" style="margin-bottom:-14px;">
+                    <button [disabled]="!editProfileForm.form.valid" (click)="editProfile(userData)" type="submit" class="btn btn-success" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> SUBMIT</button>
+
+                    <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="upload-passport-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel">
+                    <span></span>Upload fields for Passports</h4>
+            </div>
+            <form #UploadpPassportForm="ngForm">
+                    <div class="modal-body" style="padding: 20px;">
+                        <!-- FirstName LastName EmployeeCode -->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                                <div class="form-group national-upld-btn">
+                                    <label class="btn upload-button">
+                                        Browse National Passport
+                                        <input type="file" (change)="changePassport($event,'national')" hidden>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label >Passport expiry date:</label>
+                                    <input placeholder="dd/mmm/yyyy" id="nationalPassExDate" name="nationalPassExDate" #nationalPassExDate="ngModel"
+                                        [(ngModel)]="NationalPassExDate" [value]="NationalPassExDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [minMoment]="currentDateTime" [autoClose]="true" dateTimePicker
+                                        [pickerType]="'date'"  required readonly style="width:80%" />
+                                    <!-- <span class="error-message" *ngIf="nationalPassExDate.errors && (nationalPassExDate.dirty || nationalPassExDate.touched)">
+                                        <span [hidden]="!nationalPassExDate.errors.required">
+                                            Departure date is required
+                                        </span>
+                                    </span> -->
+                                    <span class="error-message" *ngIf="NationalPassExDate ==undefined && passportfiles[0] != null">
+                                        <span>
+                                            Passport Expiry date is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                                <div class="form-group foreign-upld-btn" >
+                                    <label class="btn upload-button">
+                                        Browse Foreign Passport &nbsp;
+                                        <input type="file" (change)="changePassport($event,'foreign')" hidden>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                                <div class="form-group">
+                                    <label>Passport expiry date:</label>
+                                    <input placeholder="dd/mmm/yyyy" id="FpassportExDate" name="FpassportExDate" #FpassportExDate="ngModel"
+                                        [(ngModel)]="ForeignExPassportDate" [value]="ForeignExPassportDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [minMoment]="currentDateTime" [autoClose]="true" dateTimePicker
+                                        [pickerType]="'date'" required readonly  style="width:80%"/>
+                                    <!-- <span class="error-message" *ngIf="FpassportExDate.errors && (FpassportExDate.dirty || FpassportExDate.touched)">
+                                        <span [hidden]="!FpassportExDate.errors.required">
+                                             Passport expiry date is required
+                                        </span>
+                                    </span> -->
+                                    <span class="error-message" *ngIf="ForeignExPassportDate ==undefined && passportfiles[1] != null">
+                                        <span>
+                                            Passport Expiry date is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <button class="edit-user-profile" (click)="uploadPassport()" >Submit</button>
+                        </div>
+                    </div>
+                    
+             </form>       
+        </div>
+    </div>    
+</div>

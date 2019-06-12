@@ -1,0 +1,318 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-friends"></i>
+            <h2 class="entry-title">Users</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+
+<section id="content" class="gray-area">
+    <div class="container">
+        <button
+            style="margin-top: 10px; margin-bottom: 10px;"
+            type="submit"
+            class="btn btn-primary" 
+            data-toggle="modal"
+            data-target="#add-user-modal">
+            <span class="glyphicon glyphicon-plus-sign"></span> Add New
+        </button>
+        <dx-data-grid 
+            id="gridContainer"
+            [dataSource]="userlist"
+            (onContentReady)="onContentReady($event)"
+            (onCellPrepared)="onCellPrepared($event)"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [showBorders]="true"
+            [columnAutoWidth]="true"
+            [rowAlternationEnabled]="true"
+            [allowColumnReordering]="false"
+            [allowColumnResizing]="false"
+            (onRowInserting)="logEventInserting($event)"
+            (onEditingStart)="EditingStart($event)"
+            (onRowRemoving)="RowRemoving($event)"
+            (onRowUpdated)="RowUpdated($event)">
+            
+            <dxo-editing 
+                mode="row"
+                [allowUpdating]="true"
+                [allowDeleting]="true"
+                [allowAdding]="false">
+                <dxo-popup
+                    title="Add User"
+                    [showTitle]="true"
+                    width="auto"
+                    height="auto" 
+                    [position]="{ my: 'top', at: 'top' }">
+                </dxo-popup>
+            </dxo-editing>
+
+            <dxo-header-filter 
+                [visible]="showHeaderFilter">
+            </dxo-header-filter>
+            <dxo-paging [pageSize]="20"></dxo-paging>
+
+            <dxi-column
+                dataField="FirstName"
+                caption="First Name" 
+                id="FirstName"
+                [allowFiltering]="false"
+                [allowSorting]="true">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+                    <dxi-validation-rule 
+                        type="pattern"
+                        pattern="[A-Za-z]{1,20}"
+                        message="Your Firstname must have character only!">
+                </dxi-validation-rule>
+            </dxi-column>
+            <dxi-column
+                dataField="LastName" 
+                caption="Last Name"
+                [allowFiltering]="false"
+                [allowSorting]="true"
+                id="LastName">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+                <dxi-validation-rule 
+                    type="pattern"
+                    pattern="[A-Za-z]{1,20}"
+                    message="Your Lastname must have character only!">
+                </dxi-validation-rule>
+            </dxi-column>
+            <dxi-column
+                dataField="MContactNumber"
+                caption="Contact Number"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                id="MContactNumber">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+                <dxi-validation-rule
+                    type="pattern"
+                    pattern="^[0-9]\d{6,15}$"
+                    maxlength="15" minlength="6"
+                    message="Contact No. must contain 7 to 15 digit only!">
+                </dxi-validation-rule>
+            </dxi-column>
+            <dxi-column
+                dataField="Email"
+                caption="Email Id"
+                id="Email"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                [allowEditing]="false">
+            </dxi-column>
+            <dxi-column
+                dataField="Role"
+                caption="User Type"
+                [allowFiltering]="false"
+                [allowSorting]="false">         
+                <dxo-lookup
+                    [dataSource]="userType"
+                    displayExpr="RoleName"
+                    valueExpr="Role">
+                </dxo-lookup> 
+            </dxi-column> 
+            <dxi-column
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                dataField="ReportingManagerId"
+                caption="Reporting Authority">         
+                <dxo-lookup
+                    [dataSource]="listOfAuthorities"
+                    displayExpr="FirstName"
+                    valueExpr="_id">
+                </dxo-lookup> 
+            </dxi-column> 
+            <dxi-column
+                dataField="isDeleted"
+                caption="Status"
+                [allowFiltering]="false"
+                [allowSorting]="false">         
+                <dxo-lookup
+                    [dataSource]="Status"
+                    displayExpr="status"
+                    valueExpr="isDeleted">
+                </dxo-lookup> 
+            </dxi-column>
+            <dxi-column
+                dataField="Startdate"
+                caption="Start Date"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                dataType="date">         
+            </dxi-column> 
+            <dxi-column
+                dataField="Enddate"
+                caption="End Date"
+                [allowFiltering]="false"
+                [allowSorting]="false"
+                dataType="date">         
+            </dxi-column> 
+        </dx-data-grid>
+    </div>
+</section>
+
+<div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-home"></span> Add User</h4>
+            </div>
+            <form #addUserResponseForm="ngForm">
+                <div class="modal-body" style="padding: 15px;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="firstName">First Name :</label>
+                                <input [(ngModel)]="FirstName" #firstName="ngModel" maxlength="30" class="form-control" id="firstName" name="firstName" placeholder="Enter Firstname" pattern="[A-Za-z]{1,30}" type="text" required />
+                                <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                    <span [hidden]="!firstName.errors.required">
+                                        Firstname is required!
+                                    </span>
+                                    <span [hidden]="!firstName.errors.maxlength">
+                                        Firstname cannot be more than 30 characters long.
+                                    </span>
+                                    <span [hidden]="!firstName.errors.pattern">
+                                        Invalid Firstname.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>                  
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="lastName">Last Name :</label>
+                                <input [(ngModel)]="LastName" #lastName="ngModel" maxlength="30" class="form-control" id="lastName" name="lastName" placeholder="Enter lastName" type="text" pattern="[A-Za-z]{1,30}" required />
+                                <span *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="error-message">
+                                    <span [hidden]="!lastName.errors.required">
+                                        Lastname is required!
+                                    </span>
+                                    <span [hidden]="!lastName.errors.maxlength">
+                                        Lastname cannot be more than 30 characters long.
+                                    </span>
+                                    <span [hidden]="!lastName.errors.pattern">
+                                        Invalid Lastname.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="email">Email-Id :</label>
+                                <input [(ngModel)]="Email" #email="ngModel" maxlength="30" class="form-control" id="email" name="email" placeholder="Enter Email Address" type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
+                                <span *ngIf="email.errors && (email.dirty || email.touched)" class="error-message">
+                                    <span [hidden]="!email.errors.required">
+                                        Email is required!
+                                    </span>
+                                    <span [hidden]="!email.errors.maxlength">
+                                        Email cannot be more than 30 characters long.
+                                    </span>
+                                    <span [hidden]="!email.errors.pattern">
+                                        Invalid Email.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>                  
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="contactNumber">Contact Number :</label>
+                                <input [(ngModel)]="ContactNumber" #contactNumber="ngModel" maxlength="15" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter Contact Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$" type="text" required />
+                                <span *ngIf="contactNumber.errors && (contactNumber.dirty || contactNumber.touched)" class="error-message">
+                                    <span [hidden]="!contactNumber.errors.required">
+                                        Contact Number is required!
+                                    </span>
+                                    <span [hidden]="!contactNumber.errors.maxlength">
+                                        Contact Number cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!contactNumber.errors.pattern">
+                                        Invalid Contact Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>                                        
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="user-type">User Type:</label>
+                                <select id="user-type" name="user-type" class="form-control"  [(ngModel)]="Role" #role="ngModel" required>
+                                    <option disabled selected> Select User Type
+                                    </option>  
+                                    <option *ngFor="let role of userRoles" [value]="role.value">{{role.name}}</option>
+                                </select>
+                                <span *ngIf="role.errors && (role.dirty || role.touched)" class="error-message">
+                                    <span [hidden]="!role.errors.required">
+                                        User Type is required!
+                                    </span>         
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="reportingManager">Reporting Authority :</label>
+                                <select [disabled]="Role==4" id="reportingManager" name="reportingManager" class="form-control"  [(ngModel)]="ReportingManager" #reportingManager="ngModel" required>
+                                    <option disabled selected> Select Reporting Authority
+                                    <option *ngFor="let rm of reportingManagers" [value]="rm._id">{{rm.FirstName}} {{rm.LastName}}</option>
+                                </select>
+                                <span *ngIf="reportingManager.errors && (reportingManager.dirty || reportingManager.touched)" class="error-message">
+                                    <span [hidden]="!reportingManager.errors.required">
+                                        Reporting Authority is required!
+                                    </span>         
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="Role == 5">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="user-type">User Start Date:</label>
+                                <div class="flight-inputs">
+                                    <input placeholder="Select User Start Date" id="startDate" name="startDate" #startDate="ngModel"
+                                        [(ngModel)]="StartDate" [value]="StartDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [minMoment]="currentDateTime" [autoClose]="true" dateTimePicker
+                                        [pickerType]="'date'"  required readonly />
+                                    <span class="error-message" *ngIf="startDate.errors && (startDate.dirty || startDate.touched)">
+                                        <span [hidden]="!startDate.errors.required">
+                                            User Start Date is required
+                                        </span>
+                                    </span> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="user-type">User End Date:</label>
+                                <div class="flight-inputs">
+                                    <input placeholder="Select User End Date" id="endDate" name="endDate" #endDate="ngModel"
+                                        [(ngModel)]="EndDate" [value]="EndDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [minMoment]="StartDate" [autoClose]="true" dateTimePicker
+                                        [pickerType]="'date'" required readonly />
+                                    <span class="error-message" *ngIf="endDate.errors && (endDate.dirty || endDate.touched)">
+                                        <span [hidden]="!endDate.errors.required">
+                                            User End Date is required
+                                        </span>
+                                    </span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>  
+                <div class="panel-footer" style="margin-bottom:-14px;">
+                    <button [disabled]="!addUserResponseForm.form.valid" (click)="addUser(addUserResponseForm)" type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> SUBMIT</button>
+                    
+                    <button type="reset" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span>CLEAR</button>
+
+                    <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

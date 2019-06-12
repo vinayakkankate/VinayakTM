@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+#next-button-wrapper{
+    text-align:center;
+}
+
+.view-purchase-order-file{
+	height: 64px;
+	width: 64px;
+	margin: auto;
+}
+/*.dx-header-row td{
+text-align: center !important;
+font-size: 12px !important;
+font-weight: 500 !important;
+
+}
+*/
+/*commented by vimal*/
+
+.dx-texteditor-input{
+	text-align: left !important;
+}
+
+/*.dx-header-row{
+	background-color: #e6e6e6;
+}*/
+/*commented by vimal*/
+.marginTop20{
+	margin-top: 20px;
+}
+.dx-datagrid .dx-row-alt > td{
+    background-color: #fbfbfb !important;
+}
+
+ul.search-tabs li a {
+    color: #9e9e9e;
+    display: block;
+    padding: 0 20px;
+    background: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+	text-transform: none;
+	width: 100px !important;
+	text-align: center;
+}

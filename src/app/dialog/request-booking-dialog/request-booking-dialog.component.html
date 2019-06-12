@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">×</button>
+            <h4 class="modal-title" ><span class="glyphicon glyphicon-home"></span> Agency Details</h4>
+        </div>
+        <div class="modal-body">
+            <h4>Attach Itinerary <span>(Optional)</span></h4>
+            <label class="btn upload-button">Browse
+                <input accept="application/pdf" (change)="uploadPurchseOrder($event)" hidden="" type="file" multiple>
+            </label>
+            <h5>Files Selected <span *ngIf="files">
+            {{files.length}}</span></h5>
+            <div class="modal-footer">
+                <button (click)="confirm()" type="button" class="btn btn-primary">Submit</button>
+                
+                <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
+            </div>
+    	</div>
+	</div>
+</div>

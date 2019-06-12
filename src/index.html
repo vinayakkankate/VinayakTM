@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Travel Mediary</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Travel Mediary - Travel, Tour Booking HTML5 Template</title>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA6YxaF9AapOHfeoAQhL3UWLq_F3tzoO0M"></script>
+    
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="HTML5 Template" />
+    <link rel="stylesheet" href="assets/css/animation.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tm.css">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Theme Styles -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,200,300,500' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+
+    <!-- Current Page Styles -->
+<!--     <link rel="stylesheet" type="text/css" href="assets/components/revolution_slider/css/settings.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="assets/components/revolution_slider/css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="assets/components/jquery.bxslider/jquery.bxslider.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="assets/components/flexslider/flexslider.css" media="screen" />
+ -->
+    <!-- Main Style -->
+    <link id="main-style" rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Updated Styles -->
+    <link rel="stylesheet" href="assets/css/updates.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- Responsive Styles -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+
+    <!-- Javascript Page Loader -->
+    <!--<script type="text/javascript" src="assets/js/pace.min.js" data-pace-options='{ "ajax": false }'></script>
+    <script type="text/javascript" src="assets/js/page-loading.js"></script>-->
+<style type="text/css">
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  margin: -75px 0 0 -75px;
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid #FB8E25;
+  border-bottom: 10px solid #194eb0;
+  width: 75px;
+  height: 75px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+    <app-root><div id="overlay" [hidden]="!spinner">
+    <div class="spinner"></div>
+</div></app-root>
+</body>
+
+<script type="text/javascript" src="assets/js/jquery-1.11.1.min.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery.noconflict.js"></script>
+<script type="text/javascript" src="assets/js/modernizr.2.7.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="assets/js/jquery-ui.1.10.4.min.js"></script>
+ -->
+<!-- Twitter Bootstrap -->
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+
+<!-- load revolution slider scripts -->
+<!-- <script type="text/javascript" src="assets/components/revolution_slider/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="assets/components/revolution_slider/js/jquery.themepunch.revolution.min.js"></script>
+ -->
+<!-- load BXSlider scripts -->
+<!-- <script type="text/javascript" src="assets/components/jquery.bxslider/jquery.bxslider.min.js"></script>
+ -->
+<!-- Flex Slider -->
+<!-- <script type="text/javascript" src="assets/components/flexslider/jquery.flexslider.js"></script>
+ -->
+<!-- parallax -->
+<!-- <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
+ -->
+<!-- parallax -->
+<!-- <script type="text/javascript" src="assets/js/jquery.stellar.min.js"></script>
+ -->
+<!-- waypoint -->
+<!-- <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
+ -->
+<!-- load page Javascript -->
+<!-- <script type="text/javascript" src="assets/js/theme-scripts.js"></script>
+<script type="text/javascript" src="assets/js/scripts.js"></script>
+ -->
+</html>

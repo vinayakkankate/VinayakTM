@@ -1,0 +1,108 @@
+<div class="soap-login-page style1 body-blank">
+    <div id="page-wrapper" class="wrapper-blank">
+        <section id="content">
+            <div class="container">
+                <div id="main">
+                    <h1 class="logo block">
+                        <a href="#" title="Travel Mediary - home">
+                            <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                        </a>
+                    </h1>
+                    <div class="text-center yellow-color box" style="font-size: 4em; font-weight: 300; line-height: 1em;">Corporate-Company Register</div>
+                        <p class="light-blue-color block" style="font-size: 1.3333em;">All fields are mandatory.</p>
+                            <div class="col-sm-8 col-md-6 col-lg-5 no-float no-padding center-block form-group">
+                                <form class="login-form" [formGroup]="registerForm">
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['FirstName'].valid && registerForm.controls['FirstName'].touched}">
+                                        <div class="cols-sm-10 form-group">
+                                            <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="input-text input-large form full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" placeholder="Enter Your First Name" [formControl]="registerForm.controls['FirstName']" required autofocus/>
+                                                <span class="input-group-addon input-text">
+                                                    <!-- <i *ngIf="!registerForm.controls['FirstName'].valid || registerForm.controls['FirstName'].hasError('required') || registerForm.controls['FirstName'].touched" class="fa fa-check req" aria-hidden="true"></i>
+                                                    <i *ngIf="registerForm.controls['FirstName'].valid" class="fa fa-check chk" aria-hidden="true"></i> -->
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="First Name can contain 1 to 15 characters including special characters (space, dot, single quote) only!" class="{{(!registerForm.controls['FirstName'].valid)?(registerForm.controls['FirstName'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['FirstName'].hasError('required') && registerForm.controls['FirstName'].touched" class="help-block">First Name is required.</div> -->
+                                             <!-- <div id="alt" *ngIf="!registerForm.controls['FirstName'].hasError('required') && registerForm.controls['FirstName'].touched" class="help-block">First Name must contain 1 to 15 alphabets only!</div>  -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['LastName'].valid && registerForm.controls['LastName'].touched}">
+                                        <div class="cols-sm-10">
+                                             <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="input-text input-large full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" placeholder="Enter Your Last Name" [formControl]="registerForm.controls['LastName']" required autofocus/>
+                                                 <span class="input-group-addon input-text">
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="Last Name can contain 1 to 15 characters including special characters (space, dot, single quote) only!" class="{{(!registerForm.controls['LastName'].valid)?(registerForm.controls['LastName'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['LastName'].hasError('required') && registerForm.controls['LastName'].touched" class="help-block">Last Name is required.</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['CompanyName'].valid && registerForm.controls['CompanyName'].touched}">
+                                        <div class="cols-sm-10">
+                                             <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-building-o fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="input-text input-large full-width" pattern="([A-zÀ-ž0-9\s\.\_\+\-]){1,50}" maxlength="50" placeholder="Enter your Company Name" [formControl]="registerForm.controls['CompanyName']" required autofocus/>
+                                            <span class="input-group-addon input-text">
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="Company Name can contain 1 to 20 characters including digits and special characters (space, dash, underscore, plus) only!" class="{{(!registerForm.controls['CompanyName'].valid)?(registerForm.controls['CompanyName'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                                </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['CompanyName'].hasError('required') && registerForm.controls['CompanyName'].touched" class="help-block">Company Name is required.</div> -->
+                                        </div>
+                                    </div>                                    
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['Email'].valid && registerForm.controls['Email'].touched}">
+                                        <div class="cols-sm-10">
+                                             <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                <input type="text" class="input-text input-large full-width" name="email_field" id="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z]{2,3}$"  maxlength="40" placeholder="Enter Your Email Address" [formControl]="registerForm.controls['Email']" autocomplete="off" required autofocus>
+                                                <span class="input-group-addon input-text">                                                         
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="Email Address is required!" class="{{(!registerForm.controls['Email'].valid)?(registerForm.controls['Email'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['Email'].hasError('required') && registerForm.controls['Email'].touched" class="help-block">Email is required.</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['Website'].valid && registerForm.controls['Website'].touched}">
+                                        <div class="cols-sm-10">
+                                            <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-globe fa" aria-hidden="true"></i></span>
+                                                <input type="url" pattern="(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-zA-Z]{3}.?([a-zA-Z]+)?" maxlength="45" class="input-text input-large full-width" id="Website" placeholder="Enter Company Website" autocomplete="off" [formControl]="registerForm.controls['Website']" required autofocus>
+                                                <span class="input-group-addon input-text">
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="Company Website is required!" class="{{(!registerForm.controls['Website'].valid)?(registerForm.controls['Website'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['Website'].hasError('required') && registerForm.controls['Website'].touched" class="help-block">Website is required.</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback" [ngClass]="{'has-error':!registerForm.controls['ContactNumber'].valid && registerForm.controls['ContactNumber'].touched}">
+                                        <div class="cols-sm-10">
+                                            <div class="input-group input-text input-large full-width">
+                                                <span class="input-group-addon input-text input-large"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                                                <input class="input-text input-large full-width" type="phone" pattern="^[0-9]\d{6,15}$" maxlength="15" minlength="6" placeholder="Enter Contact Number" [formControl]="registerForm.controls['ContactNumber']" required autofocus>
+                                                <span class="input-group-addon input-text">
+                                                    <i data-toggle="tooltip" id="info" data-placement="right" title="Contact Number must contain 7 to 15 digits only!" class="{{(!registerForm.controls['ContactNumber'].valid)?(registerForm.controls['ContactNumber'].touched?'fa fa-info-circle req':'fa fa-check req'):'fa fa-check chk'}}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <!-- <div id="alt" *ngIf="registerForm.controls['ContactNumber'].hasError('required') && registerForm.controls['ContactNumber'].touched" class="help-block">Contact Number is required.</div> -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <button type="submit" class="btn-large full-width sky-blue1" (click)="userRegister(registerForm.value)"  data-placement="right" [disabled]="!registerForm.valid">Register Company</button>
+                                    </div>
+                                </form>
+                            </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            <div class="footer-wrapper">
+                <div class="container">
+                    <div class="copyright">
+                        <p>2018 Travel Mediary</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

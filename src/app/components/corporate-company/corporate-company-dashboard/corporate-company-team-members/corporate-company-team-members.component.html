@@ -1,0 +1,105 @@
+<div class="container full-width">
+    <div class="row">
+        <div class="col-md-12 tmembers">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1">
+                    <div class="pull-left">
+                        <h3 class="tmtitle">Team Members</h3>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="block tmbtn pull-right">
+                        <button class="button btn-large white" data-toggle="modal" data-target="#addMember"><span class="glyphicon glyphicon-plus"></span> Add Member</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 single" *ngFor="let user of userList">
+            <div class="about-author block">
+                <div class="about-author-container">
+                    <div class="about-author-content">
+                        <div class="avatar">
+                            <img src="{{user.ProfilePhotoPath ? user.ProfilePhotoPath:'http://placehold.it/270x270'}}" width="96" height="96" alt="">
+                        </div>
+                        <div class="description">
+                            <h4 class="etext">{{user.FirstName}} {{user.LastName}}</h4>
+                            <p>{{user.Designation || 'Team Member'}}</p>
+                            <span class="ereport">{{user.Email}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content form-group">
+
+                <form #addMemberForm="ngForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Create User</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="firstname">First Name:</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" #firstName="ngModel" [(ngModel)]="FirstName" placeholder="Enter First Name" maxlength="15" pattern="\w*[A-Za-z]" required>
+                            <span class="error-message" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                                <span [hidden]="!firstName.errors.required">
+                                   Firstname is required
+                                </span>
+                                <span [hidden]="!firstName.errors.maxlength">
+                                   Input exceeding max character limit (15)
+                                </span>
+                                <span [hidden]="!firstName.errors.pattern">
+                                   Wrong Input
+                                </span>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name:</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" #lastName="ngModel" [(ngModel)]="LastName" maxlength="15" pattern="\w*[A-Za-z]" placeholder="Enter Last Name" required>
+                            <span class="error-message" *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+                                <span [hidden]="!lastName.errors.required">
+                                   Lastname is required
+                                </span>
+                                <span [hidden]="!lastName.errors.maxlength">
+                                   Input exceeding max character limit (15)
+                                </span>
+                                <span [hidden]="!lastName.errors.pattern">
+                                   Wrong Input
+                                </span>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailid">Email:</label>
+                            <input type="email" class="form-control" id="emailId" name="emailId" #emailId="ngModel" [(ngModel)]="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxlength="30" placeholder="Enter User Email" required>
+                            <span class="error-message" *ngIf="emailId.errors && (emailId.dirty || emailId.touched)">
+                                <span [hidden]="!emailId.errors.required">
+                                   Email-Id is required
+                                </span>
+                                <span [hidden]="!emailId.errors.maxlength">
+                                   Input exceeding max character limit (30)
+                                </span>
+                                <span [hidden]="!emailId.errors.pattern">
+                                   Wrong Input
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!addMemberForm.form.valid" (click)="submitForm()" data-dismiss="modal">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

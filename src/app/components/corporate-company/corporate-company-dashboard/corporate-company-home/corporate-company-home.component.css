@@ -1,0 +1,83 @@
+body, html{
+	height: 100%;
+	background-repeat: no-repeat;
+	background:none ! important;
+	background-size: cover;
+}
+.icon {
+    font-size: 50px;
+}
+
+.pending-counter{
+	background-color: #ffcc00!important;
+}
+
+.all-counter{
+	background-color: #808080!important;
+}
+
+.inprogress-counter{
+	background-color: #ff6600!important;
+}
+
+.confirmed-counter{
+	background-color: #00cc00!important;
+}
+
+.processed-counter{
+	background-color: #003399!important;
+}
+
+.history-counter{
+	background-color: #b87333!important;
+}
+
+
+.request-count{
+	/*font-size: 40px!important;
+	text-align: center;
+	font-weight: bold!important;*/
+}
+
+.request-head{
+	/*font-size: 20px!important;
+	text-align: center;
+	padding-bottom: 10px;*/
+}
+
+#count-container{
+	margin-top: 50px;
+}
+
+.fact{
+	margin-left: 20px;
+    margin-right: 20px;
+}
+
+.tile-container{
+	position: relative;
+	/* border: solid #BDBDBD 2px; */
+	/* margin: 5px 0px; */
+	width:100%;
+	font-size:0; /* add */
+  }
+  
+  .tile{
+	font-size:9px; /* or whatever you want */
+	width: 20%;
+	/* min-height:22px;
+	border: 1px #BDBDBD solid; */
+	display: inline-block;
+	}
+	
+ #main-menu ul.menu, .chaser ul.menu {
+    float: none;
+} 
+
+.whtext{
+	color: white;
+	font-size: medium;
+	line-height: 20x;
+	margin: 0px;
+}
+

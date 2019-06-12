@@ -1,0 +1,137 @@
+.icon {
+    font-size: 50px;
+}
+
+.pending-counter{
+	background-color: #ffcc00!important;
+}
+
+.all-counter{
+	background-color: #808080!important;
+}
+
+.inprogress-counter{
+	background-color: #ff6600!important;
+}
+
+.confirmed-counter{
+	background-color: #00cc00!important;
+}
+
+.processed-counter{
+	background-color: #003399!important;
+}
+
+.history-counter{
+	background-color: #b87333!important;
+}
+
+
+/*.request-count{
+	font-size: 40px!important;
+	text-align: center;
+	font-weight: bold!important;
+}*/
+
+/*.request-head{
+	/*font-size: 20px!important;
+	text-align: center;
+	padding-bottom: 10px;
+}*/
+
+#count-container{
+	margin-top: 50px;
+}
+
+.fact{
+	margin-left: 20px;
+    margin-right: 20px;
+}
+
+.tile-container{
+	position: relative;	
+	width:100%;
+	font-size:0; 
+  }
+
+  .tile{
+	font-size:9px; 
+	width: 20%;	
+	display: inline-block;
+	}
+
+	.data-wrap{
+		/* max-width: 66%; */
+		/* min-width: 66%; */
+		margin: 0 auto;
+	}
+	.data-wrap2{
+		 max-width: 50%; 
+		/* min-width: 66%; */
+		margin: 0 auto;
+	}
+
+	.data-wrap3{
+		/* max-width: 80%; */
+		/* min-width: 66%; */
+		margin: 0 auto;
+	}
+
+	
+	.borderStyle{
+		border-style: solid;
+		border-width: 1px;
+		border-color: #e0dddd;
+		text-align : center;
+		background: #92D050;
+		font-size: 15px;
+		color: black;
+		padding: 7px;
+	}
+
+	/* table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	th, td {
+		padding: 5px;
+		text-align: left;
+	}
+	caption{
+		margin-bottom: 14px;
+		text-align : center;
+		background: #92D050;
+		font-size: 15px;
+		color: black;
+	} */
+
+	/* #supervisorPicgrid{
+		max-width: 30%;
+	} */
+	/* #supervisortransgrid{
+		max-width: 35%;
+	}
+	#supervisoragencygrid{
+		max-width: 35%;
+	} */
+	/* .margin{
+		margin: 0 6px;
+	} */
+
+	.imgwidth{
+		width:60px;
+	}
+
+	#supervisorPicgrid #supervisortransgrid #supervisoragencygrid .dx-datagrid .dx-row > td {
+			padding: 30px;
+			
+	}
+
+	.dx-datagrid-content .dx-datagrid-table .dx-row > td {
+			vertical-align: middle;
+	}
+
+	.dx-datagrid.dx-datagrid-borders > .dx-datagrid-rowsview.dx-last-row-border tbody:last-child > .dx-data-row:nth-last-child(2) > td {
+			border-bottom-width: 0;
+			cursor: pointer;
+	}

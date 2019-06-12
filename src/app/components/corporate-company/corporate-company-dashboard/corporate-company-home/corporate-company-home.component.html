@@ -1,0 +1,341 @@
+<div id="slideshow">
+    <div class="fullwidthbanner-container">
+        <div class="fullwidthbanner-container">
+            <!--<img class="tab-pane fade" id="hotels-tab" src="assets/images/hotel.jpg" alt="" style="width:100%">
+                <img class="tab-pane fade" id="cars-tab" src="assets/images/car.jpg" alt="" style="width:100%">-->
+            <img src="assets/images/header_home.jpg" alt="">
+            <!--<img class="tab-pane fade" id="transfer-tab" src="assets/images/transfer1.jpg" alt="" style="width:100%">-->
+
+        </div>
+    </div>
+</div>
+<div class="container" id="count-container" *ngIf="checkForAdmin()">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="dashboard">
+			    <div class="row block">
+			        <div class="col-sm-6 col-md-3">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact blue">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt>{{AllRequestCount}}</dt>
+			                            <dd>Requests</dd>
+			                        </dl>
+			                        <i class="icon soap-icon-hotel"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			        <div class="col-sm-6 col-md-3">
+			            <a routerLink="/corporate-company/dashboard/mapping">
+			                <div class="fact yellow">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt>{{MappedAgenciesCount}}</dt>
+			                            <dd>Agencies</dd>
+			                        </dl>
+			                        <i class="icon soap-icon-plane"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			        <div class="col-sm-6 col-md-3">
+			            <a routerLink="/corporate-company/dashboard/users">
+			                <div class="fact red">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt>{{CompanyTLCount}}</dt>
+			                            <dd>Team Leaders</dd>
+			                        </dl>
+			                        <i class="icon soap-icon-car"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			        <div class="col-sm-6 col-md-3">
+			            <a routerLink="/corporate-company/dashboard/users">
+			                <div class="fact green">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt>{{CompanyUserCount}}</dt>
+			                            <dd>Users</dd>
+			                        </dl>
+			                        <i class="icon soap-icon-cruise flip-effect"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    </div>
+			</div>			
+		</div>
+	</div>
+</div>
+
+<div class="container" id="count-container" *ngIf="checkForMyRequestCount()">
+	<div class="row">
+		<div class="col-md-12">
+			<!-- <div id="dashboard">
+			    <div class="row block">
+			    	<div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact all-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyRequestCount}}</dt>
+			                            <dd class="request-head">Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-book icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    	
+			    	<div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact pending-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyPendingRequestCount}}</dt>
+			                            <dd class="request-head">Pending Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-clock-o icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact inprogress-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyInProgressRequestCount}}</dt>
+			                            <dd class="request-head">In Progress Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-refresh icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    </div>
+			    <div class="row block">
+					<div class="col-sm-3 col-md-2"></div>    
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact confirmed-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyConfirmRequestCount}}</dt>
+			                            <dd class="request-head">Confirmed Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-check-circle icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact processed-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyProcessedRequestCount}}</dt>
+			                            <dd class="request-head">Processed Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-thumbs-up icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+					<div class="col-sm-3 col-md-2"></div>  
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/my-requests">
+			                <div class="fact history-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyHistoryRequestCount}}</dt>
+			                            <dd class="request-head">History Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-archive icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    </div>
+			</div>			 -->
+
+
+
+
+			<div id="dashboard">
+			    <div class="tile-container row block">
+                    <div class="tile">							
+						<a (click)="onclick('Pending')" title="{{MyPendingRequestCount}} Pending Requests">
+			                <div class="fact pending-counter">									
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyPendingRequestCount}}</dt>
+			                            <dd class="request-head">Pending Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-clock-o icon"></i>
+			                    </div>
+			                </div>
+						</a>											
+					</div>
+                    <div class="tile">
+						<a (click)="onclick('Rejected')" title="{{MyRejectedRequestCount}} Rejected Requests">
+			                <div class="fact inprogress-counter" >
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyRejectedRequestCount}}</dt>
+			                            <dd class="request-head">Rejected Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-refresh icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+					</div>  
+                    <div class="tile">
+						<a (click)="onclick('Confirmed')" title="{{MyConfirmRequestCount}} Confirm Requests">
+			                <div class="fact confirmed-counter" >
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyConfirmRequestCount}}</dt>
+			                            <dd class="request-head">Confirm Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-check-circle icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+					</div>  
+                    <div class="tile">
+						<a (click)="onclick('Processed')" title="{{MyProcessedRequestCount}} Processed Requests"> 
+			                <div class="fact processed-counter" >
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyProcessedRequestCount}}</dt>
+			                            <dd class="request-head">Processed Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-thumbs-up icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+					</div>  
+                    <div class="tile">
+						<a (click)="onclick('')" title="{{MyRequestCount}} All Requests">
+			                <div class="fact all-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{MyRequestCount}}</dt>
+			                            <dd class="request-head">All Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-book icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+					</div>        
+                </div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div class="container" id="count-container" *ngIf="checkForDelegationAuthority()">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="dashboard">
+			    <div class="row block">
+			    	<div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact all-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllRequestCount}}</dt>
+			                            <dd class="request-head">Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-book icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    	
+			    	<div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact pending-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllPendingRequestCount}}</dt>
+			                            <dd class="request-head">Pending Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-clock-o icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact inprogress-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllInProgressRequestCount}}</dt>
+			                            <dd class="request-head">In Progress Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-refresh icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    </div>
+			    <div class="row block">    
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact confirmed-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllConfirmRequestCount}}</dt>
+			                            <dd class="request-head">Confirmed Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-check-circle icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact processed-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllProcessedRequestCount}}</dt>
+			                            <dd class="request-head">Processed Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-thumbs-up icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+
+			        <div class="col-sm-6 col-md-4">
+			            <a routerLink="/corporate-company/dashboard/all-requests">
+			                <div class="fact history-counter">
+			                    <div class="numbers counters-box">
+			                        <dl>
+			                            <dt class="request-count">{{AllHistoryRequestCount}}</dt>
+			                            <dd class="request-head">History Requests</dd>
+			                        </dl>
+			                        <i class="fa fa-archive icon"></i>
+			                    </div>
+			                </div>
+			            </a>
+			        </div>
+			    </div>
+			</div>			
+		</div>
+	</div>
+</div>

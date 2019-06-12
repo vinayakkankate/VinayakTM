@@ -1,0 +1,1155 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-calendar"></i>
+            <h2 class="entry-title">New Request</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section>
+    <div class="main-bar">
+        <img src="assets/images/hotel_header.jpg" alt="">
+    </div>
+    <div class="search-box-wrapper">
+        <div class="search-box container">
+            <ul class="search-tabs clearfix">
+
+                <li class="active" id="reason-for-travel-tab-li">
+                    <a href="#reason-for-travel-tab" data-toggle="tab">Motivation</a>
+                </li>
+                <li id="flights-tab-li">
+                    <a href="#flights-tab" data-toggle="tab">Flights</a>
+                </li>
+                <li id="hotels-tab-li">
+                    <a href="#hotels-tab" data-toggle="tab">Hotels</a>
+                </li>
+                <li id="cars-tab-li">
+                    <a href="#cars-tab" data-toggle="tab">Car Hire</a>
+                </li>
+                <li id="transfer-tab-li">
+                    <a href="#transfer-tab" data-toggle="tab">Transfer</a>
+                </li>
+                <li id="summary-tab-li">
+                    <a href="#summary-tab" data-toggle="tab">Summary</a>
+                </li>
+            </ul>
+            <div class="visible-mobile">
+                <ul id="mobile-search-tabs" class="search-tabs clearfix">
+
+                    <li class="active">
+                        <a href="#reason-for-travel-tab">Reason For Travel</a>
+                    </li>
+                    <li>
+                        <a href="#flights-tab">Flights</a>
+                    </li>
+                    <li>
+                        <a href="#hotels-tab">Hotels</a>
+                    </li>
+                    <li>
+                        <a href="#cars-tab">Car Hire</a>
+                    </li>
+                    <li>
+                        <a href="#transfer-tab">Transfer</a>
+                    </li>
+                    <li>
+                        <a href="#summary-tab">Summary</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search-tab-content">
+            
+                <div class="tab-pane fade active in" id="reason-for-travel-tab">
+                    <div class="row">
+                        <br />
+                    </div>
+                    <form #RequestTravelForm="ngForm">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Reason For Travel</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <textarea #reasonForTravel="ngModel" [(ngModel)]="ReasonForTravel" id="reasonForTravel" name="reasonForTravel"
+                                    (ngModelChange)="onReasonForTravel(reasonForTravel)"class="form-control full-width" rows="3" placeholder="Enter Reason For Travel" maxlength="250"
+                                        required></textarea>
+                                    <span class="error-message" *ngIf="reasonForTravel.errors && (reasonForTravel.dirty || reasonForTravel.touched)">
+                                        <span [hidden]="!reasonForTravel.errors.maxlength">Input exceeding max characters limit
+                                            (250) </span>
+                                        <span [hidden]="!reasonForTravel.errors.required">Reason for travel is required</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="button btn-large dark-blue2 pull-right" *ngIf="RequestTravelForm.form.valid " (click)='saveReasonForTravel()'
+                                    href="#flights-tab" data-toggle="tab">NEXT</a>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <a (click)="navReasonForTravel()" href="#flights-tab" data-toggle="tab" class="button btn-large white">SKIP</a> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="tab-pane fade" id="flights-tab">
+                    <div class="row">
+                        <marquee *ngIf="!Eligible" direction="right">
+                            <h3 class="mtext">To book international flight, Please renew your passport </h3>
+                        </marquee>
+                        <marquee *ngIf="!uploadPassport" direction="right">
+                            <h3 class="mtext">To book international flight, Please upload your passport </h3>
+                        </marquee>
+                    </div>
+                    <div class="row request-icon">
+                        <img src="assets/images/flight.png">
+                        <!-- <img [src]='flightImage'> -->
+                    </div>
+                    <!-- <div class="row">
+                        <strong>Trip Details</strong>
+                    </div> -->
+            
+                    <form #flightRequestForm="ngForm">
+                            <div class="row">
+                                <strong>Trip Details</strong>
+                            </div>
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <div  class="col-md-3 form-group">
+                                    <label>
+                                        <input class="radiobuttonClass" [disabled]="true"  [value]=1 type="radio" id="domestic" name="flightType" [(ngModel)]="FlightType" />
+                                        <strong> Domestic </strong>
+                                    </label>
+                                </div>
+                            <div  class="col-md-3 form-group">
+                                <label>
+                                    <input class="radiobuttonClass" [disabled]="true" [value]=2 type="radio" id="international" name="flightType" [(ngModel)]="FlightType" disabled/>
+                                    <strong> International </strong>
+                                </label>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>
+                                    <input class="radiobuttonClass" [value]=1 type="radio" id="oneway-trip" name="tripType" [(ngModel)]="TripType" (change)="triptype()"  />
+                                    <strong> One Way </strong>
+                                </label>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>
+                                    <input class="radiobuttonClass" [value]=2 type="radio" id="return-trip" name="tripType" value="2" [(ngModel)]="TripType" />
+                                    <strong> Return </strong>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-md-6 form-group">
+                                            <div class="col-md-4">
+                                                <label>Departure</label>
+                                            </div>
+                                            <div class="col-md-8 flight-inputs">
+                                                <input [options]="{types: ['(cities)'] }" [(ngModel)]="DepartureFrom" #departureFrom="ngModel" id="autocomplete" type="text"
+                                                    name="departureFrom" class="form-control full-width" (city)="DepartureCity=$event" (country)='DepartureCountryName=$event'
+                                                    (setAddress)="getDepartureCountryCode($event)" placeholder="Search City" ng2-google-place-autocomplete
+                                                    required/>
+                                                <span class="error-message" *ngIf="departureFrom.errors && (departureFrom.dirty || departureFrom.touched)">
+                                                    <span [hidden]="!departureFrom.errors.required">
+                                                        Departure City is required
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div> -->
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Departure</label>
+                                </div>
+                                <div class="col-md-8">
+                                <ng2-completer #departure="ngModel" [(ngModel)]="DepartureFrom" class="form-control cc"
+                                        (selected)="onSelectDepartureFrom($event)" [datasource]="dataServiceIataList"
+                                        [minSearchLength]="3" name="iataList" id="iataList" inputClass="full-width form-control"
+                                        placeholder="Search Airport" required >
+                                    </ng2-completer>
+                                  <!--  <ng2-completer [inputId]="iataList'" #departure="ngModel" [(ngModel)]="DepartureFrom" class="form-control cc"
+                                        (selected)="onSelectDepartureFrom($event)" [datasource]="dataServiceIataList"
+                                        [minSearchLength]="0" name="departure" [inputClass]="'form-control form-control-danger'"
+                                        [placeholder]="'Search Airport'" [autoMatch]="true" [clearUnselected]="true"  required >
+                                    </ng2-completer>-->
+                                    <span class="error-message" *ngIf="departure.errors && (departure.dirty || departure.touched)">
+                                            <span [hidden]="!departure.errors.required">
+                                                    Departure airport is required
+                                            </span>
+                                        <!-- Invalid Selection of Departure Airport -->
+                                     </span>
+
+                                    <!--  <ng2-completer name="departure"
+                                                [inputId]="'iataListId'"
+                                                [datasource]="dataServiceIataList"
+                                                [(ngModel)]="DepartureFrom"
+                                                [minSearchLength]="0"
+                                                [placeholder]="'Search Airport'"
+                                                #departure="ngModel"
+                                                [autoMatch]="false"
+                                                [inputClass]="(departure.valid) ? 'form-control' : 'form-control form-control-danger'"
+                                                [clearUnselected]="departureselect" 
+                                                (selected)="onSelectDepartureFrom($event)" 
+                                                required class="form-control cc">
+                                    </ng2-completer>
+                                    <span class="error-message" *ngIf="departure.errors && (departure.dirty || departure.touched)">
+                                        <span [hidden]="!departure.errors.required">
+                                                Departure airport is required
+                                        </span>
+                                     </span> -->
+                                    <!-- <div *ngIf="!departure.valid"
+                                        class="form-control-feedback">Sorry, color is required
+                                    </div> -->
+                                </div>
+                            </div>
+            
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Arrival</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <ng2-completer #arrivalTo="ngModel" [(ngModel)]="ArrivalTo" class="form-control cc" (selected)="onSelectArrivalTo($event)"
+                                        [datasource]="dataServiceIataList" [minSearchLength]="3" name="iataList2" id="iataList2"
+                                        inputClass="full-width form-control" placeholder="Search Airport" required>
+                                    </ng2-completer>                                   
+                                    <span class="error-message" *ngIf="arrivalTo.errors && (arrivalTo.dirty || arrivalTo.touched)">
+                                            <span [hidden]="!arrivalTo.errors.required">
+                                                    Arrival airport is required
+                                            </span>
+                                        <!-- Invalid Selection of Arrival Airport -->
+                                    </span>
+                                </div>
+                            </div>
+            
+                            <!-- <div class="col-md-6 form-group">
+                                            <div class="col-md-4">
+                                                <label>Arrival</label>
+                                            </div>
+                                            <div class="col-md-8 flight-inputs">
+                                                <input [options]="{types: ['(cities)'] }" [(ngModel)]="ArrivalTo" #arrivalTo="ngModel" id="autocomplete" type="text" name="arrivalTo"
+                                                    class="form-control full-width" (city)="ArrivalCity=$event" (country)='ArrivalCountryName=$event'
+                                                    (setAddress)="getArrivalCountryCode($event)" placeholder="Search City" ng2-google-place-autocomplete
+                                                    required/>
+                                                <span class="error-message" *ngIf="arrivalTo.errors && (arrivalTo.dirty || arrivalTo.touched)">
+                                                    <span [hidden]="!arrivalTo.errors.required">
+                                                        Arrival City is required
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Departing On</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <input placeholder="Select Date" id="departureDate" name="departureDate" #departureDate="ngModel"
+                                        [(ngModel)]="DepartureDate" [value]="DepartureDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [minMoment]="currentDateTime" [autoClose]="true" dateTimePicker
+                                        [pickerType]="'date'" (ngModelChange)="onFlightDepartingOnDateChange()" required readonly />
+                                    <span class="error-message" *ngIf="departureDate.errors && (departureDate.dirty || departureDate.touched)">
+                                        <span [hidden]="!departureDate.errors.required">
+                                            Departure date is required
+                                        </span>
+                                    </span> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Return Date</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <input [disabled]="validateReturnDate()" name="returnDate" id="returnDate" #returnDate="ngModel"
+                                        placeholder="Select Date" [(ngModel)]="ReturnDate" [value]="ReturnDate | date: 'dd MMM yyyy'"
+                                        class="form-control picker-input" [mode]="'dropdown'" [minMoment]="DepartureDate"
+                                        [autoClose]="true" dateTimePicker [pickerType]="'date'" required readonly  (ngModelChange)="returnDateChange()"/>
+                                    <span class="error-message" *ngIf="returnDate.errors && (returnDate.dirty || returnDate.touched)">
+                                        <span [hidden]="!returnDate.errors.required">
+                                            Return date is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Earliest Booking time</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                        <input  name="earliestBookingTime" id="earliestBookingTime" #earliestBookingTime="ngModel"
+                                        placeholder="Select Time" [(ngModel)]="EarliestBookingTime" [value]="EarliestBookingTime | date: 'HH:mm'"
+                                        class="form-control picker-input" [mode]="'dropdown'" (ngModelChange)="onEarliestBookingTimeChange($event)"
+                                        [autoClose]="true" dateTimePicker [pickerType]="'time'"  [disabled]="TripType ==1"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Returns Earliest Booking Time</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <input [disabled]="validateReturn()" name="returnEarliestBookingTime" id="returnEarliestBookingTime" #returnEarliestBookingTime="ngModel"
+                                        placeholder="Select Time" [(ngModel)]="ReturnEarliestBookingTime" [value]="ReturnEarliestBookingTime | date: 'HH:mm'"
+                                        class="form-control picker-input" [mode]="'dropdown'"  (ngModelChange)="onReturnEarliestBookingTimeChange($event)"
+                                        [autoClose]="true" dateTimePicker [pickerType]="'time'" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Class</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <select name="flightClass" id="flightClass" class="form-control full-width" [(ngModel)]="FlightClass"
+                                        #flightClass="ngModel" required>
+                                        <option disabled selected>Select Class</option>
+                                        <option *ngFor="let class of listedClasses" [value]="class.value">{{class.name}}</option>
+                                    </select>
+                                    <span class="error-message" *ngIf="flightClass.errors && (flightClass.dirty || flightClass.touched)">
+                                        <span [hidden]="!flightClass.errors.required">
+                                            Flight class is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Preferred Airline</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <ng2-completer #preferredAirlines="ngModel" [(ngModel)]="PreferredAirlines" class="form-control cc"
+                                        (selected)="onSelectPreferredAirlines($event)" [datasource]="dataServicePreferredAirlines"
+                                        [minSearchLength]="3" name="preferredAirlines" id="preferredAirlines" inputClass="full-width form-control"
+                                        placeholder="Search Airlines"></ng2-completer>
+                                    <span class="error-message" *ngIf="preferredAirlines.errors && (preferredAirlines.dirty || preferredAirlines.touched)">
+                                        Invalid Selection of Airlines
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Membership No.</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <input #membershipNo="ngModel" [(ngModel)]="MembershipNo" name="membershipNumber" id="membershipNumber"
+                                        type="text" class="form-control full-width" pattern="^[a-zA-Z0-9]*$" minlength="3"
+                                        maxlength="10" placeholder="Enter Membership Number" />
+                                    <span class="error-message" *ngIf="membershipNo.errors && (membershipNo.dirty || membershipNo.touched)">
+                                        <span [hidden]="!membershipNo.errors.minlength">Membership number should be more than 3
+                                            characters long</span>
+                                        <span [hidden]="!membershipNo.errors.maxlenght">Membership number should not be more than 8
+                                            characters long</span>
+                                        <span [hidden]="!membershipNo.errors.pattern">Invalid input</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Rewards Claim</label>
+                                </div>
+                                <div class="col-md-8 flight-inputs">
+                                    <input #rewardsClaim="ngModel" [(ngModel)]="RewardsClaim" name="rewardsClaim" id="rewardsClaim"
+                                        type="text" class="form-control full-width" pattern="^[1-9]\d*$" minlength="2" maxlength="6"
+                                        placeholder="Enter Rewards Points" />
+                                    <span class="error-message" *ngIf="rewardsClaim.errors && (rewardsClaim.dirty || rewardsClaim.touched)">
+                                        <span [hidden]="!rewardsClaim.errors.minlength">Rewards claim Number should be more than 2
+                                            characters long</span>
+                                        <span [hidden]="!rewardsClaim.errors.maxlength">Rewards claim should not be more than 6
+                                            digits long</span>
+                                        <span [hidden]="!rewardsClaim.errors.pattern">Invalid input</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+            
+                            <!-- <div class="col-md-6 form-group">
+                                            <div class="col-md-4">
+                                                <label>Reason For Travel</label>
+                                            </div>
+                                            <div class="col-md-8 flight-inputs">
+                                                <textarea #reasonForTravel="ngModel" [(ngModel)]="ReasonForTravel" id="reasonForTravel" name="reasonForTravel" class="form-control full-width"
+                                                    rows="3" placeholder="Enter Reason For Travel" maxlength="250" required></textarea>
+                                                <span class="error-message" *ngIf="reasonForTravel.errors && (reasonForTravel.dirty || reasonForTravel.touched)">
+                                                    <span [hidden]="!reasonForTravel.errors.maxlength">Input exceeding max characters limit (250) </span>
+                                                    <span [hidden]="!reasonForTravel.errors.required">Reason for travel is required</span>
+                                                </span>
+                                            </div>
+                                        </div> -->
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-2">
+                                    <label>Flight Requests Comments</label>
+                                </div>
+                                <div class="col-md-10 flight-inputs" >
+                                    <div class="form-group">
+                                        <textarea #flightRequestComment="ngModel" [(ngModel)]="FlightRequestComment" id="flightComments"
+                                            name="flightComments" class="form-control" rows="3" placeholder="Enter Comments"
+                                            maxlength="250"></textarea>
+                                        <span class="error-message" *ngIf="flightRequestComment.errors && (flightRequestComment.dirty || flightRequestComment.touched)">
+                                            <span [hidden]="!flightRequestComment.errors.maxlength">Input exceeding max characters
+                                                limit (250) </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a (click)="saveFlightRequestData()" class="button btn-large dark-blue2 pull-right" *ngIf="flightRequestForm.form.valid && Eligible"
+                                     data-toggle="tab">NEXT</a>
+            
+                                <!-- <button [hidden]="!flightRequestForm.form.valid" type="submit" (click)="saveFlightRequestData()"  class="button btn-large dark-blue2 pull-right" ><a href="#hotels-tab" data-toggle="tab">NEXT</a></button> -->
+                            </div>
+                            <div class="col-md-6">
+                                <a (click)="navFlightToHotel('skip')" href="#hotels-tab" data-toggle="tab" class="button btn-large white skipBtn">SKIP</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="tab-pane fade" id="hotels-tab">
+                    <div class="row request-icon">
+                        <img src="assets/images/hotel.png">
+                    </div>
+                    <form #hotelRequestForm="ngForm">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Select City</label>
+                                </div>
+                                <div class="col-md-8 hotel-inputs">
+                                    <input name="hotelCity" [(ngModel)]="HotelCity" #hotelCity="ngModel" [options]="{types: ['(cities)'] }"
+                                        id="autocomplete" type="text" class="form-control full-width" (setAddress)="getHotelCity($event)"
+                                        placeholder="Search City" ng2-google-place-autocomplete required />
+                                    <span class="error-message" *ngIf="hotelCity.errors && (hotelCity.dirty || hotelCity.touched)">
+                                        <span [hidden]="!hotelCity.errors.required">
+                                            City is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Preferred Accomodation</label>
+                                </div>
+                                <div class="col-md-8 hotel-inputs">
+                                    <input type="text" #preferredPlace="ngModel" [(ngModel)]="PreferredPlace" name="preferredPlace"
+                                        id="preferredPlace" class="form-control full-width" placeholder="Enter Preferred Place"
+                                        maxlength="30" />
+                                    <span class="error-message" *ngIf="preferredPlace.errors && (preferredPlace.dirty || preferredPlace.touched)">
+                                        <span [hidden]="!preferredPlace.errors.maxlength">
+                                            Input exceeding max character limit (30)
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Check In</label>
+                                </div>
+                                <div class="col-md-8 hotel-inputs">
+                                    <input placeholder="Select Check In Date" [(ngModel)]="CheckInDate" #checkInDate="ngModel" name="checkInDate"
+                                        [value]="CheckInDate | date: 'dd MMM yyyy'" [autoClose]="true" class="form-control picker-input" [mode]="'dropdown'"
+                                        [minMoment]="TripType == 2? (DepartureDate ? DepartureDate : currentDateTime) : currentDateTime"  [maxMoment]="TripType == 2? ReturnDate :''" dateTimePicker [pickerType]="'date'" required />
+                                </div>
+                                <span class="error-message" *ngIf="checkInDate.errors && (checkInDate.dirty || checkInDate.touched)">
+                                    <span [hidden]="!checkInDate.errors.required">
+                                        Check-In date is required
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Check Out</label>
+                                </div>
+                                <div class="col-md-8 hotel-inputs">
+                                    <input [disabled]="!CheckInDate" placeholder="Select Check Out Date" #checkOutDate="ngModel"
+                                        [(ngModel)]="CheckOutDate" [autoClose]="true" id="checkOutDate" name="checkOutDate" [value]="CheckOutDate | date: 'dd MMM yyyy'"
+                                        class="form-control picker-input" [mode]="'dropdown'" [minMoment]="CheckInDate"
+                                        dateTimePicker [pickerType]="'date'" required  [maxMoment]="TripType == 2? ReturnDate :''"/>
+                                    <span class="error-message" *ngIf="checkOutDate.errors && (checkOutDate.dirty || checkOutDate.touched)">
+                                        <span [hidden]="!checkOutDate.errors.required">
+                                            Check-Out date is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-2">
+                                    <label>Hotel Request Comments</label>
+                                </div>
+                                <div class="col-md-10 form-group">
+                                    <div class="form-group">
+                                        <textarea #hotelRequestComment="ngModel" [(ngModel)]="HotelRequestComment" id="hotelComments"
+                                            name="hotelComments" class="form-control" rows="4" placeholder="Enter Comments"
+                                            maxlength="250"></textarea>
+                                        <span class="error-message" *ngIf="hotelRequestComment.errors && (hotelRequestComment.dirty || hotelRequestComment.touched)">
+                                            <span [hidden]="!hotelRequestComment.errors.maxlength">Input exceeding max characters
+                                                limit (250) </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a *ngIf="hotelRequestForm.form.valid" href="#cars-tab" data-toggle="tab" (click)="saveAccomodationRequestData()"
+                                    class="button btn-large dark-blue2 pull-right">NEXT</a>
+                                <!-- <button [hidden]="!hotelRequestForm.form.valid" type="submit" (click)="saveAccomodationRequestData()" class="button btn-large dark-blue2 pull-right" ><a href="#cars-tab" data-toggle="tab">NEXT</a></button> -->
+                            </div>
+                            <div class="col-md-6">
+                                <a (click)="navHotelToCars('skip')" href="#cars-tab" data-toggle="tab" class="button btn-large white skipBtn">SKIP</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="cars-tab">
+                    <div class="row request-icon">
+                        <img src="assets/images/car.png">
+                    </div>
+                    <form #carRequestForm="ngForm">
+
+                        <div class="row linesaprate-div">
+                                <div class="col-md-3 form-group">
+                                        <label>
+                                            <input class="radiobuttonClass"  type="checkbox" id="pickUpFromAirpoort" name="pickUpFromAirpoort" [(ngModel)]="CarpickUpFromAirpoort"
+                                            (change)="pickUpFromAirpoortChange($event)" />
+                                            <strong> Pick Up From Airport </strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label>
+                                            <input class="radiobuttonClass "  type="checkbox" id="dropOffFromAirpoort" name="dropOffFromAirpoort" [(ngModel)]="CardropOffFromAirpoort" 
+                                            (change)="dropOffFromAirpoortChange($event)" />
+                                            <strong> Drop Off From Airport </strong>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label>
+                                            <input class="radiobuttonClass "  type="checkbox" id="deliverVehicle" name="deliverVehicle" [(ngModel)]="CardeliverVehicle" />
+                                            <strong> Deliver Vehicle </strong>
+                                        </label>
+                                    </div>
+                                    <!-- <div class="col-md-3 form-group">
+                                        <label>
+                                            <input class="radiobuttonClass "  type="checkbox" id="selectTime" name="selectTime" [(ngModel)]="CarselectTime" />
+                                            <strong> Select Time </strong>
+                                        </label>
+                                    </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Pick Up From</label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <input placeholder="Search Location" [(ngModel)]="CarPickupFrom" #carPickUp="ngModel" name="carPickUp"
+                                        id="autocomplete" type="text" class="form-control full-width" (setAddress)="getCarPickupLocation($event)"
+                                        ng2-google-place-autocomplete required />
+                                    <span class="error-message" *ngIf="carPickUp.errors && (carPickUp.dirty || carPickUp.touched)">
+                                        <span [hidden]="!carPickUp.errors.required">
+                                            Pickup location is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Pick Up Date And Time</label>
+                                </div>
+                                <div class="col-md-4 car-inputs">
+                                    <input name="carPickupDate" id="carPickupDate" #carPickupDate="ngModel" placeholder="Select Date"
+                                        [(ngModel)]="CarPickupDate" [value]="CarPickupDate | date: 'dd MMM yyyy'" class="form-control picker-input"
+                                        [mode]="'dropdown'" [autoClose]="true"  [minMoment]="TripType == 2? (DepartureDate ? DepartureDate : currentDateTime) : currentDateTime"  dateTimePicker [pickerType]="'date'"
+                                        (ngModelChange)="onCarPickUpDateChange()" required  [maxMoment]="TripType == 2? ReturnDate :''"/>
+                                    <span class="error-message" *ngIf="carPickupDate.errors && (carPickupDate.dirty || carPickupDate.touched)">
+                                        <span [hidden]="!carPickupDate.errors.required">
+                                            Pickup date is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="col-md-4 car-inputs">
+                                    <input [disabled]="!CarPickupDate" [(ngModel)]="CarPickupTime" #carPickupTime="ngModel" name="carPickupTime"
+                                        id="carPickupTime" placeholder="Select Time" [value]="CarPickupTime | date: 'HH:mm'" class="form-control picker-input"
+                                        [mode]="'dropdown'" dateTimePicker [pickerType]="'time'" (ngModelChange)="onCarPickUpTimeChange()"
+                                        required />
+                                    <span class="error-message" *ngIf="carPickupTime.errors && (carPickupTime.dirty || carPickupTime.touched)">
+                                        <span [hidden]="!carPickupTime.errors.required">
+                                            Pickup Time is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Return To</label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <input placeholder="Search Location" [(ngModel)]="CarDropoffTo" #carDropoff="ngModel" name="carDropoff"
+                                        id="autocomplete" type="text" class="form-control full-width" (setAddress)="getCarDropoffLocation($event)"
+                                        ng2-google-place-autocomplete required />
+                                    <span class="error-message" *ngIf="carDropoff.errors && (carDropoff.dirty || carDropoff.touched)">
+                                        <span [hidden]="!carDropoff.errors.required">
+                                            Dropoff location is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Drop off Date And Time</label>
+                                </div>
+                                <div class="col-md-4 car-inputs">
+                                    <input [(ngModel)]="CarDropoffDate" #carDropoffDate="ngModel" name="carDropoffDate" id="carDropoffDate"
+                                        [disabled]="!CarPickupDate" placeholder="Select Date" [value]="CarDropoffDate | date: 'dd MMM yyyy'"
+                                        class="form-control picker-input" [autoClose]="true" [mode]="'dropdown'" [minMoment]="CarPickupDate" [maxMoment]="TripType == 2? ReturnDate :''"
+                                        dateTimePicker [pickerType]="'date'" (ngModelChange)="onCarDropoffDateChange()" required />
+                                    <span class="error-message" *ngIf="carDropoffDate.errors && (carDropoffDate.dirty || carDropoffDate.touched)">
+                                        <span [hidden]="!carDropoffDate.errors.required">
+                                            Dropoff Date is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="col-md-4 car-inputs">
+                                    <input [(ngModel)]="CarDropoffTime" #carDropoffTime="ngModel" name="carDropoffTime" id="carDropoffTime"
+                                        [disabled]="!CarPickupTime || !CarDropoffDate" placeholder="Select Time" [value]="CarDropoffTime | date: 'HH:mm'"
+                                        class="form-control picker-input" [mode]="'dropdown'" dateTimePicker [pickerType]="'time'"
+                                        (ngModelChange)="onCarDropoffTimeChange()" required />
+                                    <span class="error-message" *ngIf="carDropoffTime.errors && (carDropoffTime.dirty || carDropoffTime.touched)">
+                                        <span [hidden]="!carDropoffTime.errors.required">
+                                            Dropoff Time is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <span [hidden]="!carDateError" class="error-message" style="margin-left: 15px;">
+                                    Dropoff time should be greater than Pickup time
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>No of People</label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <input #noOfPeople="ngModel" type="number" [(ngModel)]="CarNoOfPeople" id="noOfPeople" name="noOfPeople"
+                                        class="form-control" placeholder="Enter No of People"  max="15"  min="0"/>
+                                    <span class="error-message" *ngIf="CarNoOfPeople > 15">
+                                            Upto 15 people will be allowed.
+                                    </span>
+                                    <span class="error-message" *ngIf="CarNoOfPeople < 0">
+                                       Negative number not allowed 
+                                     </span>   
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Air Conditioning </label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <input class="radiobuttonClass" type="checkbox" id="airConditioning" name="airConditioning" [(ngModel)]="CarAirConditioning"
+                                        (change)="airConditioningChange($event)" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Car Type</label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <div>
+                                        <select [(ngModel)]="CarType" #carType="ngModel" name="carType" id="carType" class="form-control full-width"
+                                            required>
+                                            <option [value]="" disabled selected>Select Car</option>
+                                            <option *ngFor="let car of listedCars" [value]="car.value">{{car.name}}</option>
+                                        </select>
+                                        <span class="error-message" *ngIf="carType.errors && (carType.dirty || carType.touched)">
+                                            <span [hidden]="!carType.errors.required">
+                                                Car preference is required
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-md-12 form-group">
+                                <div class="col-md-2">
+                                    <label>Car Request Comments</label>
+                                </div>
+                                <div class="col-md-10 car-inputs">
+                                    <textarea #carRequestComment="ngModel" [(ngModel)]="CarRequestComment" id="carComments" name="carComments"
+                                        class="form-control" rows="4" placeholder="Enter Comments" maxlength="250"></textarea>
+                                    <span class="error-message" *ngIf="carRequestComment.errors && (carRequestComment.dirty || carRequestComment.touched)">
+                                        <span [hidden]="!carRequestComment.errors.maxlength">Input exceeding max characters limit
+                                            (250) </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6 form-group">
+
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a (click)="saveCarRequestData()" class="button btn-large dark-blue2 pull-right" href="#transfer-tab"
+                                    data-toggle="tab" *ngIf="carRequestForm.form.valid && !carDateError && (CarNoOfPeople < 16 || CarNoOfPeople =='' || CarNoOfPeople ==undefined  )">NEXT</a>
+                                <!-- <button [hidden]="!carRequestForm.form.valid || carDateError" type="submit" (click)="saveCarRequestData()" class="button btn-large dark-blue2 pull-right" ><a href="#transfer-tab" data-toggle="tab">NEXT</a></button> -->
+                            </div>
+                            <div class="col-md-6">
+                                <a (click)="navCarsToTransfer('skip')" href="#transfer-tab" data-toggle="tab" class="button btn-large white skipBtn">SKIP</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="transfer-tab">
+                    <div class="row request-icon">
+                        <img src="assets/images/transfer.png">
+                    </div>
+                    <form #transferRequestForm="ngForm">
+
+                        <div class="row">
+                                <div class="col-md-3 form-group">
+                        
+                                    </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group">
+                                    <label>
+                                        <input class="radiobuttonClass" type="checkbox" id="transferpickUpFromAirpoort" name="transferpickUpFromAirpoort"
+                                            [(ngModel)]="TransferpickUpFromAirpoort" (change)="transferpickUpFromAirpoortChange($event)" />
+                                        <strong> Pick Up From Airport </strong>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>
+                                        <input class="radiobuttonClass " type="checkbox" id="transferdropOffFromAirpoort" name="transferdropOffFromAirpoort"
+                                            [(ngModel)]="TransferdropOffFromAirpoort" (change)="TransferdropOffFromAirpoortChange($event)" />
+                                        <strong> Drop Off From Airport </strong>
+                                    </label>
+                                </div>
+                        
+                            </div>
+                            <div class="col-md-3 form-group">
+                        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Pick Up From</label>
+                                </div>
+                                <div class="col-md-8 transfer-inputs">
+                                    <input placeholder="Search Location" id="autocomplete" name="transferPickup" type="text"
+                                        [(ngModel)]="TransferPickupFrom" #transferPickup="ngModel" class="form-control full-width"
+                                        (setAddress)="getTransferPickupLocation($event)" ng2-google-place-autocomplete required />
+                                    <span class="error-message" *ngIf="transferPickup.errors && (transferPickup.dirty || transferPickup.touched)">
+                                        <span [hidden]="!transferPickup.errors.required">
+                                            Pickup location is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Pick Up Date And Time</label>
+                                </div>
+                                <div class="col-md-4 transfer-inputs">
+                                    <input name="transferPickupDate" id="transferPickupDate" #transferPickupDate="ngModel"
+                                        placeholder="Select Date" [(ngModel)]="TransferPickupDate" [value]="TransferPickupDate | date: 'dd MMM yyyy'"
+                                        class="form-control picker-input" [autoClose]="true" [mode]="'dropdown'"  [minMoment]="TripType == 2? (DepartureDate ? DepartureDate : currentDateTime) : currentDateTime" 
+                                        [maxMoment]="TripType == 2? ReturnDate :''" dateTimePicker [pickerType]="'date'" (ngModelChange)="onTransferPickUpDateChange()"
+                                        required />
+                                    <span class="error-message" *ngIf="transferPickupDate.errors && (transferPickupDate.dirty || transferPickupDate.touched)">
+                                        <span [hidden]="!transferPickupDate.errors.required">
+                                            Pickup date is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="col-md-4 transfer-inputs">
+                                    <input [disabled]="!TransferPickupDate" [(ngModel)]="TransferPickupTime" #transferPickupTime="ngModel"
+                                        name="transferPickupTime" id="transferPickupTime" placeholder="Select Time" [value]="TransferPickupTime | date: 'HH:mm'"
+                                        class="form-control picker-input" [mode]="'dropdown'" dateTimePicker [pickerType]="'time'"
+                                        (ngModelChange)="onTransferPickUpTimeChange()" required />
+                                    <span class="error-message" *ngIf="transferPickupTime.errors && (transferPickupTime.dirty || transferPickupTime.touched)">
+                                        <span [hidden]="!transferPickupTime.errors.required">
+                                            Pickup Time is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Drop Off To</label>
+                                </div>
+                                <div class="col-md-8 transfer-inputs">
+                                    <input placeholder="Search Location" [(ngModel)]="TransferDropoffTo" #transferDropoff="ngModel"
+                                        name="transferDropoff" id="autocomplete" type="text" class="form-control full-width"
+                                        (setAddress)="getTransferDropoffLocation($event)" ng2-google-place-autocomplete required />
+                                    <span class="error-message" *ngIf="transferDropoff.errors && (transferDropoff.dirty || transferDropoff.touched)">
+                                        <span [hidden]="!transferDropoff.errors.required">
+                                            Dropoff location is required
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Drop off Date And Time</label>
+                                </div>
+                                <div class="col-md-4 transfer-inputs">
+                                    <input [(ngModel)]="TransferDropoffDate" #transferDropoffDate="ngModel" name="transferDropoffDate"
+                                        id="transferDropoffDate" [disabled]="!transferPickupDate" placeholder="Select Date" [value]="TransferDropoffDate | date: 'dd MMM yyyy'"
+                                        class="form-control picker-input" [mode]="'dropdown'" [minMoment]="TransferPickupDate" [maxMoment]="TripType == 2? ReturnDate :''"
+                                        dateTimePicker [pickerType]="'date'" [autoClose]="true" (ngModelChange)="onTransferDropoffDateChange()"
+                                        required />
+                                    <span class="error-message" *ngIf="transferDropoffDate.errors && (transferDropoffDate.dirty || transferDropoffDate.touched)">
+                                        <span [hidden]="!transferDropoffDate.errors.required">
+                                            Dropoff Date is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="col-md-4 transfer-inputs">
+                                    <input [(ngModel)]="TransferDropoffTime" #transferDropoffTime="ngModel" name="transferDropoffTime"
+                                        id="transferDropoffTime" [disabled]="!TransferPickupTime || !TransferDropoffDate"
+                                        placeholder="Select Time" [value]="TransferDropoffTime | date: 'HH:mm'" class="form-control picker-input"
+                                        [mode]="'dropdown'" dateTimePicker [pickerType]="'time'" (ngModelChange)="onTransferDropoffTimeChange()"
+                                        required />
+                                    <span class="error-message" *ngIf="transferDropoffTime.errors && (transferDropoffTime.dirty || transferDropoffTime.touched)">
+                                        <span [hidden]="!transferDropoffTime.errors.required">
+                                            Dropoff Time is required
+                                        </span>
+                                    </span>
+                                </div>
+                                <span [hidden]="!transferDateError" class="error-message" style="margin-left: 15px;">
+                                    Dropoff time should be greater than Pickup time
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Transportation Type</label>
+                                </div>
+                                <div class="col-md-8 transfer-inputs">
+                                    <div>
+                                        <select [(ngModel)]="TransportationType" #transportationType="ngModel" name="transportationType"
+                                            id="transportationType" class="form-control full-width">
+                                            <option [value]="" disabled selected>Select Any</option>
+                                            <option *ngFor="let transportation of listedTransportations" [value]="transportation.value">{{transportation.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>No of People</label>
+                                </div>
+                                <div class="col-md-8 car-inputs">
+                                    <input #noOfPeople="ngModel" type="number" [(ngModel)]="TransferNoOfPeople" id="noOfPeople" name="noOfPeople"
+                                        class="form-control" placeholder="Enter No of People" />
+                                    <span class="error-message" *ngIf="TransferNoOfPeople < 0">
+                                            Negative number not allowed.
+                                    </span>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div class="col-md-4">
+                                    <label>Transfer Request Comments</label>
+                                </div>
+                                <div class="col-md-8 transfer-inputs">
+                                    <textarea #transferRequestComment="ngModel" [(ngModel)]="TransferRequestComment" id="transferComments"
+                                        name="transferComments" class="form-control" rows="4" placeholder="Enter Comments"
+                                        maxlength="250"></textarea>
+                                    <span class="error-message" *ngIf="transferRequestComment.errors && (transferRequestComment.dirty || transferRequestComment.touched)">
+                                        <span [hidden]="!transferRequestComment.errors.maxlength">Input exceeding max characters
+                                            limit (250) </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a (click)="saveTransferRequestData()" class="button btn-large dark-blue2 pull-right" *ngIf="transferRequestForm.form.valid && !transferDateError"
+                                    href="#summary-tab" data-toggle="tab">NEXT</a>
+                                <!-- <button [hidden]="!transferRequestForm.form.valid || transferDateError" type="submit" (click)="saveTransferRequestData()" class="button btn-large dark-blue2 pull-right" ><a href="#summary-tab" data-toggle="tab">NEXT</a></button> -->
+                            </div>
+                            <div class="col-md-6">
+                                <a (click)="navTransferToSummary('skip')" href="#summary-tab" data-toggle="tab" class="button btn-large white skipBtn">SKIP</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="summary-tab">
+                    <div class="details-wrapper" *ngIf="RequestData">
+
+                         <div class="details" *ngIf="RequestData.Motivation">
+                            <div class="row details-head-row">
+                                <div class="col-md-3 details-head-box">
+                                    <img class="" src="assets/images/inverse-flight.png" alt="" >
+                                    <span class="details-heading">Motivation</span>
+                                </div>
+                                <div class="col-md-9"></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Reason for Travel</div>
+                                    <div class="field-value">{{RequestData.Motivation.ReasonForTravelRequest}}</div>
+                                </div>
+                                
+                            </div>
+                        </div> 
+
+
+                        <div class="details" *ngIf="RequestData.FlightRequest">
+                            <div class="row details-head-row">
+                                <div class="col-md-3 details-head-box">
+                                    <img class="" src="assets/images/inverse-flight.png" alt="">
+                                    <span class="details-heading">Flight</span>
+                                </div>
+                                <div class="col-md-9"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Departure</div>
+                                    <div class="field-value">
+                                        {{RequestData.FlightRequest.DepartureAirport}},
+                                        {{RequestData.FlightRequest.DepartureCountryName}},
+                                        {{RequestData.FlightRequest.DepartureCode}}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Arrival</div>
+                                    <div class="field-value">
+                                        {{RequestData.FlightRequest.ArrivalAirport}},
+                                        {{RequestData.FlightRequest.ArrivalCountryName}}, {{RequestData.FlightRequest.ArrivalCode}}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Departing On</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.DepartureDate | date : 'dd MMM yyyy'}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Return Date</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.ReturnDate | date : 'dd MMM yyyy'}}</div>
+                                </div>
+                            </div>
+                            <hr>
+            
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Trip Type</div>
+                                    <div class="field-value">
+                                        {{RequestData.FlightRequest.TripType | tripType}}
+                                    </div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Flight Class</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.Class | flightClass}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Flight Type</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.FlightType | flightType}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Preferred Airline</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.PreferredAirlines}}</div>
+                                </div>
+                            </div>
+                            <hr>
+            
+                            <div class="row">
+                                <!-- <div class="col-md-3 field divider">
+                                    <div class="field-key">Membership No.</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.MembershipNo}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Rewards Claim</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.RewardsClaim}}</div>
+                                </div> -->
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Reason For Travel</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.ReasonForTravel}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Flight Requests Comments</div>
+                                    <div class="field-value">{{RequestData.FlightRequest.FlightRequestComment}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details" *ngIf="RequestData.AccomodationRequest">
+                            <div class="row details-head-row">
+                                <div class="col-md-3 details-head-box">
+                                    <img class="" src="assets/images/inverse-hotel.png" alt="">
+                                    <span class="details-heading">Hotel</span>
+                                </div>
+                                <div class="col-md-9"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">City</div>
+                                    <div class="field-value">{{RequestData.AccomodationRequest.City}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Preferred Place</div>
+                                    <div class="field-value">{{RequestData.AccomodationRequest.PreferredPlace}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Check-In</div>
+                                    <div class="field-value">{{RequestData.AccomodationRequest.CheckIn | date : 'dd MMM yyyy'}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Check-Out</div>
+                                    <div class="field-value">{{RequestData.AccomodationRequest.CheckOut | date : 'dd MMM yyyy'}}</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12 field ">
+                                    <div class="field-key">Hotel Request Comment </div>
+                                    <div class="field-value">{{RequestData.AccomodationRequest.HotelRequestComment}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details" *ngIf="RequestData.CarRequest">
+                            <div class="row details-head-row">
+                                <div class="col-md-3 details-head-box">
+                                    <img class="" src="assets/images/inverse-car.png" alt="">
+                                    <span class="details-heading">Car Hire</span>
+                                </div>
+                                <div class="col-md-9"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Pick Up From</div>
+                                    <div class="field-value">{{RequestData.CarRequest.PickupFromLocation}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Pick Up Date And Time</div>
+                                    <div class="field-value">{{RequestData.CarRequest.PickupDate | date : 'dd MMM yyyy
+                                        HH:mm'}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Drop Off To</div>
+                                    <div class="field-value">{{RequestData.CarRequest.DropoffTo}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Drop Off Date And Time</div>
+                                    <div class="field-value">{{RequestData.CarRequest.DropoffDate | date : 'dd MMM yyyy
+                                        HH:mm'}}</div>
+                                </div>
+            
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <!-- <div class="col-md-3 field divider">
+                                    <div class="field-key">Car Type</div>
+                                    <div class="field-value">{{RequestData.CarRequest.CarType | cars}}</div>
+                                </div> -->
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">No of People</div>
+                                    <div class="field-value">{{RequestData.CarRequest.NumberOfPeople}}</div>
+                                </div>
+                                <div class="col-md-9 field divider">
+                                    <div class="field-key">Car Request Comment</div>
+                                    <div class="field-value">{{RequestData.CarRequest.CarRequestComment}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details" *ngIf="RequestData.TransferRequest">
+                            <div class="row details-head-row">
+                                <div class="col-md-3 details-head-box">
+                                    <img class="" src="assets/images/inverse-transfer.png" alt="">
+                                    <span class="details-heading">Transfer</span>
+                                </div>
+                                <div class="col-md-9">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Pick Up From</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.PickupFromLocation}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Pick Up Date And Time</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.PickupDate | date : 'dd MMM yyyy
+                                        HH:mm'}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Drop Off To</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.DropoffTo}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Drop Off Date And Time</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.DropoffDate | date : 'dd MMM yyyy
+                                        HH:mm'}}</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Transportation Type</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.TransportationType | transportations}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">Transfer Request Comment</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.TransferRequestComment}}</div>
+                                </div>
+                                <div class="col-md-3 field divider">
+                                    <div class="field-key">No. of People</div>
+                                    <div class="field-value">{{RequestData.TransferRequest.NumberOfPeople}}</div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Select Travel Company</label>
+                            </div>
+                            <div class="col-md-5">
+                                <select #mapping name="mapped-companies" class="form-control full-width" [(ngModel)]="Mapping"
+                                    required>
+                                    <option [disabled]="true" [selected]="true">Select Travel Company</option>
+                                    <option *ngFor="let mapping of mappingList" [ngValue]="mapping">
+                                        {{mapping.ToCompanyId._id==CompanyId?mapping.FromCompanyId.CompanyName:mapping.ToCompanyId.CompanyName}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <a *ngIf="(Mapping && ((flightRequestForm.form.valid) || (hotelRequestForm.form.valid) || (carRequestForm.form.valid) || (transferRequestForm.form.valid)))" type="submit" (click)="saveRequestData()" class="button btn-large dark-blue2 pull-right">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

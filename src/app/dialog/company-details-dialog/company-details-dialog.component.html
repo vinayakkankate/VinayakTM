@@ -1,0 +1,71 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="close()">×</button>
+            <h4 class="modal-title" ><span class="glyphicon glyphicon-home"></span> Company Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+            	<div class="col-md-6 field divider">
+					<div class="field-key">TMID</div>
+					<div class="field-value">{{CompanyTMID}}</div>
+				</div>
+				<div class="col-md-6 ">
+					<div class="field-key">Name</div>
+					<div class="field-value">{{CompanyName}}</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 field divider">
+					<div class="field-key">Website</div>
+					<div class="field-value ">{{CompanyWebsite}}</div>
+				</div>
+				<div class="col-md-6 ">
+					<div class="field-key">Address</div>
+					<div class="field-value">{{CompanyAddress | addressSplit}}</div>
+				</div>			
+			</div>
+			<form #sendMappingRequestForm="ngForm">
+				<div class="row">
+					<div class="col-md-6 field divider">
+						<div class="field-key">Select Team Leader</div>
+						<div class="field-value ">
+							<select class="form-control"  name="tl-list" id="TL-List" [(ngModel)]="AgencyTLId" #teamLeader="ngModel" (change)="getEmployeeOfAgencyByTLId(AgencyTLId)" required>
+								<option [disabled]="true" [selected]="true" >Select Team Leader</option>
+								<option *ngFor="let TL of agencyTLList" [ngValue]="TL._id">
+									{{TL.FirstName}} {{TL.LastName}}
+								</option>
+							</select>
+							<span *ngIf="teamLeader.errors && (teamLeader.dirty || teamLeader.touched)" class="error-message">
+                        		<span [hidden]="!teamLeader.errors.required">
+                        			Team Leader is required!
+                        		</span>    		
+                        	</span>
+						</div>
+					</div>
+					<div class="col-md-6 ">
+						<div class="field-key">Select Employee</div>
+						<div class="field-value">
+							<select class="form-control"  name="emp-list" id="emp-list" [(ngModel)]="EmployeeId" #employee="ngModel" >
+								<option [disabled]="true" [selected]="true" >Select Employee</option>
+								<option *ngFor="let Employee of agencyEmployeeList" [ngValue]="Employee._id">
+									{{Employee.FirstName}} {{Employee.LastName}}
+								</option>
+							</select>
+							<span *ngIf="employee.errors && (employee.dirty || employee.touched)" class="error-message">
+                        		<span [hidden]="!employee.errors.required">
+                        			Employee is required!
+                        		</span>    		
+                        	</span>			
+						</div>
+					</div>			
+				</div> 
+	            <div class="modal-footer">
+	                <button [disabled]="!sendMappingRequestForm.form.valid" (click)="confirm(AgencyTLId,EmployeeId)" type="submit" class="btn btn-primary">Submit</button>
+	                
+	                <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
+	            </div>
+            </form>
+    	</div>
+	</div>
+</div>

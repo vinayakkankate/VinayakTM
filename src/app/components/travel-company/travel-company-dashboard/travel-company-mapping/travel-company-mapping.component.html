@@ -1,0 +1,172 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-myspace"></i>
+            <h2 class="entry-title">Travel Agent Associations</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<!-- <div id="slideshow">
+    <div class="fullwidthbanner-container">
+        <div class="fullwidthbanner-container">
+            <img src="assets/images/hotel_header.jpg" alt="">
+        </div>
+    </div>
+</div> -->
+<section >
+	<div class="main-bar">
+		<img src="assets/images/hotel_header.jpg" alt="">
+	</div>
+    <div class="search-box-wrapper">
+        <div class="search-box container">
+            <ul class="search-tabs clearfix">                
+            	<li class="active"><a href="#mapped-agencies-tab" data-toggle="tab">Associated Corporates</a></li>
+                <li ><a href="#send-mapping-request-tab" data-toggle="tab">Send Association Request</a></li>
+                <li><a href="#approve-mapping-request-tab" data-toggle="tab">Approve Association Request</a></li>
+                
+            </ul>
+            <div class="visible-mobile">
+                <ul id="mobile-search-tabs" class="search-tabs clearfix">
+
+                	<li class="active"><a href="#mapped-agencies-tab">Associated Corporates</a></li>
+                    <li ><a href="#send-mapping-request-tab">Send Association Request</a></li>
+					<li><a href="#approve-mapping-request-tab">Approve Association Request</a></li>
+					
+                </ul>
+            </div>
+
+            <div class="search-tab-content">
+		    	<div class="tab-pane fade active in" id="mapped-agencies-tab">
+		    		<div class="row">
+						<div class="col-md-12">
+							<table class="table tbl table-striped table-bordered">
+								<tr>
+									<th>Sr. No.</th>
+									<th>Corporate Company</th>
+									<th>Corporate website address</th>
+									<!-- <th>Reporting Manager</th>
+									<th>Employee</th> -->
+									<th class="w20">Status</th>
+									<th class="w20"></th>
+									<th class="w20"></th>
+								</tr>
+								<tr *ngFor="let request of mappedRequests; let i=index">
+								  <td>{{i+1}}</td>
+								  <td>{{CompanyId!=request.ToCompanyId._id?request.ToCompanyId.CompanyName:request.FromCompanyId.CompanyName}}</td>
+								  <!-- <td>{{request.AgencyReportingManagerId.FirstName}} {{request.AgencyReportingManagerId.LastName}}</td>
+									<td>{{request.AgencyEmployeeId.FirstName}} {{request.AgencyEmployeeId.LastName}}</td> -->
+									<td>{{request.Website }}</td>
+									<!-- <td>{{request.Status | mappingStatus}}</td> -->
+									<td *ngIf="request.Status == false"><span  [class]=" '1' | requestStatusIconClass"></span></td>
+									<td *ngIf="request.Status == true"><span  [class]=" '8' | requestStatusIconClass"></span></td>
+									<td *ngIf="request.Status == true"  ><button (click)="changeMappingStatus('false',request.FromCompanyId._id,request.ToCompanyId._id)">Suspend</button></td>
+									<td *ngIf="request.Status == false"><button  (click)="changeMappingStatus('true',request.FromCompanyId._id,request.ToCompanyId._id)">Continue</button></td>
+									<td><button (click)="changeMappingStatus('delete',request.FromCompanyId._id,request.ToCompanyId._id)">Cancel</button></td>
+								</tr>	
+							</table>
+						</div>
+					</div>
+		        </div> 
+
+		        <div class="tab-pane fade" id="send-mapping-request-tab">
+		        	<div class="row">
+			        	<div class="col-md-4">
+			    			<form #sendMappingRequestForm="ngForm" class="form-action">
+								<div class="form-group">
+								<label for="tmid">Enter TMID:</label>
+									<!-- <input class="form-control" type="text" maxlength="30" id="tmid" name="tmid" placeholder="Enter The TMID" [(ngModel)]="ToCompanyTMID" #sendTMID="ngModel" required/>
+									<span *ngIf="sendTMID.errors && (sendTMID.dirty || sendTMID.touched)" class="error-message">
+			                    		<span [hidden]="!sendTMID.errors.required">
+			                    			TMID is required!
+			                    		</span>
+			                    		<span [hidden]="!sendTMID.errors.maxlength">
+			                    			TMID cannot be more than 30 characters long.
+			                    		</span>
+									</span> -->
+									<select name="mapped-companies" class="form-control full-width" [(ngModel)]="ToCompanyTMID"
+                                    required>
+										<option [disabled]="true" [selected]="true">Select TMID</option>
+										<option *ngFor="let company of companies" [ngValue]="company.TMID">
+											{{company.TMID}} - {{company.CompanyName}}
+										</option>
+									</select>
+								</div>
+								<div class="form-actions">
+									<button type="submit" [disabled]="!sendMappingRequestForm.form.valid" (click)="getCompanyDetailsByTMID(ToCompanyTMID)" class="button btn-large dark-blue2">Submit</button>
+								</div>
+							</form>
+						</div>
+
+						<div class="col-md-8">
+							<label for="sel1">Pending Requests</label>
+							<table class="table tbl table-striped table-bordered">
+								<tr>
+									<th>Sr. No.</th>
+									<th>Corporate Company</th>
+									<th>Agency Reporting Manager</th>
+									<th>Agency Employee</th> 
+									<th>Status</th>
+								</tr>
+								<tr *ngFor="let request of pendingMappingRequests; let i=index">
+								  <td>{{i+1}}</td>
+								  <td>{{request.ToCompanyId.CompanyName}}</td>
+								  <td>{{request.AgencyReportingManagerId.FirstName}} {{request.AgencyReportingManagerId.LastName}}</td>
+									<td *ngIf="request.AgencyEmployeeId">{{request.AgencyEmployeeId.FirstName}} {{request.AgencyEmployeeId.LastName}}</td>
+									<!-- <td>{{request.Status | mappingStatus}}</td> -->
+									<td *ngIf="request.Status == false"><span  [class]=" '1' | requestStatusIconClass"></span></td>
+									<td *ngIf="request.Status == true"><span  [class]=" '8' | requestStatusIconClass"></span></td>
+								</tr>	
+							</table>
+						</div>
+					</div>
+		        </div>
+		        
+		        <div class="tab-pane fade" id="approve-mapping-request-tab">
+		        	<div class="row">
+			      		<div class="col-md-12">
+							<table class="table tbl table-striped table-bordered">
+								<tr>
+									<th>Sr. No.</th>
+									<th>Corporate Company</th>
+									<!-- <th>TMID of Corporate Company</th> -->
+									<th>Reporting Manager</th>
+									<th>Employee</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+								<tr *ngFor="let request of approvingMappingRequests; let i = index">					
+									<td>{{i+1}}</td>
+									<td><label class="form-control">{{request.FromCompanyId.CompanyName}}</label></td>
+									<!-- <td><input maxlength="30" class="form-control" type="text" name="tmid2-{{i}}" placeholder="Enter The TMID" [(ngModel)]="FromCompanyTMID[i]" required></td> -->
+									<td><select class="form-control"  name="tllist-{{i}}" id="TLList" [(ngModel)]="AgencyTLId[i]" (change)="getEmployeeOfAgencyByTLId(AgencyTLId[i])" required>
+										<option [disabled]="true" [selected]="true" >Select Reporting Manager</option>
+										<option *ngFor="let TL of agencyTLList; let j = index" [ngValue]="TL._id">
+											{{TL.FirstName}} {{TL.LastName}}
+										</option>
+									</select></td>
+									<td><select class="form-control"  name="emplist-{{i}}" id="emplist" [(ngModel)]="EmployeeId[i]" required>
+										<option [disabled]="true" [selected]="true" >Select Employee</option>
+										<option *ngFor="let Employee of agencyEmployeeList; let k = index" [ngValue]="Employee._id">
+											{{Employee.FirstName}} {{Employee.LastName}}</option>
+										</select>
+									</td>
+									<!-- <td>{{request.Status | mappingStatus}}</td> -->
+									<td *ngIf="request.Status == false"><span  [class]=" '1' | requestStatusIconClass"></span></td>
+									<td *ngIf="request.Status == true"><span  [class]=" '8' | requestStatusIconClass"></span></td>
+									<td><button type="submit" (click)="approveMappingRequest(EmployeeId[i],AgencyTLId[i],request.FromCompanyId.TMID,request._id,request.FromCompanyId._id)" class="button btn-medium dark-blue2">Approve</button></td>
+									<!-- <td><button type="submit" (click)="approveMappingRequest(EmployeeId[i],AgencyTLId[i],FromCompanyTMID[i],request._id,request.FromCompanyId._id)" class="button btn-medium dark-blue2">Approve</button></td> -->
+								</tr>	
+							</table>
+						</div>
+					</div>
+		        </div>
+		    </div>
+        </div>
+    </div>
+    
+</section>

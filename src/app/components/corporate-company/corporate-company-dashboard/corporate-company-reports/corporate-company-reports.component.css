@@ -1,0 +1,66 @@
+.reportMenu{
+    text-align: left;
+    color: white;
+    font-size: medium;
+}
+.gridClass{
+    border: solid;
+    border-style: double;
+    margin: 5px;
+    padding: 10px;
+}
+/* #gridColumnClass{
+    text-align: center !important;
+    vertical-align: middle !important;
+ 
+} */
+.reportName{
+    text-align: center;
+    color: blue;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row > td {
+    vertical-align: middle ! important;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row > td {
+    vertical-align: middle;
+}
+
+.sub-btn{
+    font-size: 13px;
+    font-weight: bold;
+    background: #007AFF;
+    height: 40px;
+    line-height: 34px;
+    border-radius: 7px;
+    min-width: 22%;
+    margin: 5px;
+}
+
+.sub-btn .active {
+    background: #FB8E25;
+    color: #fff;
+}
+
+.subTab-select{
+    color: blue;  
+    background-color: #e6d6d6; 
+}
+
+.font18{
+    font-size: 18px;
+}
+
+.nav>li>a {
+    position: relative;
+    display: initial;
+    padding: 10px 15px;
+}
+
+.dx-datagrid-headers .dx-header-row > td > .dx-datagrid-text-content {
+    white-space: normal;
+    vertical-align: middle ! important;
+    font-weight: bold ! important;
+}
+

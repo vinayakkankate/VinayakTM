@@ -1,0 +1,560 @@
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-user"></i>
+            <h2 class="entry-title">User Profile</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section style="padding: 20px">
+    <div class="row upload-wrapper">
+        <div class="col-md-4 image-wrapper">
+            <img
+                alt=""
+                class="image-block img img-responsive img-thumbnail"
+                [src]="getProfilePhoto(userData.ProfilePhotoPath)">
+            <label class="btn upload-button">
+                Browse
+                <input
+                    #profilePhoto
+                    type="file"
+                    name="upload-profile-photo"
+                    id="upload-profile-photo"
+                    accept="image/*"
+                    (change)="uploadProfilePhoto($event)" hidden>
+            </label>
+        </div>
+        <div class="col-md-8">
+            <div class="row display-profile">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <dl class="term-description" style="margin-top: 10px;">
+                        <dt>Email-ID:</dt>
+                        <dd>{{userData.Email}}</dd>
+                        <dt>First Name:</dt>
+                        <dd>{{userData.FirstName}}</dd>
+                        <dt>Last Name:</dt>
+                        <dd>{{userData.LastName}}</dd>
+                        <dt>Employee Code:</dt>
+                        <dd>{{userData.EmployeeCode || DefaultText}}</dd>
+                        <dt>Designtion:</dt>
+                        <dd>{{userData.Designation || DefaultText}}</dd>
+                        <dt>Department:</dt>
+                        <dd>{{userData.Department || DefaultText}}</dd>
+                        <dt>Gender:</dt>
+                        <dd>{{userData.Gender || DefaultText}}</dd>
+                        <dt>Date of Birth:</dt>
+                        <dd>
+                            <span *ngIf="userData.DOB">
+                                {{userData.DOB | date : 'yyyy-MM-dd'}}    
+                            </span>
+                            <span *ngIf="!userData.DOB">
+                                {{DefaultText}}
+                            </span>
+                        </dd>
+                        <dt>Mobile Number:</dt>
+                        <dd>{{userData.MContactNumber || DefaultText}}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <dl class="term-description" style="margin-top: 10px;">
+                        <dt>Phone Number:</dt>
+                        <dd>{{userData.LContactNumber || DefaultText}}</dd>
+                        <dt>Reporting Manager:</dt>
+                        <dd>
+                            <span *ngIf="userData.ReportingManagerId">{{userData.ReportingManagerId.FirstName}} {{userData.ReportingManagerId.LastName}}
+                            </span>
+                            <span *ngIf="!userData.ReportingManagerId">{{DefaultText}}
+                            </span>
+                        </dd>
+                        <dt>Emergency Contact:</dt>
+                        <dd>
+                            <span *ngIf="userData.EmergencyContactId">{{userData.EmergencyContactId.FirstName}} {{userData.EmergencyContactId.LastName}}
+                            </span>
+                            <span *ngIf="!userData.EmergencyContactId">{{DefaultText}}
+                            </span>
+                        </dd>
+                        <dt>Nationality:</dt>
+                        <dd>{{userData.Nationality || DefaultText}}</dd>
+                        <dt>Address1:</dt>
+                        <dd>{{userData.AddressOne || DefaultText}}</dd>
+                        <dt>Address2:</dt>
+                        <dd>{{userData.AddressTwo || DefaultText}}</dd>
+                        <dt>City:</dt>
+                        <dd>{{userData.City || DefaultText}}</dd>
+                        <dt>Zipcode:</dt>
+                        <dd>{{userData.Zipcode || DefaultText}}</dd>
+                        <dt>Country:</dt>
+                        <dd>{{userData.Country || DefaultText}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row edit-profile-button-wrapper">
+                <button data-toggle="modal" data-target="#edit-profile-modal" class="edit-user-profile">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-plane"></span>Edit Profile</h4>
+            </div>
+            <form #editProfileForm="ngForm">
+                <div class="modal-body" style="padding:20px;">
+                    <!-- FirstName LastName EmployeeCode -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="first-name">Firstname:</label>
+                                <input placeholder="Enter Firstname" maxlength="20" pattern="[A-Za-z]{1,20}" name="first-name" id="first-name" class="form-control" #firstName="ngModel" [(ngModel)]="userData.FirstName" required>
+
+                                <span *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="error-message">
+                                    <span [hidden]="!firstName.errors.required">
+                                        Firstname is required!
+                                    </span>
+                                    <span [hidden]="!firstName.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!firstName.errors.pattern">
+                                        Invalid firstname
+                                    </span>
+                                </span>
+                            </div>
+                        </div>                        
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="last-name">Lastname:</label>
+                                <input placeholder="Enter Lastname" maxlength="20" pattern="[A-Za-z]{1,20}" name="last-name" id="last-name" class="form-control" #lastName="ngModel" [(ngModel)]="userData.LastName" required>
+
+                                <span *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="error-message">
+                                    <span [hidden]="!lastName.errors.required">
+                                        Lastname is required!
+                                    </span>
+                                    <span [hidden]="!lastName.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!lastName.errors.pattern">
+                                        Invalid lastname
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="employee-code">Employee Code:</label>
+                                <input placeholder="Enter Employee Code" maxlength="20" pattern="[A-Za-z0-9]{1,20}" name="employee-code" id="employee-code" class="form-control" #employeeCode="ngModel" [(ngModel)]="userData.EmployeeCode">
+
+                                <span *ngIf="employeeCode.errors && (employeeCode.dirty || employeeCode.touched)" class="error-message">
+                                    <span [hidden]="!employeeCode.errors.required">
+                                        Employee code is required!
+                                    </span>
+                                    <span [hidden]="!employeeCode.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!employeeCode.errors.pattern">
+                                        Invalid Employee code
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Designation Department Gender -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="designation">Designation:</label>
+                                <input placeholder="Enter Your Designation" maxlength="20" pattern="[A-Za-z]{1,20}" name="designation" id="designation" class="form-control" #designation="ngModel" [(ngModel)]="userData.Designation">
+                                <span *ngIf="designation.errors && (designation.dirty || designation.touched)" class="error-message">
+                                    <span [hidden]="!designation.errors.required">
+                                        Designation is required!
+                                    </span>
+                                    <span [hidden]="!designation.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!designation.errors.pattern">
+                                        Invalid designation
+                                    </span>
+                                </span>
+                            </div>
+                        </div>                        
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="department">Department:</label>
+                                <input placeholder="Enter Your Department" maxlength="20" pattern="[A-Za-z]{1,20}" name="department" id="department" class="form-control" #department="ngModel" [(ngModel)]="userData.Department">
+
+                                <span *ngIf="department.errors && (department.dirty || department.touched)" class="error-message">
+                                    <span [hidden]="!department.errors.required">
+                                        Department is required!
+                                    </span>
+                                    <span [hidden]="!department.errors.maxlength">
+                                        Input exceeding max character limit (20)!
+                                    </span>
+                                    <span [hidden]="!department.errors.pattern">
+                                        Invalid department
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" class="form-control"  [(ngModel)]="userData.Gender" #gender="ngModel">
+                                    <option *ngFor="let gender of listedGenders" [value]="gender">{{gender}}</option>
+                                </select>
+                                <span *ngIf="gender.errors && (gender.dirty || gender.touched)" class="error-message">
+                                    <span [hidden]="!gender.errors.pattern">
+                                        Gender is required!
+                                    </span>         
+                                </span>
+                            </div>
+                        </div>                        
+                    </div>
+
+                    <!-- DOB Mobile Nubmer Landline Number-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="dob">Date of Birth:</label>
+                                <input placeholder="Date of Birth" name="dob" id="dob" class="form-control picker-input" [mode]="'dropdown'" [value]="userData.DOB | date:'MM/dd/yyyy'" dateTimePicker [pickerType]="'date'" [(ngModel)]="userData.DOB" #dob="ngModel" readonly>
+                                <span *ngIf="dob.errors && (dob.dirty || dob.touched)" class="error-message">
+                                    <span [hidden]="!dob.errors.required">
+                                        Date of Birth is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="contact-number">Mobile Number :</label>
+                                <input [(ngModel)]="userData.MContactNumber" #mContactNumber="ngModel" maxlength="15" class="form-control" id="contact-number" name="contact-number" placeholder="Enter Mobile Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$" type="text" required />
+                                <span *ngIf="mContactNumber.errors && (mContactNumber.dirty || mContactNumber.touched)" class="error-message">
+                                    <span [hidden]="!mContactNumber.errors.required">
+                                        Mobile Number is required!
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.maxlength">
+                                        Mobile Number cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!mContactNumber.errors.pattern">
+                                        Invalid Mobile Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="phone-number">Phone Number :</label>
+                                <input [(ngModel)]="userData.LContactNumber" #lContactNumber="ngModel" maxlength="15" class="form-control" id="phone-number" name="phone-number" placeholder="Enter Phone Number" pattern="^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$" type="text" />
+                                <span *ngIf="lContactNumber.errors && (lContactNumber.dirty || lContactNumber.touched)" class="error-message">
+                                    <span [hidden]="!lContactNumber.errors.required">
+                                        Phone Number is required!
+                                    </span>
+                                    <span [hidden]="!lContactNumber.errors.maxlength">
+                                        Mobile Phone cannot be more than 15 digit long.
+                                    </span>
+                                    <span [hidden]="!lContactNumber.errors.pattern">
+                                        Invalid Phone Number.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EmegencyContact Address1 Address2-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="emergency-contact">Emergency Contact:</label>
+                                <ng2-completer class="form-control cc" #emergencyContact="ngModel" [(ngModel)]="EmergencyContact" (selected)="onSelectEmergencyContact($event)" [datasource]="agencyUsersService" [minSearchLength]="0" name="emergency-contact" inputClass="full-width" required></ng2-completer>
+                                <span *ngIf="emergencyContact.errors && (emergencyContact.dirty || emergencyContact.touched)" class="error-message">
+                                    <span [hidden]="!emergencyContact.errors.pattern">
+                                        Emergency Contact is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="address-one">Address1:</label>
+                                <input placeholder="Enter Address" maxlength="120" name="address-one" id="address-one" class="form-control" #addressOne="ngModel" [(ngModel)]="userData.AddressOne">
+                                <span *ngIf="addressOne.errors && (addressOne.dirty || addressOne.touched)" class="error-message">
+                                    <span [hidden]="!addressOne.errors.required">
+                                        Address1 is required!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.maxlength">
+                                        Input exceeding max character limit (120)!
+                                    </span>
+                                    <span [hidden]="!addressOne.errors.pattern">
+                                        Invalid Address
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="address-two">Address2:</label>
+                                <input placeholder="Enter Address" maxlength="120" name="address-two" id="address-two" class="form-control" #addressTwo="ngModel" [(ngModel)]="userData.AddressTwo">
+                                <span *ngIf="addressTwo.errors && (addressTwo.dirty || addressTwo.touched)" class="error-message">
+                                    <span [hidden]="!addressTwo.errors.required">
+                                        Address2 is required!
+                                    </span>
+                                    <span [hidden]="!addressTwo.errors.maxlength">
+                                        Input exceeding max character limit (120)!
+                                    </span>
+                                    <span [hidden]="!addressTwo.errors.pattern">
+                                        Invalid Address
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- City Nationality Zipcode -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input [options]="{types:['(cities)']}" placeholder="Search City" name="city" class="form-control" [(ngModel)]="userData.City" #city="ngModel" id="autocomplete" (city)= 'userData.City=$event' (country)='userData.Country=$event' required ng2-google-place-autocomplete>
+                                <span *ngIf="city.errors && (city.dirty || city.touched)" class="error-message">
+                                    <span [hidden]="!city.errors.required">
+                                        City is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="nationality">Nationality:</label>
+                                <input name="nationality" id="nationality" class="form-control" #nationality="ngModel" [(ngModel)]="userData.Nationality">
+                                <span *ngIf="nationality.errors && (nationality.dirty || nationality.touched)" class="error-message">
+                                    <span [hidden]="!nationality.errors.required">
+                                        nationality is required!
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding-bottom: 10px;">
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode:</label>
+                                <input name="zipcode" id="zipcode" class="form-control" #zipcode="ngModel" [(ngModel)]="userData.Zipcode" maxlength="6" pattern="[0-9]{6}">
+                                <span *ngIf="zipcode.errors && (zipcode.dirty || zipcode.touched)" class="error-message">
+                                    <span [hidden]="!zipcode.errors.required">
+                                        Zipcode is required!
+                                    </span>
+                                    <span [hidden]="!zipcode.errors.maxlength">
+                                        Input exceeding max limit (6)
+                                    </span>
+                                    <span [hidden]="!zipcode.errors.pattern">
+                                        Invalid Zipcode
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>  
+                <div class="panel-footer" style="margin-bottom:-14px;">
+                    <button [disabled]="!editProfileForm.form.valid" (click)="editProfile(userData)" type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> SUBMIT</button>
+
+                    <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- <section id="content" class="dx-viewport">
+    <div class="tab-container full-width-style arrow-left dashboard">
+        <div class="container">
+            <div id="profile" class="tab-content">
+                <div class="view-profile tab-pane fade active in">
+                    <article *ngIf="!edit" class="box innerstyle personal-details row">
+
+                        <figure class="col-md-4">
+                            <a title="" href="#"><img *ngIf="userData.ProfilePhotoPath==undefined || null" width="310" height="263" alt="" src="http://placehold.it/270x263">
+                                <img *ngIf="userData.ProfilePhotoPath!=undefined || null" width="310" height="263" alt="" src="{{userData.ProfilePhotoPath}}"></a>
+                        </figure>
+                        <div  class="details col-md-8">
+                             <button type="submit" class="btn btn-primary pull-right" (click)="editProfile()">
+         <span class="glyphicon glyphicon-plus-edit"></span> Edit Profile
+         </button>
+                            <h2 class="box-title fullname">{{userData.FirstName}} {{userData.LastName}}</h2>
+                            <dl class="term-description">
+                                <dt>Email Address:</dt>
+                                 <dd>{{userData.Email}}</dd> 
+                                 <dt>Employee Code:</dt>
+                                 <dd>{{userData.EmployeeCode || 'Not Available'}}</dd>
+                                 <dt>Designation:</dt>
+                                 <dd>{{userData.Designation || 'Not Available'}}</dd>
+                                 <dt>Department:</dt>
+                                 <dd>{{userData.Department || 'Not Available'}}</dd>
+                                <dt>First Name:</dt>
+                                 <dd>{{userData.FirstName}}</dd> 
+                                <dt>Last Name:</dt>
+                                <dd>{{userData.LastName}}</dd>
+                                <dt>Gender:</dt>
+                                <dd>{{userData.Gender || 'Not Available'}}</dd>
+                                <dt>Date Of Birth:</dt>
+                                <dd>{{userData.DOB || 'Not Available'}}</dd>
+                                <dt>Phone Number:</dt>
+                                <dd>{{userData.MContactNumber || 'Not Available'}}</dd>
+                                <dt>Emergency Contact:</dt>
+                                <dd *ngIf="userData.EmergencyContactId">{{userData.EmergencyContactId.FirstName}} {{userData.EmergencyContactId.LastName}}</dd>
+                                <dd *ngIf="!userData.EmergencyContactId">Not Available</dd>
+                                <dt>Address :</dt>
+                                <dd *ngIf="addressParts!=null">{{addressParts[0] || 'Not Available'}}</dd>
+                                <dt *ngIf="addressParts!=null"></dt>
+                                <dd *ngIf="addressParts!=null">{{addressParts[1] || 'Not Available'}}</dd>
+                                <dt *ngIf="addressParts!=null"></dt>
+                                <dd *ngIf="addressParts!=null">{{addressParts[2] || 'Not Available'}}</dd>
+                                <dd *ngIf="addressParts==null">Not Available</dd>
+                                <dt>Country:</dt>
+                                <dd >{{userData.Country || 'Not Available'}}</dd>
+                                <dt>Nationality:</dt>
+                                <dd>{{userData.Nationality || 'Not Updated'}}</dd>
+                            </dl>
+                        </div>
+                      
+                    </article>
+                    <article *ngIf="edit" class="box innerstyle personal-details row">
+
+                        <figure class="col-md-4">
+                            <a title="" href="#"><img *ngIf="userData.ProfilePhotoPath==undefined || null" width="310" height="263" alt="" src="http://placehold.it/270x263">
+                                 <img *ngIf="userData.ProfilePhotoPath!=undefined || null" width="310" height="263" alt="" src="{{userData.ProfilePhotoPath}}"> 
+                            </a>
+                                <br>
+                          
+                                             
+                            <span><input id="photo" #c type="file" ng2FileSelect [uploader]="uploader" accept=".png,.jpg,.jpeg" (change)="TestFileType(c.value,['jpg', 'png', 'jpeg'],'photo')" [formControl]="updateProfileForm.controls['photo']"  class="form-control full-width"/></span>
+                            
+                        </figure>
+                        
+                        <div class="details col-md-8">
+                            
+                             <form [formGroup]="updateProfileForm">
+                            <h2 class="box-title fullname">{{userData.FirstName}} {{userData.LastName}}</h2>
+                                    <dl class="term-description">
+                                <dt>Email Id:</dt>
+                                 <dd><input type="text" class="form-control full-width" [value]="userData.Email" readonly="readonly"/></dd> 
+                                <dt>Employee Code:</dt>
+                                  <dd class="search">
+                                             <i data-tooltip="Employee code can contain 1 to 20 characters including digits and special characters(space,dash) only!" class="{{!updateProfileForm.controls['EmployeeCode'].valid && updateProfileForm.controls['EmployeeCode'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                <input *ngIf="userData.EmployeeCode!=undefined || null" pattern="[A-Za-z0-9\s\-]{1,20}" maxlength="20" type="text" [value]="userData.EmployeeCode" class="form-control full-width" [formControl]="updateProfileForm.controls['EmployeeCode']" required autofocus/>
+                                    <input *ngIf="userData.EmployeeCode==undefined || null" pattern="[A-Za-z0-9\s\-]{1,20}" maxlength="20" type="text" class="form-control full-width" placeholder="Enter Employee Code"  [formControl]="updateProfileForm.controls['EmployeeCode']" required autofocus/>
+                                </dd>
+                                 <dt>Designation:</dt>
+                                 <dd class="search">
+                                             <i data-tooltip="Designation can contain 1 to 20 characters including space only!" class="{{!updateProfileForm.controls['Designation'].valid && updateProfileForm.controls['Designation'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                     <input *ngIf="userData.Designation!=undefined || null" pattern="[A-Za-z\s]{1,20}" maxlength="20" type="text" [value]="userData.Designation" class="form-control full-width" [formControl]="updateProfileForm.controls['Designation']" required autofocus/>
+                                    <input *ngIf="userData.Designation==undefined || null" pattern="[A-Za-z\s]{1,20}" maxlength="20" type="text" class="form-control full-width" placeholder="Enter Designation"  [formControl]="updateProfileForm.controls['Designation']" required autofocus/></dd>
+                                 <dt>Department</dt>
+                                 <dd class="search">
+                                             <i data-tooltip="Department can contain 1 to 20 characters including digits and space !" class="{{!updateProfileForm.controls['Department'].valid && updateProfileForm.controls['Department'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                     <input *ngIf="userData.Department!=undefined || null" pattern="[A-Za-z0-9\s]{1,20}" maxlength="20" type="text" [value]="userData.Department" class="form-control full-width" [formControl]="updateProfileForm.controls['Department']" required autofocus/>
+                                    <input *ngIf="userData.Department==undefined || null" pattern="[A-Za-z0-9\s]{1,20}" maxlength="20" type="text" class="form-control full-width" placeholder="Enter Department"  [formControl]="updateProfileForm.controls['Department']" required autofocus/></dd>
+                                 <dt>First Name:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="First Name can contain 1 to 15 characters including special characters (space, dot, single quote) only!" class="{{!updateProfileForm.controls['FirstName'].valid && updateProfileForm.controls['FirstName'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                     <input type="text" class="form-control full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" [value]="userData.FirstName" [formControl]="updateProfileForm.controls['FirstName']" required autofocus/></dd> 
+                                <dt>Last Name:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Last Name can contain 1 to 15 characters including special characters (space, dot, single quote) only!" class="{{!updateProfileForm.controls['LastName'].valid && updateProfileForm.controls['LastName'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                    <input type="text" class="form-control full-width" pattern="[A-Za-z\.\'']{1,15}" maxlength="15" [value]="userData.LastName" [formControl]="updateProfileForm.controls['LastName']" required autofocus/></dd>
+                                <dt>Phone Number:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Contact Number can contain 7 to 15 digits only!" class="{{!updateProfileForm.controls['MContactNumber'].valid && updateProfileForm.controls['MContactNumber'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                <input *ngIf="userData.MContactNumber!=undefined || null"  class="form-control full-width" autocomplete="off" type="phone" pattern="^[0-9]\d{6,15}$" maxlength="15" minlength="6" [value]="userData.MContactNumber" [formControl]="updateProfileForm.controls['MContactNumber']" required autofocus>
+                                            <input *ngIf="userData.MContactNumber==undefined || null"  class="form-control full-width" type="phone" pattern="^[0-9]\d{6,15}$" maxlength="15" minlength="6" placeholder="Enter Contact Number" maxlength="15" minlength="6" [formControl]="updateProfileForm.controls['MContactNumber']" required autofocus>
+                                        </dd>
+                                        <dt>Emergency Contact:</dt>
+                            <dd class="search">
+                                             <i data-tooltip="Enter person's name as emergency contact" class="{{!updateProfileForm.controls['EmergencyContactId'].valid && updateProfileForm.controls['EmergencyContactId'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                <ng2-completer *ngIf="userData.EmergencyContactId!=undefined || null" class="form-control cc" [formControl]="updateProfileForm.controls['EmergencyContactId']" (selected)="onSelectEmergencyContact($event)" [datasource]="companyUsersService" [minSearchLength]="0" name="emergency-contact" inputClass="full-width" placeholder="{{userData.EmergencyContactId.FirstName}} {{userData.EmergencyContactId.LastName}}" required autofocus></ng2-completer>
+
+                                <ng2-completer *ngIf="userData.EmergencyContactId==undefined || null" class="form-control cc" [formControl]="updateProfileForm.controls['EmergencyContactId']" (selected)="onSelectEmergencyContact($event)" [datasource]="companyUsersService" [minSearchLength]="0" name="emergency-contact" inputClass="full-width" placeholder="Search with name" required autofocus></ng2-completer>
+                            </dd>
+                                        <dt>Gender</dt>
+                                       <dd class="search">
+                                             <i data-tooltip="Select Gender" class="{{!updateProfileForm.controls['Gender'].valid && updateProfileForm.controls['Gender'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                            <select *ngIf="userData.Gender!=undefined || null" value="userData.Gender" class="form-control full-width" [formControl]="updateProfileForm.controls['Gender']" #g (change)="onSelectGender(g.value)" required autofocus>
+
+ <option value="Male" [selected]="userData.Gender=='Male'">Male</option>
+ <option value="Female" [selected]="userData.Gender=='Female'">Female</option>
+    </select> 
+                                        <select *ngIf="userData.Gender==undefined || null"  class="form-control full-width" [formControl]="updateProfileForm.controls['Gender']" required autofocus>
+                                        <option value=" " disabled selected hidden [selected]="strGender">Select Gender</option>
+<option value="Male">Male</option>
+ <option value="Female">Female</option>
+                                   </select>
+                                        </dd>
+                                <dt>Date Of Birth:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Select Date Of Birth" class="{{!updateProfileForm.controls['DOB'].valid && updateProfileForm.controls['DOB'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                <input *ngIf="userData.DOB!=undefined || null" [value]="DOB || userData.DOB | date: 'MM/dd/yyyy'" class="form-control picker-input" [mode]="'dropdown'" [maxMoment]="allowedDate" [formControl]="updateProfileForm.controls['DOB']" dateTimePicker [pickerType]="'date'" (onChange)="onSelectDOB($event)" required autofocus/>
+                                    
+                            <input *ngIf="userData.DOB==undefined || null" placeholder="Enter Birth Date" class="form-control picker-input" [mode]="'dropdown'" [maxMoment]="allowedDate" [formControl]="updateProfileForm.controls['DOB']" dateTimePicker [pickerType]="'date'" (onChange)="onSelectDOB($event)" required autofocus/>
+                            
+                            </dd>
+                                <dt>Address Line 1:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Plot No./Street/Locality" class="{{!updateProfileForm.controls['Address1'].valid && updateProfileForm.controls['Address1'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                    
+                                     <input *ngIf="addressParts!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[0]" [formControl]="updateProfileForm.controls['Address1']" required autofocus/>
+                                    <input *ngIf="addressParts==undefined || null" type="text" placeholder="Plot No./Street/Locality" class="form-control full-width" [formControl]="updateProfileForm.controls['Address1']" required autofocus/> 
+                                </dd>
+                                <dt>Address Line 2:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Landmark" class="{{!updateProfileForm.controls['Address2'].valid && updateProfileForm.controls['Address2'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                     <input *ngIf="addressParts[1]!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[1]" [formControl]="updateProfileForm.controls['Address2']"  required autofocus/>
+                                    <input *ngIf="addressParts[1]==undefined || null" type="text" placeholder="Landmark" class="form-control full-width" [formControl]="updateProfileForm.controls['Address2']" required autofocus/> 
+                                </dd>
+                                <dt>City:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="City" class="{{!updateProfileForm.controls['City'].valid && updateProfileForm.controls['City'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                     <input *ngIf="addressParts[2]!=undefined || null" type="text" class="form-control full-width" [value]="addressParts[2]" [formControl]="updateProfileForm.controls['City']"  required autofocus/>
+                                    <input *ngIf="addressParts[2]==undefined || null" type="text" placeholder="City" class="form-control full-width" [formControl]="updateProfileForm.controls['City']" required autofocus/> 
+                                </dd>
+                                <dt>Country:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Enter Country Name" class="{{!updateProfileForm.controls['Country'].valid && updateProfileForm.controls['Country'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                    
+                                    <ng2-completer *ngIf="userData.Country!=undefined || null" class="form-control cc" [formControl]="updateProfileForm.controls['Country']" (selected)="onSelectCountry($event)" [datasource]="dataService" [minSearchLength]="0" name="country" inputClass="full-width" placeholder="{{userData.Country}}" required autofocus></ng2-completer>
+                                    <ng2-completer *ngIf="userData.Country==undefined || null" class="form-control cc" [formControl]="updateProfileForm.controls['Country']" (selected)="onSelectCountry($event)" [datasource]="dataService" [minSearchLength]="0" name="country" inputClass="full-width" placeholder="Country" required autofocus></ng2-completer>
+                                </dd>  
+                                <dt>Nationality:</dt>
+                                <dd class="search">
+                                             <i data-tooltip="Enter nationality" class="{{!updateProfileForm.controls['Nationality'].valid && updateProfileForm.controls['Nationality'].touched?'fa fa-info-circle':''}}" aria-hidden="true"></i> 
+                                    <input *ngIf="userData.Nationality!=undefined || null" pattern="[A-Za-z]{1,30}" maxlength="30" type="text" [value]="userData.Nationality" class="form-control full-width" [formControl]="updateProfileForm.controls['Nationality']" required autofocus/>
+                                    <input *ngIf="userData.Nationality==undefined || null" pattern="[A-Za-z]{1,30}" maxlength="30" type="text" class="form-control full-width" placeholder="Nationality"  [formControl]="updateProfileForm.controls['Nationality']" required autofocus/>
+                                </dd>
+                            <dt>
+                                <button type="button" class="btn btn-primary btn-s form-control" (click)="goBack()">Back</button>
+                            </dt>
+                            <dd>
+                                <button type="button" class="btn btn-success btn-s form-control" (click)="updateUserProfile(updateProfileForm.value)">Save Profile</button>
+                            </dd>
+                            </dl> 
+                             
+                             </form>
+                        </div>  
+                    </article>
+                    
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+</section>
+ -->

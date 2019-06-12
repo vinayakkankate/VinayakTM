@@ -1,0 +1,231 @@
+<div id="page-wrapper">
+    <header id="header" class="navbar-static-top">
+        <div class="topnav hidden-xs">
+            <div class="container">
+                <!-- <h4 *ngIf="userData" class="pull-left whtext">{{userData.CompanyId.CompanyName}}</h4>           -->
+                <label class="pull-left whtext">{{userData.CompanyId.CompanyName}}</label>
+                <h4 *ngIf="userData" class="pull-right whtext">Welcome, {{userData.FirstName}} {{userData.LastName}}</h4>
+            </div>
+        </div>
+
+        <div class="main-header">
+
+            <a href="#mobile-menu-01" data-toggle="collapse" class="mobile-menu-toggle">
+                Mobile Menu Toggle
+            </a>
+
+            <!-- <div class="container-fluid" id="nav-container"> -->
+            <div class="container-fluid" id="nav-container">
+                <h1 class="logo navbar-brand">
+                    <a (click)="oncorporateDashboardHome('goToCCHome')" title="Travel Mediary - home" style="margin-right: -66px;">
+                        <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                    </a>
+                </h1>
+                <div class="col-md-1 col-lg-1"></div>
+                <nav id="main-menu" role="navigation">
+                    <ul class="menu">
+
+                        <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a (click)="consoleTab=!consoleTab" data-toggle="tab" routerLink="/corporate-company/dashboard/home" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Management Console</a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/home" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Home</a>
+                        </li>
+
+                        <li *ngIf="userData.Role==1 || userData.Role==2" class=" menu-item-has-children ">
+                            <a  (click)="consoleTab=false" routerLink="/corporate-company/dashboard/team-requests" routerLinkActive="active" [ngStyle]="{'color':takeURLname() == 'Trequest-details' ? '#007AFF' : '' }"
+                                [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Team Approvals</a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/user-profile" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">User Profile</a>
+                        </li>
+                        <!-- <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/corporate-company/dashboard/users" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Users</a>
+                        </li> -->
+                        <li *ngIf="userData.Role!=4" class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/new-request" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">New Request</a>
+                        </li>
+
+                        <!-- <li *ngIf="userData.Role==4 || userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/corporate-company/dashboard/all-requests" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">All Requests</a>
+                        </li> -->
+
+                        <li *ngIf="userData.Role!=4" class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/my-requests" routerLinkActive="active" [ngStyle]="{'color':takeURLname() == 'Mrequest-details' ? '#007AFF' : '' }"
+                                [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">My Requests</a>
+                        </li>
+
+                        <li class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/reports" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Reports</a>
+                        </li>
+
+
+                        <!-- <li *ngIf="userData.Role==1 || userData.Role==2" class=" menu-item-has-children ">
+                            <a routerLink="/corporate-company/dashboard/team-requests" routerLinkActive="active">Team Approvals</a>
+                        </li> -->
+                        <!-- <li *ngIf="userData.Role==2" class="menu-item-has-children">
+                            <a routerLink="/corporate-company/dashboard/team-members" routerLinkActive="active">Team Members</a>
+                        </li> -->
+
+                        <!-- <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                            <a routerLink="/corporate-company/dashboard/company-profile" routerLinkActive="active">Company Profile</a>
+                        </li> -->
+                        <!-- <li class="menu-item-has-children">
+                            <a routerLink="/corporate-company/dashboard/user-profile" routerLinkActive="active">User Profile</a>
+                        </li> -->
+                        <!-- <li *ngIf="userData.Role==1" class=" menu-item-has-children ">
+                            <a routerLink="/corporate-company/dashboard/mapping" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Mapping</a>
+                        </li> -->
+                        <li class="menu-item-has-children">
+                            <a (click)="consoleTab=false" routerLink="/corporate-company/dashboard/settings" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Settings</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a (click)="consoleTab=false" href="#" (click)="onLogoutClick()">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="container-fluid" id="managementConsoleID" *ngIf="consoleTab">
+                   
+                    <div class="col-md-1 col-lg-1"></div>
+                    <nav id="main-menu" role="navigation">
+                        <ul class="menu floatLeftManagementConsoleMenu">
+    
+                         
+                            <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                                <a routerLink="/corporate-company/dashboard/users" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Users</a>
+                            </li>
+                          
+    
+                            <li *ngIf="userData.Role==4 || userData.Role==1" class="menu-item-has-children">
+                                <a routerLink="/corporate-company/dashboard/all-requests" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">All Requests</a>
+                            </li>   
+                           
+          
+                            <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                                <a routerLink="/corporate-company/dashboard/company-profile" routerLinkActive="active">Company Profile</a>
+                            </li>
+                            
+                            <li *ngIf="userData.Role==1" class=" menu-item-has-children ">
+                                <a routerLink="/corporate-company/dashboard/mapping" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Mapping</a>
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+
+            <nav id="mobile-menu-01" class="mobile-menu collapse">
+                <ul id="mobile-primary-menu " class="menu ">
+                    <li class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/home" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Home</a>
+                    </li>
+                    <!-- <li class="menu-item-has-children">s
+                        <a routerLink="/corporate-company/dashboard/user-profile" routerLinkActive="active">User Profile</a>
+                    </li> -->
+                    <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/users" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Users</a>
+                    </li>
+                    <li *ngIf="userData.Role!=4" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/new-request" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">New Request</a>
+                    </li>
+
+                    <li *ngIf="userData.Role!=4" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/my-requests" routerLinkActive="active" [ngStyle]="{'color':requestDetailsURL[3] == 'Mrequest-details' ? '#007AFF' : '' }"
+                            [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">My Requests</a>
+                    </li>
+
+                    <li *ngIf="userData.Role==4 || userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/all-requests" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">All Requests</a>
+                    </li>
+
+                    <li *ngIf="userData.Role==1 || userData.Role==2" class=" menu-item-has-children ">
+                        <a routerLink="/corporate-company/dashboard/team-requests" routerLinkActive="active" [ngStyle]="{'color':requestDetailsURL[3] == 'Trequest-details' ? '#007AFF' : '' }"
+                            [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Team Requests</a>
+                    </li>
+                    <li *ngIf="userData.Role==2" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/team-members" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Team Members</a>
+                    </li>
+
+                    <li *ngIf="userData.Role==1" class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/company-profile" routerLinkActive="active">Company Profile</a>
+                    </li>
+                    <!-- <li class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/user-profile" routerLinkActive="active">User Profile</a>
+                    </li> -->
+                    <li *ngIf="userData.Role==1" class=" menu-item-has-children ">
+                        <a routerLink="/corporate-company/dashboard/mapping" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Mapping</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a routerLink="/corporate-company/dashboard/settings" routerLinkActive="active" [ngClass]="{isDisabled: authService.getUserData().CompanyId.profileSaveFlag == false}">Settings</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="#" (click)="onLogoutClick()">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+
+
+    <router-outlet></router-outlet>
+
+
+
+
+
+
+    <footer id="footer">
+
+
+
+        <div class="bottom gray-area">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>About Travel Mediary</h2>
+                        <p>currently in beta phase, please email "support" for assistance</p>
+                        <br />
+                        <address class="contact-details">
+                            <!-- <span class="contact-phone"><i class="soap-icon-phone"></i> 1-800-123-HELLO</span> -->
+                            For support please contact
+                            <br />
+                            <a href="#" class="contact-email">support@travelmediary.com</a>
+                        </address>
+
+                        <!-- <ul class="social-icons ss">
+                            <li class="twitter"><a title="twitter" href="#" data-toggle="tooltip"><i class="soap-icon-twitter"></i></a></li>
+                            <li class="googleplus"><a title="googleplus" href="#" data-toggle="tooltip"><i class="soap-icon-googleplus"></i></a></li>
+                            <li class="facebook"><a title="facebook" href="#" data-toggle="tooltip"><i class="soap-icon-facebook"></i></a></li>
+                            <li class="linkedin"><a title="linkedin" href="#" data-toggle="tooltip"><i class="soap-icon-linkedin"></i></a></li>
+                            <li class="vimeo"><a title="vimeo" href="#" data-toggle="tooltip"><i class="soap-icon-vimeo"></i></a></li>
+                            <li class="dribble"><a title="dribble" href="#" data-toggle="tooltip"><i class="soap-icon-dribble"></i></a></li>
+                            <li class="flickr"><a title="flickr" href="#" data-toggle="tooltip"><i class="soap-icon-flickr"></i></a></li>
+                        </ul> -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="logo pull-left cursor-pointer" >
+                        <a (click)="oncorporateDashboardHome('goToCCHome')" title="Travel Mediary - home">
+                            <img src="assets/images/logo.png" alt="Travel Mediary HTML5 Template" />
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <a id="back-to-top" href="#" class="animated" data-animation-type="bounce">
+                            <i class="soap-icon-longarrow-up circle"></i>
+                        </a>
+                    </div>
+                    <div class="copyright pull-right ">
+                        <p> 2018 Travel Mediary</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

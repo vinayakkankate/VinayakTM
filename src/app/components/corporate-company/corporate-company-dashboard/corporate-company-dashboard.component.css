@@ -1,0 +1,24 @@
+/* #main-menu{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}  */
+
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+    pointer-events: none;
+  }
+
+  .navbar-brand {
+    padding: 10px 0px 5px 0px !important;
+  }
+
+  .floatLeftManagementConsoleMenu{
+    float: left !important;    
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
+  }

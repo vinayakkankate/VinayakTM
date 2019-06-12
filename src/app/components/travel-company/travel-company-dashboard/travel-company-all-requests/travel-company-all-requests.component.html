@@ -1,0 +1,334 @@
+<!-- <div class="container full-width">
+    <div class="row">
+        <div class="col-md-12 tmembers">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1">
+                    <div class="pull-left">
+                        <h3 class="tmtitle">Requests</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="page-title-container style4">
+    <div class="container">
+        <div class="page-title">
+            <i class="soap-icon-calendar"></i>
+            <h2 class="entry-title">All Requests</h2>
+        </div>
+        <!-- <ul class="breadcrumbs">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PAGES</a></li>
+            <li class="active">Before You Fly</li>
+        </ul> -->
+    </div>
+</div>
+<section id="content">
+    <div class="container-fluid marginTop20">
+        <div class="col-md-12 nopadding">
+            <!-- <div class="request-filter-wrapper">
+                <div class="request-filter">
+                    <ul class="nav nav-pills">
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text active" style="margin-left:30px">
+                                <span class="badge" *ngIf="statusFlag==null && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#all" (click)="sortRequestStatusWise(null)">All</a>
+                            </li>         
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==1 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#pending" (click)="sortRequestStatusWise(1)">Pending</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==2 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#in-progress" (click)="sortRequestStatusWise(2)">In-Progress</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==3 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#confirmed" (click)="sortRequestStatusWise(3)">Confirmed</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2 filter-divider">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==4 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#processed" (click)="sortRequestStatusWise(4)">Processed</a>
+                            </li>
+                        </div>
+                        <div class="col-md-2" style="margin-top: 5px;">
+                            <li class="filter-text">
+                                <span class="badge" *ngIf="statusFlag==5 && requestList">{{count}}</span>
+                                <a data-toggle="pill" href="#history" (click)="sortRequestStatusWise(5)">History</a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div> -->
+
+            <!-- <div class="request-header-wrapper">
+                <div class="request-header">
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 header-text  nopadding">Date</div>
+                        <div class="col-md-4 header-text  nopadding">Request ID (C)</div>
+                        <div class="col-md-4 header-text  nopadding">Request ID (T)</div>
+                    </div>
+
+                    <div class="col-md-4 header-text  nopadding">
+                        <div>Request For</div>     
+                    </div>
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 header-text  nopadding">Approver</div>
+                        <div class="col-md-4 header-text nopadding">Status</div> 
+                        <div class="col-md-4 header-text nopadding">Book</div>        
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="request-box-wrapper" *ngFor="let request of requestList">                
+                <div class="request-list">
+                    <div class="row">
+                    <a target="_blank" [routerLink]="['../request-details/',request._id]">
+
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 divider nopadding">
+                            <div class="fullCircle">
+                                {{request.FirstDate | date : 'dd'}}
+                            </div>
+                        </div>
+                        <div class="col-md-4 divider nopadding">
+                            <div class="request-id">{{request.CompanyRequestId}}</div>
+                        </div>
+                        <div class="col-md-4 divider nopadding">
+                            <div class="request-id">{{request.AgencyRequestId}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 divider nopadding image-holder" >
+                        <img *ngIf="request.FlightRequest" class="image-block img-responsive" src="/assets/images/flight.png" alt="">
+                        <img *ngIf="request.AccomodationRequest" class="image-block img-responsive" src="/assets/images/hotel.png" alt="">
+                        <img *ngIf="request.CarRequest" class="image-block img-responsive" src="/assets/images/car.png" alt="">
+                        <img *ngIf="request.TransferRequest" class="image-block img-responsive" src="/assets/images/transfer.png" alt="">
+                    </div>
+
+                    </a>
+                    <div class="col-md-4 nopadding">
+                        <div class="col-md-4 nopadding divider">
+                            <div *ngIf="request.ReportingManagerId; then thenBlockRMPhoto else elseBlockRMPhoto">
+                            </div>
+                            <ng-template #thenBlockRMPhoto><img class="img-responsive img-circle img-approver-custom" [src]="request.ReportingManagerId.ProfilePhotoPath || DefaultPhotoPath" alt=""></ng-template>
+                            <ng-template #elseBlockRMPhoto><img class="img-responsive img-circle img-approver-custom" [src]="request.CompanyUserId.ProfilePhotoPath || DefaultPhotoPath" alt=""></ng-template>
+                        </div>
+                        <div class="col-md-4 divider nopadding">
+                            <div class="request-status">
+                                <span [class]="request.Status | requestStatusIconClass"></span>
+                                <span [class]="request.Status | requestStatusTextClass">{{request.Status | requestStatusText}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 nopadding">
+                            <div class="book-button-wrapper">
+                                <button id="book-button" class="btn btn-primary" (click)="bookRequest(request._id,request.Status)" [disabled]="request.Status!=3">Book</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 nopadding">
+                            <div class="col-md-4 nopadding date-year">
+                            {{request.FirstDate | date : 'MMM'}} 
+                            {{request.FirstDate | date : 'yyyy'}}
+                            </div>
+                            <div class="col-md-4 nopadding"></div>
+                            <div class="col-md-4 nopadding"></div>
+
+                        </div>
+                        <div class="col-md-4 nopadding"></div>
+                        <div class="col-md-4 nopadding">
+                            <div class="col-md-4 request-approver-text nopadding">
+                                <span *ngIf="request.ReportingManagerId; then thenBlockRMName else elseBlockRMName"> </span>
+                                <ng-template #thenBlockRMName>{{request.ReportingManagerId.FirstName}} {{request.ReportingManagerId.LastName}}</ng-template>
+                                <ng-template #elseBlockRMName>Self</ng-template>
+                            </div>
+                            <div class="col-md-4 nopadding"></div>
+                            <div class="col-md-4 nopadding"></div>
+                        </div>
+                    </div>
+                </div>                
+            </div> -->
+            <!-- <div id="next-button-wrapper" *ngIf="requestList">
+                <button *ngIf="requestList.length<count" (click)="nextRecords()" class="btn add-button">Next</button>    
+            </div> -->
+
+            <!-- devextreme grid -->
+            <!-- <dx-select-box id="select-prefix"
+                [dataSource]="user"
+                placeholder= "Assign request to"
+                [value]="FirstName"
+                displayExpr="FirstName"
+                valueExpr="_id"
+                (onValueChanged)="AssignRequest($event)">
+            </dx-select-box><br><br> -->
+            
+                
+            <!-- <dx-select-box
+                [dataSource]="user"
+                displayExpr="FirstName"
+                valueExpr="_id"
+                [value]="_id"
+                fieldTemplate="field" id="select-prefix" (onValueChanged)="AssignRequest($event)" >
+                <div *dxTemplate="let data of 'field'">
+                    <dx-text-box class="product-name" 
+                            [value]="data" 
+                            [readOnly]="true">
+                    </dx-text-box>
+                </div>
+            </dx-select-box> -->
+            
+            <dx-data-grid id="gridContainer" [dataSource]="requestList" [rowAlternationEnabled]="true" [showColumnLines]="true" [showRowLines]="true"
+                [showBorders]="true" [allowColumnReordering]="false" [allowColumnResizing]="false" [columnAutoWidth]="true" >
+                <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+                <dxo-load-panel [enabled]="true"></dxo-load-panel>
+                <dxo-filter-row [visible]="true"></dxo-filter-row>
+                <dxo-header-filter [visible]="true"></dxo-header-filter>
+
+                <!-- <dxo-selection
+                    mode="multiple">
+                </dxo-selection> -->
+                <dxo-editing 
+                    mode="cell"
+                    [allowUpdating]="true">
+                </dxo-editing>
+                <!-- <dxo-editing 
+                    mode="cell"
+                    [allowUpdating]="true"
+                    >
+                </dxo-editing> -->
+                <!-- Date -->
+                <dxi-column alignment="center"  dataType="date"  caption="Date" dataField="FirstDate" [allowFiltering]="true" [allowSorting]="false" cellTemplate="DateTemplate" [allowEditing]="false" ></dxi-column>
+                <div *dxTemplate="let date of 'DateTemplate'">
+                    <div class="fullCircle">
+                        {{date.value | date : 'dd'}}
+                    </div>
+                    <div class="nopadding date-year">
+                        {{date.value | date : 'MMM'}} {{date.value | date : 'yyyy'}}
+                    </div>
+                </div>
+
+                <!-- Request Id -->
+                <dxi-column alignment="center" caption="Request ID" dataField="AgencyRequestId" [allowFiltering]="true" [allowSorting]="false" cellTemplate="RequestIDTemplate" [allowEditing]="false" sortOrder="desc"></dxi-column>
+                <div *dxTemplate="let Id of 'RequestIDTemplate'">
+                    <a  [routerLink]="['../request-details/',Id.data._id]" style="color:blue;">
+                        {{Id.value}}
+                    </a>
+                </div>
+
+                <!-- Request Id C-->
+                <!-- <dxi-column caption="Request ID (T)" dataField="AgencyRequestId" [allowFiltering]="true" [allowSorting]="false"></dxi-column> -->
+
+
+                <!--company name -->
+                <dxi-column alignment="center" caption="Corporate Name" dataField="CompanyId.CompanyName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="CompanyNameTemplate" [allowEditing]="false"></dxi-column>
+                <div class="company-name" *dxTemplate="let CompanyName of 'CompanyNameTemplate'">
+                    {{CompanyName.value}}
+                </div>
+
+                <!-- Request For -->
+                <dxi-column alignment="center" caption="Request For" dataField="Requests" [width]="220" [allowFiltering]="true" [allowSorting]="true" cellTemplate="RequestForTemplate" [allowEditing]="false">
+                    <dxo-header-filter [dataSource]="reasonforHeaderFilter"></dxo-header-filter>
+                </dxi-column>
+                <div *dxTemplate="let request of 'RequestForTemplate'">
+                    <div class="nopadding image-holder">
+                        <div *ngFor="let data of request.data.Requests">
+                            <img *ngIf="data.FlightRequest" class="image-block img-responsive" src="assets/images/flight.png" alt="">
+                            <img *ngIf="data.AccomodationRequest" class="image-block img-responsive" src="assets/images/hotel.png" alt="">
+                            <img *ngIf="data.CarRequest" class="image-block img-responsive" src="assets/images/car.png" alt="">
+                            <img *ngIf="data.TransferRequest" class="image-block img-responsive" src="assets/images/transfer.png" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approver -->
+                <dxi-column alignment="center" caption="Approver" dataField="ReportingManagerId.FirstName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="ApproverTemplate" [allowEditing]="false"></dxi-column>
+                <div *dxTemplate="let approver of 'ApproverTemplate'">
+                    <!-- <div *ngIf="!approver.data.ReportingManagerId">
+                        <div>
+                            <img class="img-responsive img-circle img-approver-custom" [src]="DefaultPhotoPath" alt="">
+                        </div>
+                        Self
+                    </div> -->
+                    <div *ngIf="approver.data.ReportingManagerId"><br>
+                        <!-- <div>
+                            <img
+                                class="img-responsive img-circle img-approver-custom" 
+                                [src]="getProfilePhoto(approver.data.ReportingManagerId.ProfilePhotoPath)"
+                                alt="">
+                                {{approver.data.ReportingManagerId.FirstName}} {{approver.data.ReportingManagerId.LastName}}
+                        </div> -->
+                            {{approver.data.ReportingManagerId[0].FirstName}} {{approver.data.ReportingManagerId[0].LastName}}<br>
+                            {{approver.data.ReportingManagerId[0].Email}}<br>{{approver.data.ReportingManagerId[0].MContactNumber}}
+                    </div>
+                </div>
+
+                <!-- Requester -->
+                <dxi-column alignment="center" caption="Requester" dataField="CompanyUserId.FirstName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="RequesterTemplate" [allowEditing]="false"></dxi-column>
+                <div *dxTemplate="let requester of 'RequesterTemplate'">
+                    <!-- <img
+                        class="img-responsive img-circle img-approver-custom"
+                        [src]="getProfilePhoto(requester.data.CompanyUserId.ProfilePhotoPath)"
+                        alt="">
+                        {{requester.data.CompanyUserId.FirstName}} {{requester.data.CompanyUserId.LastName}} -->
+                    <div class="request-approver-text nopadding">
+                        {{requester.data.CompanyUserId.FirstName}} {{requester.data.CompanyUserId.LastName}}<br>
+                        {{requester.data.CompanyUserId.Email}}<br>{{requester.data.CompanyUserId.MContactNumber}}
+                    </div>    
+                </div>
+
+                <!-- status -->
+                <dxi-column alignment="center" caption="Status" dataField="statusName" [allowFiltering]="true" [allowSorting]="false" cellTemplate="StatusTemplate" [allowEditing]="false" [width]="100"></dxi-column>
+                <div *dxTemplate="let status of 'StatusTemplate'">
+                    <!-- <div class="request-status">
+                        <span [class]="status.data.Status | requestStatusIconClass"></span>
+                    </div>
+                    <div>
+                        <span [class]="status.data.Status | requestStatusTextClass">{{status.data.Status | requestStatusText}}</span>
+                    </div> -->
+                    <div class="request-status">
+                        <span *ngIf="status.data.Status ==5 " [class]=" '1' | requestStatusIconClass"></span>
+                        <!-- <span *ngIf="status.data.Status ==5 && loggedInUser.Role !=1"  [class]="status.data.Status | requestStatusIconClass"></span> -->
+                        <span *ngIf="status.data.Status !=5" [class]="status.data.Status | requestStatusIconClass"></span>
+                    </div>
+                    <div>
+                        <span *ngIf="status.data.Status ==5 " [class]=" '1' | requestStatusTextClass" >{{'1'| requestStatusText}}</span>
+                        <!-- <span *ngIf="status.data.Status ==5 && loggedInUser.Role !=1" [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span> -->
+                        <span *ngIf="status.data.Status !=5" [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span>
+                    </div>
+                </div>
+                <!-- book -->
+                <dxi-column alignment="center" caption="Book" dataField="Status" [allowFiltering]="false" [allowSorting]="false" [allowEditing]="false" cellTemplate="BookTemplate">
+
+                </dxi-column>
+                <div *dxTemplate="let bookstatus of 'BookTemplate'">
+                    <div class="book-button-wrapper">
+                        <button id="book-button" class="btn btn-default" (click)="showConfirm(bookstatus)" [disabled]="bookstatus.value !=3"><i class="fa fa-check-circle" aria-hidden="true" style="color:#9a9a9a; font-size:20px;"></i></button>
+                    </div>
+                </div>
+
+                <!-- <dxi-column alignment="center" class="valign-middle" dataField="FirstName" caption="Assign to" [allowFiltering]="false" [allowSorting]="false" [width]="140">
+                    <dxo-lookup [dataSource]="user" valueExpr="_id" aria-placeholder="select" displayExpr="FirstName" ></dxo-lookup>
+                </dxi-column> -->
+
+                <dxo-remote-operations [filtering]="true" [sorting]="false" [paging]="true" [grouping]="true">
+                </dxo-remote-operations>
+
+                <dxo-paging [pageSize]="5"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+            </dx-data-grid>
+
+        </div>
+
+    </div>
+</section>

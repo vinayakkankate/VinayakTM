@@ -1,0 +1,482 @@
+<div class="page-title-container style4">
+  <div class="container">
+    <div class="col-md-2 page-title">
+      <i class="soap-icon-list"></i>
+      <h2 class="entry-title">Reports</h2>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-9 reportMenu" *ngIf="userData.Role == 1 || userData.Role ==2">
+        <button class="sub-btn active" (click)="showSubTabs('Myreports')" [ngClass]="{'subTab-select':showSubTab=='Myreports'}">My Reports</button>
+        <button class="sub-btn" (click)="showSubTabs('Teamreports')" [ngClass]="{'subTab-select':showSubTab=='Teamreports'}">Team Reports</button>
+      <!-- <ul>
+        <li class="col-md-3 active " id="expense-report-tab-li">
+          <a href="#expense-report-tab" data-toggle="tab" (click)="StartDate='';EndDate=''" >Expense report</a>
+        </li>
+        <li class="col-md-3" id="out-of-office-report-tab-li">
+          <a href="#out-of-office-report-tab" data-toggle="tab" (click)="StartDate='';EndDate=''">Out of office report</a>
+        </li>
+        <li class="col-md-3" id="cost-benefit-report-tab-li">
+          <a href="#cost-benefit-report-tab" data-toggle="tab" (click)="StartDate='';EndDate=''">Cost benefit analysis report</a>
+        </li>
+      </ul> -->
+    </div>
+  </div>
+</div>
+
+<div class="search-tab-content">
+  <div>
+    <ul class="list-inline nav nav-tab">
+        <li class="col-md-3 active ">
+        </li>
+        <li class="col-md-2 active font18 " id="expense-report-tab-li"  [ngStyle]="{'color':reportName=='expense' ? 'blue' : '' }">
+          <a data-toggle="tab" href="#expense-report-tab" data-toggle="tab" (click)="StartDate='';EndDate='';reportName='expense'" >Expense report</a>
+        </li>
+        <li class="col-md-2 font18" id="out-of-office-report-tab-li" [ngStyle]="{'color':reportName=='outoff' ? 'blue' : '' }">
+          <a data-toggle="tab" href="#out-of-office-report-tab" data-toggle="tab" (click)="StartDate='';EndDate='';reportName='outoff'">Out of office report</a>
+        </li>
+        <li class="col-md-3 font18" id="cost-benefit-report-tab-li" [ngStyle]="{'color':reportName=='costbenefit' ? 'blue' : '' }">
+          <a data-toggle="tab" href="#cost-benefit-report-tab" data-toggle="tab" (click)="StartDate='';EndDate='';reportName='costbenefit'">Cost benefit analysis report</a>
+        </li>
+    </ul>
+  </div>
+  <div class="tab-pane fade active in" id="expense-report-tab">
+    <!-- <div class="row">
+      <h1 class="reportName">Expense report</h1>
+    </div> --><br><br><br>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <div class="col-md-4">
+          <label>Start Date</label>
+        </div>
+        <div class="col-md-8 flight-inputs">
+            <input type="date" placeholder="Select Date" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="StartDate"
+             class="form-control " (ngModelChange)="onstartDateChange($event)"/>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="col-md-4">
+          <label>End Date</label>
+        </div>
+        <div class="col-md-8 flight-inputs">
+            <input type="date" placeholder="Select Date" id="endDate" name="endDate" #endDate="ngModel" [(ngModel)]="EndDate"
+            class="form-control " (ngModelChange)="onendDateChange($event)"/>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <a (click)="getExpenceReport()" *ngIf="StartDate && EndDate" class="button btn-large dark-blue2 pull-right" data-toggle="tab">
+          Get Report</a>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="row gridClass">
+      <dx-data-grid id="gridContainer" [dataSource]="expenceReport" [columnAutoWidth]="true" [showBorders]="true"
+        [allowColumnReordering]="false" [showRowLines]="true">
+        <dxi-column alignment="center" caption="Corporate Name" dataField="CompanyId.CompanyName"></dxi-column>
+        <dxi-column alignment="center" caption="Travel Agency" dataField="AgencyId.CompanyName"></dxi-column>
+        <dxi-column alignment="center" caption="Transaction ID" dataField="CompanyRequestId" [groupIndex]="0" ></dxi-column>
+        <dxi-column alignment="center" caption="Date" dataField="QuotedDate" dataType="date"></dxi-column>
+        <dxi-column alignment="center" caption="User Type" dataField="CompanyUserId.Role" cellTemplate="userTypeTemplate"></dxi-column>
+        <div *dxTemplate="let user of 'userTypeTemplate'">
+          <div *ngIf="user.value ==1">Team Admin</div>
+          <div *ngIf="user.value ==2">Team Leader</div>
+          <div *ngIf="user.value ==3">Team Member</div>
+          <div *ngIf="user.value ==5">Freelance User</div>
+        </div>
+        <dxi-column alignment="center" caption="Travel Approver" dataField="ReportingManagerId[0].FirstName" ></dxi-column>
+        <dxi-column alignment="center" caption="Travel Requester" dataField="CompanyUserId.FirstName"></dxi-column>
+        <dxi-column alignment="center" caption="Department" dataField="Country"></dxi-column>
+        <dxi-column alignment="center" caption="Status" dataField="Status" cellTemplate="StatusTemplate"></dxi-column>
+        <div *dxTemplate="let status of 'StatusTemplate'">
+            <div>
+                <span [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span>
+            </div>
+        </div>
+        <dxi-column alignment="center" caption="Request For" dataField="requestfor" ></dxi-column>
+        <!-- <dxi-column alignment="center" caption="Request ID" dataField="AgencyRequestId" [allowFiltering]="true" [allowSorting]="false" ></dxi-column> -->
+        <!-- <div *dxTemplate="let Id of 'RequestIDTemplate'">
+            {{Id}}
+        </div> -->
+
+        <dxi-column alignment="center" caption="Request Detail" dataField="request" cellTemplate="requestTemplate"></dxi-column>
+        <div *dxTemplate="let request1 of 'requestTemplate'">
+            <div *ngIf="request1.value.for =='Hotel'">{{request1.value.City}}({{request1.value.CheckIn | date: 'dd MMM yyyy'}})-({{request1.value.CheckOut | date: 'dd MMM yyyy'}})</div>
+            <div *ngIf="request1.value.for =='Transfer'">{{request1.value.TransportationType}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div>
+            <div *ngIf="request1.value.for =='Car Hire'">{{request1.value.PickupFromLocation}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div>
+            <div *ngIf="request1.value.for =='Flight'">{{request1.value.DepartureAirport}},{{request1.value.DepartureCountryName}}({{request1.value.DepartureDate | date: 'dd MMM yyyy'}})-{{request1.value.ArrivalAirport}} {{request1.value.ArrivalCountryName}}({{request1.value.ReturnDate | date: 'dd MMM yyyy'}})</div>
+        </div>
+        <dxi-column alignment="center" caption="Quote" dataField="QuoteNo"></dxi-column>
+        <dxi-column alignment="center" caption="Purchase Order" dataField="Country"></dxi-column>
+        <dxi-column alignment="center" caption="Quote Detail" dataField="response" cellTemplate="quoteTemplate"></dxi-column>
+        <div *dxTemplate="let request1 of 'quoteTemplate'">
+            <div *ngIf="request1.value.for =='Hotel'">{{request1.value.HotelName}},{{request1.value.HotelAddress}}</div>
+            <div *ngIf="request1.value.for =='Transfer'">{{request1.value.ServiceProvider}}</div>
+            <div *ngIf="request1.value.for =='Car Hire'">{{request1.value.ServiceProvider}},{{request1.value.TransportationType}}</div>
+            <div *ngIf="request1.value.for =='Flight'">{{request1.value.Airlines}},{{request1.value.Class}}</div>
+        </div>
+        <dxi-column alignment="center" caption="Transaction" dataField="transaction"></dxi-column>
+        <dxi-column alignment="center" caption="Booked Date" dataField="Country"></dxi-column>
+        <dxi-column alignment="center" caption="Rating" dataField="Country"></dxi-column>
+        <dxi-column alignment="center" caption="Travel Expense Report" dataField="Country">
+            <dxi-column alignment="center" caption="2018" dataField="Country">
+                <dxi-column alignment="center" caption="Motivation" dataField="ReasonForTravel"></dxi-column>
+                <dxi-column alignment="center" caption="Travel Approver Comments" dataField="Country"></dxi-column>
+                <dxi-column alignment="center" caption="Jan" dataField="monthCost" cellTemplate="monthTemplate1"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate1'">
+                    <div *ngIf="month1.value.month==1">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Feb" dataField="monthCost" cellTemplate="monthTemplate2"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate2'">
+                  <div *ngIf="month1.value.month ==2">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Mar" dataField="monthCost" cellTemplate="monthTemplate3"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate3'">
+                  <div *ngIf="month1.value.month ==3">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Apr" dataField="monthCost" cellTemplate="monthTemplate4"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate4'">
+                  <div *ngIf="month1.value.month =='4'">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="May" dataField="monthCost" cellTemplate="monthTemplate5"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate5'">
+                  <div *ngIf="month1.value.month ==5">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="June" dataField="monthCost" cellTemplate="monthTemplate6"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate6'">
+                  <div *ngIf="month1.value.month ==6">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Jul" dataField="monthCost" cellTemplate="monthTemplate7"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate7'">
+                  <div *ngIf="month1.value.month ==7">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Aug" dataField="monthCost" cellTemplate="monthTemplate8"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate8'">
+                  <div *ngIf="month1.value.month ==8">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Sept" dataField="monthCost" cellTemplate="monthTemplate9"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate9'">
+                  <div *ngIf="month1.value.month =='9'">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Oct" dataField="monthCost" cellTemplate="monthTemplate10"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate10'">
+                  <div *ngIf="month1.value.month =='10'">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Nov" dataField="monthCost" cellTemplate="monthTemplate11"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate11'">
+                  <div *ngIf="month1.value.month =='11'">{{month1.value.Cost}}</div>
+                </div>
+                <dxi-column alignment="center" caption="Dec" dataField="monthCost" cellTemplate="monthTemplate12"></dxi-column>
+                <div *dxTemplate="let month1 of 'monthTemplate12'">
+                  <div *ngIf="month1.value.month =='12'">{{month1.value.Cost}}</div>
+                </div>
+            </dxi-column>
+        </dxi-column>
+        <dxo-remote-operations [filtering]="true" [sorting]="false" [paging]="true" [grouping]="true">
+          </dxo-remote-operations>
+
+        <dxo-paging [pageSize]="5"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+      </dx-data-grid>
+    </div>
+  </div>
+
+
+  <div class="tab-pane fade" id="out-of-office-report-tab">
+  <!--     <div class="row">
+          <h1 class="reportName">Out of office report</h1>
+        </div> --><br><br><br>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
+            <div class="col-md-4">
+              <label>Start Date</label>
+            </div>
+            <div class="col-md-8 flight-inputs">
+                <input type="date" placeholder="Select Date" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="StartDate"
+                 class="form-control " (ngModelChange)="onstartDateChange($event)"/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-4">
+              <label>End Date</label>
+            </div>
+            <div class="col-md-8 flight-inputs">
+                <input type="date" placeholder="Select Date" id="endDate" name="endDate" #endDate="ngModel" [(ngModel)]="EndDate"
+                class="form-control " (ngModelChange)="onendDateChange($event)"/>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <a (click)="getOutOfOfficeReport()" *ngIf="StartDate && EndDate" class="button btn-large dark-blue2 pull-right" data-toggle="tab">Get
+              Report</a>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="row gridClass">
+          <dx-data-grid id="gridContainer" [dataSource]="outOfficeReport" [columnAutoWidth]="true" [showBorders]="true"
+            [allowColumnReordering]="false" [showRowLines]="true">
+            <dxi-column alignment="center" caption="Corporate Name" dataField="CompanyId.CompanyName" ></dxi-column>
+            <dxi-column alignment="center" caption="Transaction ID" dataField="CompanyRequestId"></dxi-column>
+            <dxi-column alignment="center" caption="Date" dataField="QuotedDate" dataType="date"></dxi-column>
+            <dxi-column alignment="center" caption="Travel Approver" dataField="ReportingManagerId[0].FirstName"></dxi-column>
+            <dxi-column alignment="center" caption="Travel Requester" dataField="CompanyUserId.FirstName"></dxi-column>
+            <dxi-column alignment="center" caption="Department" dataField="Country"></dxi-column>
+            <!-- <dxi-column alignment="center" caption="Status" dataField="Status"></dxi-column> -->
+            <dxi-column alignment="center" caption="Status" dataField="Status" cellTemplate="StatusTemplate"></dxi-column>
+            <div *dxTemplate="let status of 'StatusTemplate'">
+                <div>
+                    <span [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span>
+                </div>
+            </div>
+            <!-- <dxi-column alignment="center" caption="Request Detail" dataField="Country"></dxi-column> -->
+            <dxi-column alignment="center" caption="Request Detail" dataField="request" cellTemplate="requestTemplate"></dxi-column>
+            <div *dxTemplate="let request1 of 'requestTemplate'">
+                {{request1}}
+                <!-- <div *ngIf="request1.value.for =='Hotel'">{{request1.value.City}}({{request1.value.CheckIn | date: 'dd MMM yyyy'}})-({{request1.value.CheckOut | date: 'dd MMM yyyy'}})</div>
+                <div *ngIf="request1.value.for =='Transfer'">{{request1.value.TransportationType}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div>
+                <div *ngIf="request1.value.for =='Car Hire'">{{request1.value.PickupFromLocation}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div> -->
+                <!-- <div>{{request1.value.DepartureAirport}},{{request1.value.DepartureCountryName}}({{request1.value.DepartureDate | date: 'dd MMM yyyy'}})-{{request1.value.ArrivalAirport}} {{request1.value.ArrivalCountryName}}({{request1.value.ReturnDate | date: 'dd MMM yyyy'}})</div> -->
+            </div>
+            <dxi-column alignment="center" caption="Trip" dataField=""></dxi-column>
+            <dxi-column alignment="center" caption="Out Of office" dataField="">
+                <dxi-column alignment="center" caption="June 2018" dataField="">
+                    <!-- <div *ngFor="let x of dates;let i=index">                  
+                      <dxi-column alignment="center" caption="{{x}}" dataField="monthCost" cellTemplate="{{x}}"></dxi-column>
+                      <div *dxTemplate="let date of 'x'" [ngStyle]="{'background-color': x == date.value.month ? 'yellow' : '' }" >
+                          {{monthCost.month}}-{{date.value.month}}-{{date.data.month}}
+                      </div>
+                    </div> -->
+                    <dxi-column alignment="center" caption="1" dataField="dateObj" cellTemplate="dateTemplate1"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate1'" [ngStyle]="{'background-color': (1 >= date.value.firstdate && 1 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        1
+                    </div>
+                    <dxi-column alignment="center" caption="2" dataField="dateObj" cellTemplate="dateTemplate2"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate2'" [ngStyle]="{'background-color': (2 >= date.value.firstdate && 2 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        2
+                    </div>
+                    <dxi-column alignment="center" caption="3" dataField="dateObj" cellTemplate="dateTemplate3"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate3'" [ngStyle]="{'background-color': (3 >= date.value.firstdate && 3 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        3
+                    </div> 
+                    <dxi-column alignment="center" caption="4" dataField="dateObj" cellTemplate="dateTemplate4"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate4'" [ngStyle]="{'background-color': (4 >= date.value.firstdate && 4 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        4
+                    </div> 
+                    <dxi-column alignment="center" caption="5" dataField="dateObj" cellTemplate="dateTemplate5"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate5'" [ngStyle]="{'background-color': (5 >= date.value.firstdate && 5 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        5
+                    </div> 
+                    <dxi-column alignment="center" caption="6" dataField="dateObj" cellTemplate="dateTemplate6"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate6'" [ngStyle]="{'background-color': (6 >= date.value.firstdate && 6 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        6
+                    </div> 
+                    <dxi-column alignment="center" caption="7" dataField="dateObj" cellTemplate="dateTemplate7"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate7'" [ngStyle]="{'background-color': (7 >= date.value.firstdate && 7 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        7
+                    </div> 
+                    <dxi-column alignment="center" caption="8" dataField="dateObj" cellTemplate="dateTemplate8"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate8'" [ngStyle]="{'background-color': (8 >= date.value.firstdate && 8 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        8
+                    </div> 
+                    <dxi-column alignment="center" caption="9" dataField="dateObj" cellTemplate="dateTemplate9"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate9'" [ngStyle]="{'background-color': (9 >= date.value.firstdate && 9 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        9
+                    </div> 
+                    <dxi-column alignment="center" caption="10" dataField="dateObj" cellTemplate="dateTemplate10"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate10'" [ngStyle]="{'background-color': (10 >= date.value.firstdate && 10 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        10
+                    </div> 
+                    <dxi-column alignment="center" caption="11" dataField="dateObj" cellTemplate="dateTemplate11"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate11'" [ngStyle]="{'background-color': (11 >= date.value.firstdate && 11 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        11
+                    </div> 
+                    <dxi-column alignment="center" caption="12" dataField="dateObj" cellTemplate="dateTemplate12"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate12'" [ngStyle]="{'background-color': (12 >= date.value.firstdate && 12 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        12
+                    </div> 
+                    <dxi-column alignment="center" caption="13" dataField="dateObj" cellTemplate="dateTemplate13"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate13'" [ngStyle]="{'background-color':(13 >= date.value.firstdate && 13 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        13
+                    </div> 
+                    <dxi-column alignment="center" caption="14" dataField="dateObj" cellTemplate="dateTemplate14"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate14'" [ngStyle]="{'background-color': (14 >= date.value.firstdate && 14 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        14
+                    </div> 
+                    <dxi-column alignment="center" caption="15" dataField="dateObj" cellTemplate="dateTemplate15"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate15'" [ngStyle]="{'background-color': (15 >= date.value.firstdate && 15 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        15
+                    </div> 
+                    <dxi-column alignment="center" caption="16" dataField="dateObj" cellTemplate="dateTemplate16"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate16'" [ngStyle]="{'background-color': (16 >= date.value.firstdate && 16 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        16
+                    </div> 
+                    <dxi-column alignment="center" caption="17" dataField="dateObj" cellTemplate="dateTemplate17"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate17'" [ngStyle]="{'background-color': (17 >= date.value.firstdate && 17 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        17
+                    </div> 
+                    <dxi-column alignment="center" caption="18" dataField="dateObj" cellTemplate="dateTemplate18"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate18'" [ngStyle]="{'background-color': (18 >= date.value.firstdate && 18 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        18
+                    </div> 
+                    <dxi-column alignment="center" caption="19" dataField="dateObj" cellTemplate="dateTemplate19"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate19'" [ngStyle]="{'background-color': (19 >= date.value.firstdate && 19 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        19
+                    </div> 
+                    <dxi-column alignment="center" caption="20" dataField="dateObj" cellTemplate="dateTemplate20"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate20'" [ngStyle]="{'background-color': (20 >= date.value.firstdate && 20 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        20
+                    </div> 
+                    <dxi-column alignment="center" caption="21" dataField="dateObj" cellTemplate="dateTemplate21"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate21'" [ngStyle]="{'background-color': (21 >= date.value.firstdate && 21 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        21
+                    </div> 
+                    <dxi-column alignment="center" caption="22" dataField="dateObj" cellTemplate="dateTemplate22"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate22'" [ngStyle]="{'background-color': (22 >= date.value.firstdate && 22 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        22
+                    </div> 
+                    <dxi-column alignment="center" caption="23" dataField="dateObj" cellTemplate="dateTemplate23"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate23'" [ngStyle]="{'background-color': (23 >= date.value.firstdate && 23 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        23
+                    </div> 
+                    <dxi-column alignment="center" caption="24" dataField="dateObj" cellTemplate="dateTemplate24"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate24'" [ngStyle]="{'background-color': (24 >= date.value.firstdate && 24 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        24
+                    </div> 
+                    <dxi-column alignment="center" caption="25" dataField="dateObj" cellTemplate="dateTemplate25"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate25'" [ngStyle]="{'background-color': (25 >= date.value.firstdate && 25 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        25
+                    </div> 8
+                    <dxi-column alignment="center" caption="26" dataField="dateObj" cellTemplate="dateTemplate26"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate26'" [ngStyle]="{'background-color': (26 >= date.value.firstdate && 26 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        26
+                    </div> 
+                    <dxi-column alignment="center" caption="27" dataField="dateObj" cellTemplate="dateTemplate27"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate27'" [ngStyle]="{'background-color': (27 >= date.value.firstdate && 27 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        27
+                    </div> 
+                    <dxi-column alignment="center" caption="28" dataField="dateObj" cellTemplate="dateTemplate28"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate28'" [ngStyle]="{'background-color': (28 >= date.value.firstdate && 28 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        28
+                    </div> 
+                    <dxi-column alignment="center" caption="29" dataField="dateObj" cellTemplate="dateTemplate29"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate29'" [ngStyle]="{'background-color': (29 >= date.value.firstdate && 29 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        29
+                    </div> 
+                    <dxi-column alignment="center" caption="30" dataField="dateObj" cellTemplate="dateTemplate30"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate30'" [ngStyle]="{'background-color': (30 >= date.value.firstdate && 30 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        30
+                    </div> 
+                    <dxi-column alignment="center" caption="31" dataField="dateObj" cellTemplate="dateTemplate31"></dxi-column>
+                    <div *dxTemplate="let date of 'dateTemplate31'" [ngStyle]="{'background-color': (31 >= date.value.firstdate && 31 <= date.value.lastdate) ? 'yellow' : '' }" >
+                        31
+                    </div> 
+                    
+                </dxi-column>
+            </dxi-column>
+
+            <dxo-remote-operations [filtering]="true" [sorting]="false" [paging]="true" [grouping]="true">
+              </dxo-remote-operations>
+    
+            <dxo-paging [pageSize]="5"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>
+          </dx-data-grid>
+        </div>
+  </div>
+
+
+  <div class="tab-pane fade" id="cost-benefit-report-tab">
+     <!--  <div class="row">
+          <h1 class="reportName">Cost benefit analysis report</h1>
+        </div> --><br><br><br>
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
+            <div class="col-md-4">
+              <label>Start Date</label>
+            </div>
+            <div class="col-md-8 flight-inputs">
+                <input type="date" placeholder="Select Date" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="StartDate"
+                 class="form-control " (ngModelChange)="onstartDateChange($event)"/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-md-4">
+              <label>End Date</label>
+            </div>
+            <div class="col-md-8 flight-inputs">
+                <input type="date" placeholder="Select Date" id="endDate" name="endDate" #endDate="ngModel" [(ngModel)]="EndDate"
+                class="form-control " (ngModelChange)="onendDateChange($event)"/>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <a (click)="saveFlightRequestData()" *ngIf="StartDate && EndDate" class="button btn-large dark-blue2 pull-right" data-toggle="tab">Get
+              Report</a>
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+        <div class="row gridClass">
+          <dx-data-grid id="gridContainer" [dataSource]="expenceReport" [columnAutoWidth]="true" [showBorders]="true"
+            [allowColumnReordering]="false" [showRowLines]="true">
+            <dxi-column alignment="center" caption="Corporate Name" dataField="CompanyId.CompanyName"></dxi-column>
+            <dxi-column alignment="center" caption="Travel Agency" dataField="AgencyId.CompanyName"></dxi-column>
+            <dxi-column alignment="center" caption="Transaction ID" dataField="CompanyRequestId"></dxi-column>
+            <dxi-column alignment="center" caption="Date" dataField="QuotedDate" dataType="date"></dxi-column>
+            <dxi-column alignment="center" caption="User Type" dataField="CompanyUserId.Role" cellTemplate="userTypeTemplate"></dxi-column>
+            <div *dxTemplate="let user of 'userTypeTemplate'">
+              <div *ngIf="user.value ==1">Team Admin</div>
+              <div *ngIf="user.value ==2">Team Leader</div>
+              <div *ngIf="user.value ==3">Team Member</div>
+              <div *ngIf="user.value ==5">Freelance User</div>
+            </div>
+            <dxi-column alignment="center" caption="Travel Approver" dataField="ReportingManagerId[0].FirstName"></dxi-column>
+            <dxi-column alignment="center" caption="Travel Requester" dataField="CompanyUserId.FirstName"></dxi-column>
+            <dxi-column alignment="center" caption="Department" dataField="Country"></dxi-column>
+            <dxi-column alignment="center" caption="Status" dataField="Status" cellTemplate="StatusTemplate"></dxi-column>
+            <div *dxTemplate="let status of 'StatusTemplate'">
+                <div>
+                    <span [class]="status.data.Status | requestStatusTextClass" >{{status.data.Status | requestStatusText}}</span>
+                </div>
+            </div>
+            <dxi-column alignment="center" caption="Request For" dataField="requestfor"></dxi-column>
+            <dxi-column alignment="center" caption="Request Detail" dataField="request" cellTemplate="requestTemplate"></dxi-column>
+            <div *dxTemplate="let request1 of 'requestTemplate'">
+                <div *ngIf="request1.value.for =='Hotel'">{{request1.value.City}}({{request1.value.CheckIn | date: 'dd MMM yyyy'}})-({{request1.value.CheckOut | date: 'dd MMM yyyy'}})</div>
+                <div *ngIf="request1.value.for =='Transfer'">{{request1.value.TransportationType}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div>
+                <div *ngIf="request1.value.for =='Car Hire'">{{request1.value.PickupFromLocation}}({{request1.value.PickupDate | date: 'dd MMM yyyy'}})-({{request1.value.DropoffDate | date: 'dd MMM yyyy'}})</div>
+                <div *ngIf="request1.value.for =='Flight'">{{request1.value.DepartureAirport}},{{request1.value.DepartureCountryName}}({{request1.value.DepartureDate | date: 'dd MMM yyyy'}})-{{request1.value.ArrivalAirport}} {{request1.value.ArrivalCountryName}}({{request1.value.ReturnDate | date: 'dd MMM yyyy'}})</div>
+            </div>
+            <dxi-column alignment="center" caption="Quote" dataField="QuoteNo"></dxi-column>
+            <dxi-column alignment="center" caption="Purchase Order" dataField="Country"></dxi-column>
+            <dxi-column alignment="center" caption="Quote Detail" dataField="response" cellTemplate="quoteTemplate"></dxi-column>
+            <div *dxTemplate="let request1 of 'quoteTemplate'">
+                <div *ngIf="request1.value.for =='Hotel'">{{request1.value.HotelName}},{{request1.value.HotelAddress}}</div>
+                <div *ngIf="request1.value.for =='Transfer'">{{request1.value.ServiceProvider}}</div>
+                <div *ngIf="request1.value.for =='Car Hire'">{{request1.value.ServiceProvider}},{{request1.value.TransportationType}}</div>
+                <div *ngIf="request1.value.for =='Flight'">{{request1.value.Airlines}},{{request1.value.Class}}</div>
+            </div>
+            <dxi-column alignment="center" caption="Transaction" dataField="transaction"></dxi-column>
+            <dxi-column alignment="center" caption="Booked Date" dataField="Country"></dxi-column>
+            <dxi-column alignment="center" caption="Rating" dataField="Country"></dxi-column>
+            <dxi-column alignment="center" caption="Travel Cost/Benefit Analysis Report" dataField="Country">
+                <dxi-column alignment="center" caption="" dataField="Country">
+                    <dxi-column alignment="center" caption="Motivation" dataField="ReasonForTravel" ></dxi-column>
+                    <dxi-column alignment="center" caption="Travel Approver Comments" dataField="Country" ></dxi-column>
+                    <dxi-column alignment="center" caption="Jul 2018" dataField="Country" ></dxi-column>
+                </dxi-column>
+                <dxi-column alignment="center" caption="Variance" dataField="Country">
+                  <dxi-column alignment="center" caption="Saving" dataField="Country" ></dxi-column>
+                  <dxi-column alignment="center" caption="Additional Expense" dataField="Country" ></dxi-column>
+              </dxi-column>
+            </dxi-column>
+
+            <dxo-remote-operations [filtering]="true" [sorting]="false" [paging]="true" [grouping]="true">
+              </dxo-remote-operations>
+    
+            <dxo-paging [pageSize]="5"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]"></dxo-pager>  
+          </dx-data-grid>
+        </div>
+
+</div>

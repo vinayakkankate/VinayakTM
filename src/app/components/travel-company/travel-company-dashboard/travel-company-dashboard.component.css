@@ -1,0 +1,11 @@
+.navbar-brand {
+    padding: 10px 0px 5px 0px !important;
+  }
+
+  .floatLeftManagementConsoleMenu{
+    float: left !important;    
+  }
+
+  .cursor-pointer{
+    cursor: pointer;
+  }
